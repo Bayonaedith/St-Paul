@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google Fonts for Inter -->
+    <!-- Professional Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
     <!-- Top Bar -->
     <div class="navbar">
         <!-- Hamburger Menu Button on the LEFT -->
-        <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
         <div class="navbar-center">
             <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
             <span class="logo-text">St Paul Learning Centre</span>
@@ -20,8 +20,8 @@
     </div>
 
     <!-- Sidebar Menu -->
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
         <a href="index.html">News & Announcements</a>
         <a href="student-portal.html">Student Portal</a>
         <a href="admissions.html">Admissions</a>
@@ -31,12 +31,35 @@
         <a href="timetable.html">Timetable</a>
         <a href="teacher-resources.html">Teacher Resources</a>
         <a href="parent-portal.html">Parent Portal</a>
-    </div>
+    </nav>
+
+    <header>
+        <h1>St Paul Learning Centre</h1>
+        <div class="motto">Strive For Success</div>
+        <p>Empowering students, connecting families, supporting teachers.</p>
+    </header>
 
     <section>
         <h2>Welcome to St Paul Learning Centre</h2>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-        <!-- Your main page content here -->
+        <p>
+            St Paul Learning Centre is dedicated to nurturing every student’s potential and fostering a vibrant, supportive community for families and educators. Explore our student and parent portals, discover resources, view our school showcase, and stay updated with news and announcements.
+        </p>
+
+        <div class="gallery">
+            <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
+            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
+        </div>
+
+        <h3>Quick Access</h3>
+        <ul class="feature-list">
+            <li><a href="student-portal.html">Student Portal</a> – Access learning materials and your timetable</li>
+            <li><a href="parent-portal.html">Parent Portal</a> – Monitor progress and communicate with teachers</li>
+            <li><a href="admissions.html">Admissions</a> – Join our community</li>
+            <li><a href="resources.html">Resources</a> – Study tools and support</li>
+            <li><a href="showcase.html">Showcase</a> – Discover our achievements and history</li>
+            <li><a href="contact.html">Contact</a> – Get in touch with us</li>
+        </ul>
     </section>
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
@@ -50,6 +73,13 @@
     function closeMenu() {
         document.getElementById("sideMenu").style.width = "0";
     }
+
+    // Accessibility: Close menu on Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === "Escape") {
+            closeMenu();
+        }
+    });
     </script>
 </body>
 </html>
