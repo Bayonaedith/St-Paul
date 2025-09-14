@@ -1,6 +1,5 @@
-/* Professional Stylesheet for Sidebar Navigation */
+/* Professional Stylesheet for Sidebar Navigation (Menu Button on LEFT) */
 
-/* Reset and base styles */
 *, *::before, *::after { box-sizing: border-box; }
 body {
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
@@ -19,11 +18,27 @@ body {
     padding: 16px 24px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     box-shadow: 0 2px 8px rgba(37,99,235,0.07);
     position: sticky;
     top: 0;
     z-index: 100;
+}
+.menu-btn {
+    font-size: 32px;
+    cursor: pointer;
+    color: white;
+    transition: color 0.2s;
+    margin-right: 22px;
+}
+.menu-btn:hover {
+    color: #ffe066;
+}
+.navbar-center {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 .school-logo {
     width: 60px;
@@ -38,16 +53,7 @@ body {
     font-size: 1.5em;
     font-weight: 800;
     letter-spacing: 1px;
-}
-.menu-btn {
-    font-size: 32px;
-    cursor: pointer;
-    color: white;
-    transition: color 0.2s;
-    margin-left: 24px;
-}
-.menu-btn:hover {
-    color: #ffe066;
+    color: #fff;
 }
 
 /* Sidebar Menu */
@@ -150,11 +156,16 @@ footer {
     }
     .menu-btn {
         font-size: 28px;
-        margin-left: 8px;
+        margin-right: 8px;
     }
     .side-menu a {
         font-size: 1em;
         padding: 13px 18px;
+    }
+    .navbar-center {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
     }
 }
 
@@ -164,4 +175,4 @@ footer {
 .close-btn:focus {
     outline: 2.5px solid #ffe066;
     outline-offset: 2px;
-}
+    }
