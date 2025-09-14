@@ -1,0 +1,15 @@
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f5f7fa; margin: 0; }
+header { background: #204a87; color: #fff; padding: 32px 0; text-align: center; }
+.motto { font-size: 1.2em; font-style: italic; margin-top: 8px; color: #f3d34a; }
+nav { background: #2e6eb8; padding: 12px 0; text-align: center; }
+nav a { color: #fff; margin: 0 14px; text-decoration: none; font-weight: 500;}
+nav a:hover { text-decoration: underline;}
+section { max-width: 900px; margin: 32px auto; background: #fff; border-radius: 8px; padding: 28px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);}
+h2 { color: #204a87; margin-top: 0;}
+.feature-list { list-style-type: disc; margin-left: 24px; }
+.cta { background: #e8f0fe; padding: 20px; border-radius: 7px; margin-top: 20px; text-align: center;}
+.cta a { color: #2e6eb8; text-decoration: none; font-weight: bold;}
+.portal-links { margin-top: 20px; }
+.portal-links a { display: inline-block; margin: 8px; padding: 10px 18px; background: #204a87; color: #fff; border-radius: 5px; text-decoration: none; font-weight: 500;}
+.portal-links a:hover { background: #2e6eb8;}
+footer { text-align:center; padding:20px; background:#204a87; color:#fff; margin-top:30px; }
