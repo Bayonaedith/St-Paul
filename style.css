@@ -1,14 +1,10 @@
-/* St Paul Learning Centre - Professional Stylesheet */
+/* Professional Stylesheet for Sidebar Navigation */
 
 /* Reset and base styles */
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
+*, *::before, *::after { box-sizing: border-box; }
 body {
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    padding: 0;
     background: #f6f8fc;
     color: #25324b;
     min-height: 100vh;
@@ -16,79 +12,45 @@ body {
     line-height: 1.7;
 }
 
-/* Header styles */
-header {
-    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
-    color: #fff;
-    padding: 40px 0 15px 0;
-    text-align: center;
-    box-shadow: 0 2px 14px rgba(37,99,235,0.07);
-    position: relative;
-}
-
-header h1 {
-    font-size: 2.6em;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin: 0;
-}
-
-header .motto {
-    font-size: 1.15em;
-    font-style: italic;
-    margin-top: 9px;
-    color: #ffe066;
-    font-weight: 600;
-}
-
-header p {
-    margin: 13px 0 0 0;
-    font-weight: 400;
-    font-size: 1.08em;
-}
-
-/* Logo styles */
-.school-logo {
-    width: 90px;
-    height: 90px;
-    object-fit: contain;
-    border-radius: 16px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 12px rgba(37,99,235,0.12);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background: #fff;
-    border: 3px solid #ffe066;
-}
-
-/* ---------------- SIDEBAR MENU ---------------- */
+/* Top Bar */
 .navbar {
     background: #2563eb;
     color: white;
-    padding: 14px 20px;
+    padding: 16px 24px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-
-.navbar .logo {
-    font-size: 1.3em;
-    font-weight: 700;
+.school-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 12px;
+    margin-right: 16px;
+    background: #fff;
+    border: 2px solid #ffe066;
 }
-
+.logo-text {
+    font-size: 1.5em;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
 .menu-btn {
-    font-size: 28px;
+    font-size: 32px;
     cursor: pointer;
     color: white;
     transition: color 0.2s;
+    margin-left: 24px;
 }
-
 .menu-btn:hover {
     color: #ffe066;
 }
 
+/* Sidebar Menu */
 .side-menu {
     height: 100%;
     width: 0;
@@ -101,147 +63,57 @@ header p {
     padding-top: 70px;
     z-index: 1000;
 }
-
 .side-menu a {
-    padding: 14px 26px;
+    padding: 16px 32px;
     text-decoration: none;
-    font-size: 1.1em;
+    font-size: 1.08em;
     color: #fff;
     display: block;
     transition: background 0.2s, padding-left 0.2s;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
-
 .side-menu a:hover {
     background: #ffe066;
     color: #2563eb;
-    padding-left: 36px;
-    font-weight: bold;
+    padding-left: 52px;
+    font-weight: 800;
 }
-
 .side-menu .close-btn {
     position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 34px;
+    top: 18px;
+    right: 26px;
+    font-size: 38px;
     cursor: pointer;
     color: white;
     transition: color 0.2s;
 }
-
 .side-menu .close-btn:hover {
     color: #ffe066;
 }
 
-/* Main section styles */
+/* Section and Footer styling */
 section {
-    max-width: 700px;
-    margin: 42px auto 28px auto;
+    max-width: 750px;
+    margin: 48px auto 28px auto;
     background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 24px rgba(37,99,235,0.08);
-    padding: 38px 38px 30px 38px;
+    border-radius: 24px;
+    box-shadow: 0 4px 32px rgba(37,99,235,0.11);
+    padding: 44px 44px 36px 44px;
 }
-
 h2 {
     color: #2563eb;
-    font-size: 2.1em;
+    font-size: 2.2em;
     margin-top: 0;
     font-weight: 700;
+    letter-spacing: 1px;
 }
-
-h3 {
-    color: #1e40af;
-    margin-top: 30px;
-    font-size: 1.25em;
-    font-weight: 600;
-}
-
-/* Form styles */
-form {
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-label {
-    margin-bottom: 9px;
-    font-weight: 600;
-    color: #1e40af;
-    font-size: 1em;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select,
-textarea {
-    padding: 12px 14px;
-    margin-bottom: 18px;
-    border: 1.5px solid #a5b4fc;
-    border-radius: 8px;
-    font-size: 1em;
-    background: #f6f8fc;
-    transition: border 0.2s, background 0.2s;
-    font-family: inherit;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    outline: none;
-    border: 1.5px solid #2563eb;
-    background: #e0e7ff;
-}
-
-button[type="submit"],
-.button {
-    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
-    color: #fff;
-    padding: 13px 0;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.05em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.18s, box-shadow 0.18s;
-    margin-top: 8px;
-    box-shadow: 0 2px 8px rgba(37,99,235,0.10);
-}
-
-button[type="submit"]:hover,
-.button:hover {
-    background: #ffe066;
-    color: #2563eb;
-    box-shadow: 0 2px 16px rgba(37,99,235,0.20);
-}
-
-/* Gallery styles */
-.gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 18px;
-    margin-top: 22px;
-    justify-content: center;
-}
-
-.gallery img {
-    width: 160px;
-    height: 110px;
-    object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(37,99,235,0.07);
-    border: 2.5px solid #ffe066;
-    background: #fff;
-}
-
-/* Footer styles */
 footer {
     background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
     color: #fff;
     text-align: center;
-    padding: 22px 0;
-    margin-top: 44px;
+    padding: 26px 0;
+    margin-top: 52px;
     font-size: 1em;
     border-top: 3px solid #ffe066;
     position: relative;
@@ -250,14 +122,46 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+    section {
+        max-width: 99vw;
+        padding: 24px 10px;
+    }
+    .navbar .logo-text {
+        font-size: 1.1em;
+    }
+    .school-logo {
+        width: 40px;
+        height: 40px;
+    }
+}
 @media (max-width: 600px) {
-    .navbar .logo {
+    section {
+        padding: 9px 3px;
+        margin: 24px auto;
+    }
+    .school-logo {
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    }
+    .logo-text {
         font-size: 1em;
     }
     .menu-btn {
-        font-size: 24px;
+        font-size: 28px;
+        margin-left: 8px;
     }
     .side-menu a {
         font-size: 1em;
+        padding: 13px 18px;
     }
+}
+
+/* Accessibility: High contrast for focus */
+.side-menu a:focus,
+.menu-btn:focus,
+.close-btn:focus {
+    outline: 2.5px solid #ffe066;
+    outline-offset: 2px;
 }
