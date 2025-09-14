@@ -1,123 +1,138 @@
-/* St Paul Learning Centre - Full Stylesheet */
+/* St Paul Learning Centre - Professional Stylesheet */
 
 /* Reset and base styles */
-* {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f4f7fa;
-    color: #222;
+    background: #f6f8fc;
+    color: #25324b;
     min-height: 100vh;
+    font-size: 17px;
+    line-height: 1.7;
 }
 
 /* Header styles */
 header {
-    background: linear-gradient(90deg, #2b5d9c, #4e9bcf);
+    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
     color: #fff;
-    padding: 30px 0 18px 0;
+    padding: 40px 0 15px 0;
     text-align: center;
+    box-shadow: 0 2px 14px rgba(37,99,235,0.07);
     position: relative;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5em;
+    font-size: 2.6em;
+    font-weight: 800;
     letter-spacing: 1px;
+    margin: 0;
 }
 
 header .motto {
-    font-size: 1.2em;
+    font-size: 1.15em;
     font-style: italic;
-    margin-top: 7px;
-    color: #f4e869;
+    margin-top: 9px;
+    color: #ffe066;
+    font-weight: 600;
 }
 
 header p {
-    margin: 8px 0 0 0;
+    margin: 13px 0 0 0;
     font-weight: 400;
-    font-size: 1.05em;
+    font-size: 1.08em;
 }
 
 /* Logo styles */
 .school-logo {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     object-fit: contain;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(50, 80, 120, 0.07);
+    border-radius: 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.12);
     display: block;
     margin-left: auto;
     margin-right: auto;
+    background: #fff;
+    border: 3px solid #ffe066;
 }
 
 /* Navigation styles */
 nav {
-    background: #306db3;
+    background: #2563eb;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 0;
-    margin: 0;
-    border-bottom: 2px solid #f4e869;
+    gap: 0;
+    border-bottom: 2px solid #ffe066;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    padding: 15px 20px;
-    display: block;
-    font-weight: 500;
-    transition: background 0.2s, color 0.2s;
-    border-radius: 8px 8px 0 0;
-    margin: 0 3px;
+    padding: 16px 28px;
+    font-weight: 600;
+    font-size: 1em;
+    transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    border-radius: 0 0 18px 18px;
+    margin: 0 2px;
+    position: relative;
 }
 
 nav a:hover,
 nav a:focus,
 nav a.active {
-    background: #f4e869;
-    color: #306db3;
-    border-radius: 8px;
+    background: #ffe066;
+    color: #2563eb;
+    box-shadow: 0 2px 10px rgba(37,99,235,0.13);
+    font-weight: 700;
 }
 
 /* Main section styles */
 section {
-    max-width: 650px;
-    margin: 36px auto 20px auto;
+    max-width: 700px;
+    margin: 42px auto 28px auto;
     background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(44, 76, 121, 0.08);
-    padding: 28px 32px;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(37,99,235,0.08);
+    padding: 38px 38px 30px 38px;
 }
 
 h2 {
-    color: #2b5d9c;
-    font-size: 2em;
+    color: #2563eb;
+    font-size: 2.1em;
     margin-top: 0;
+    font-weight: 700;
 }
 
 h3 {
-    color: #306db3;
-    margin-top: 28px;
-    font-size: 1.3em;
+    color: #1e40af;
+    margin-top: 30px;
+    font-size: 1.25em;
+    font-weight: 600;
 }
 
 /* Form styles */
 form {
-    margin-top: 22px;
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
+    gap: 0;
 }
 
 label {
-    margin-bottom: 7px;
+    margin-bottom: 9px;
     font-weight: 600;
-    color: #306db3;
+    color: #1e40af;
+    font-size: 1em;
 }
 
 input[type="text"],
@@ -125,40 +140,44 @@ input[type="email"],
 input[type="password"],
 select,
 textarea {
-    padding: 8px 12px;
-    margin-bottom: 17px;
-    border: 1px solid #b4c7e7;
-    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border: 1.5px solid #a5b4fc;
+    border-radius: 8px;
     font-size: 1em;
-    background: #f9fbfd;
-    transition: border 0.2s;
+    background: #f6f8fc;
+    transition: border 0.2s, background 0.2s;
+    font-family: inherit;
 }
 
 input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border: 1.5px solid #2b5d9c;
-    background: #f1f8ff;
+    border: 1.5px solid #2563eb;
+    background: #e0e7ff;
 }
 
 button[type="submit"],
 .button {
-    background: #2b5d9c;
+    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
     color: #fff;
-    padding: 12px 0;
+    padding: 13px 0;
     border: none;
-    border-radius: 6px;
-    font-size: 1.1em;
+    border-radius: 8px;
+    font-size: 1.05em;
     font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s;
-    margin-top: 6px;
+    transition: background 0.18s, box-shadow 0.18s;
+    margin-top: 8px;
+    box-shadow: 0 2px 8px rgba(37,99,235,0.10);
 }
 
 button[type="submit"]:hover,
 .button:hover {
-    background: #306db3;
+    background: #ffe066;
+    color: #2563eb;
+    box-shadow: 0 2px 16px rgba(37,99,235,0.20);
 }
 
 /* List and paragraph styles */
@@ -169,35 +188,37 @@ p, ul, ol, li {
 
 .feature-list,
 ul.feature-list {
-    padding-left: 20px;
-    margin-top: 15px;
+    padding-left: 22px;
+    margin-top: 18px;
     margin-bottom: 0;
 }
 
 .feature-list li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+    font-weight: 500;
 }
 
 /* Table styles */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 18px 0;
-    background: #f9fbfd;
-    border-radius: 8px;
+    margin: 24px 0;
+    background: #f6f8fc;
+    border-radius: 10px;
     overflow: hidden;
+    font-size: 0.98em;
 }
 
 th, td {
-    padding: 12px 10px;
-    border-bottom: 1px solid #e3eaf5;
+    padding: 14px 12px;
+    border-bottom: 1px solid #e0e7ff;
     text-align: left;
 }
 
 th {
-    background: #306db3;
+    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
     color: #fff;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 tr:last-child td {
@@ -208,69 +229,71 @@ tr:last-child td {
 .gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    margin-top: 18px;
+    gap: 18px;
+    margin-top: 22px;
+    justify-content: center;
 }
 
 .gallery img {
-    width: 140px;
-    height: 100px;
+    width: 160px;
+    height: 110px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 1px 6px rgba(44,76,121,0.08);
-    border: 2px solid #f4e869;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(37,99,235,0.07);
+    border: 2.5px solid #ffe066;
+    background: #fff;
 }
 
 /* Link styles */
 a {
-    color: #306db3;
+    color: #2563eb;
     text-decoration: underline;
     transition: color 0.18s;
 }
 
 a:hover, a:focus {
-    color: #1e406e;
+    color: #1e40af;
     text-decoration: none;
 }
 
 /* Footer styles */
 footer {
-    background: #306db3;
+    background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
     color: #fff;
     text-align: center;
-    padding: 18px 0;
-    margin-top: 38px;
+    padding: 22px 0;
+    margin-top: 44px;
     font-size: 1em;
-    border-top: 2px solid #f4e869;
+    border-top: 3px solid #ffe066;
     position: relative;
     bottom: 0;
     width: 100%;
 }
 
 /* Responsive styles */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     section {
-        max-width: 98vw;
-        padding: 18px 7px;
+        max-width: 99vw;
+        padding: 22px 10px;
     }
     header h1 {
-        font-size: 1.6em;
+        font-size: 2em;
     }
     .school-logo {
-        width: 60px;
-        height: 60px;
+        width: 70px;
+        height: 70px;
     }
     nav a {
-        padding: 10px 8px;
+        padding: 12px 7px;
         font-size: 0.95em;
     }
     .gallery img {
-        width: 90px;
+        width: 100px;
         height: 70px;
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     nav {
         flex-direction: column;
         align-items: stretch;
@@ -278,13 +301,29 @@ footer {
     nav a {
         margin: 0;
         border-radius: 0;
-        padding: 9px 4px;
+        padding: 11px 4px;
+        text-align: center;
+        border-top: 1px solid #60a5fa;
     }
     section {
-        padding: 10px 2px;
+        padding: 9px 3px;
     }
     footer {
         font-size: 0.92em;
         padding: 13px 2px;
     }
+    .school-logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Accessibility: High contrast for focus */
+nav a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2.5px solid #ffe066;
+    outline-offset: 2px;
 }
