@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration - St Paul Learning Centre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>St Paul Learning Centre</h1>
+        <div class="motto">Strive For Success</div>
+        <p>Empowering students, connecting families, supporting teachers.</p>
+    </header>
+    <nav>
+        <a href="index.html">News & Announcements</a>
+        <a href="student-portal.html">Student Portal</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="resources.html">Resources</a>
+        <a href="showcase.html">About Us</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <section>
+        <h2>Student Registration</h2>
+        <form class="register-form">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" required>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="grade">Grade:</label>
+            <select id="grade" name="grade" required>
+                <option value="">Select Grade</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+            </select>
+
+            <label for="username">Choose a Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Create Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already registered? <a href="login.html">Login here</a>.</p>
+    </section>
+    <footer>
+        &copy; 2025 St Paul Learning Centre. All rights reserved.
+    </footer>
+</body>
+</html>
