@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login - St Paul Learning Centre</title>
+    <title>Login & Sign Up - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google Fonts and your CSS -->
+    <!-- Inter font and your CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- Firebase CDN SDKs -->
@@ -44,6 +44,16 @@
             <button type="submit" class="button">Login</button>
         </form>
         <p id="loginMessage"></p>
+        <hr>
+        <h2>Sign Up</h2>
+        <form id="signupForm">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" required>
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" required>
+            <button type="submit" class="button">Sign Up</button>
+        </form>
+        <p id="signupMessage"></p>
         <div id="userInfo" style="display:none;">
             <p id="welcomeUser"></p>
             <button id="logoutBtn" class="button">Logout</button>
@@ -78,7 +88,7 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Login form logic
+    // Login logic
     document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
       const email = document.getElementById('loginEmail').value;
@@ -92,14 +102,30 @@
         });
     });
 
+    // Sign up logic
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          document.getElementById('signupMessage').textContent = "Sign up successful! You may now log in.";
+        })
+        .catch(error => {
+          document.getElementById('signupMessage').textContent = error.message;
+        });
+    });
+
     // Show user info and logout
     auth.onAuthStateChanged(user => {
       if (user) {
         document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'none';
         document.getElementById('userInfo').style.display = 'block';
         document.getElementById('welcomeUser').textContent = `Welcome, ${user.email}`;
       } else {
         document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('signupForm').style.display = 'block';
         document.getElementById('userInfo').style.display = 'none';
       }
     });
