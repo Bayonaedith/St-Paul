@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Firebase should be loaded in type="module" scripts, but inline modules are not widely supported in all browsers.
-         The best practice is to keep your <script type="module"> at the end of <body> or in a separate JS file. -->
     <meta name="google-site-verification" content="R3kH-LbUwNa0uZwAc91SCEMZh46mtNGdyCv-h7_bMow" />
     <meta charset="UTF-8">
     <title>St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Professional Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Top Bar -->
     <div class="navbar">
-        <!-- Hamburger Menu Button on the LEFT -->
         <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
         <div class="navbar-center">
             <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
@@ -68,7 +64,6 @@
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
 
-    <!-- Simple JS for menu toggle -->
     <script>
     function openMenu() {
         document.getElementById("sideMenu").style.width = "260px";
@@ -76,32 +71,12 @@
     function closeMenu() {
         document.getElementById("sideMenu").style.width = "0";
     }
-
-    // Accessibility: Close menu on Escape key
     document.addEventListener('keydown', function(event) {
         if (event.key === "Escape") {
             closeMenu();
         }
     });
     </script>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyC2t_Azhw6McMu_uG7L3i3UVJOcZyDYkT0",
-    authDomain: "my-school-st-paul-74f39.firebaseapp.com",
-    projectId: "my-school-st-paul-74f39",
-    storageBucket: "my-school-st-paul-74f39.firebasestorage.app",
-    messagingSenderId: "565569714075",
-    appId: "1:565569714075:web:0c0d45e25844ebb213933e"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-    </script>
+    <script type="module" src="firebase-init.js"></script>
 </body>
 </html>
