@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a",
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const adminEmail = "nicholasbagenda@gmail.com";
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user || user.email.toLowerCase().trim() !== adminEmail.toLowerCase().trim()) {
+      // Not signed in, or not admin – block!
+      signOut(auth); // optional: logs out non-admins instantly
+      window.location.href = "admin-login.html"; // <-- your admin login page filename
+    }
+    // else: allow access
+  });
+    </script>
     <meta charset="UTF-8">
     <title>Teacher Resources - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
