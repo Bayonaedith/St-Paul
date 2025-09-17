@@ -6,119 +6,255 @@
   <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js"></script>
   <style>
+    /* ==== Sidebar & Layout Styles ==== */
+    *, *::before, *::after { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        background: #f6f8fc;
+        color: #25324b;
+        min-height: 100vh;
+        font-size: 17px;
+        line-height: 1.7;
     }
-    .container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-      width: 320px;
-      text-align: center;
+    .navbar {
+        background: #2563eb;
+        color: white;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        box-shadow: 0 2px 8px rgba(37,99,235,0.07);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    .menu-btn {
+        font-size: 32px;
+        cursor: pointer;
+        color: white;
+        transition: color 0.2s;
+        margin-right: 22px;
+    }
+    .menu-btn:hover { color: #ffe066; }
+    .navbar-center {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .school-logo {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        border-radius: 12px;
+        margin-right: 16px;
+        background: #fff;
+        border: 2px solid #ffe066;
+    }
+    .logo-text {
+        font-size: 1.5em;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: #fff;
+    }
+    .side-menu {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: linear-gradient(180deg, #2563eb 0%, #60a5fa 100%);
+        overflow-x: hidden;
+        transition: 0.4s;
+        padding-top: 70px;
+        z-index: 1000;
+    }
+    .side-menu a {
+        padding: 16px 32px;
+        text-decoration: none;
+        font-size: 1.08em;
+        color: #fff;
+        display: block;
+        transition: background 0.2s, padding-left 0.2s;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .side-menu a:hover {
+        background: #ffe066;
+        color: #2563eb;
+        padding-left: 52px;
+        font-weight: 800;
+    }
+    .side-menu .close-btn {
+        position: absolute;
+        top: 18px;
+        right: 26px;
+        font-size: 38px;
+        cursor: pointer;
+        color: white;
+        transition: color 0.2s;
+    }
+    .side-menu .close-btn:hover { color: #ffe066; }
+
+    /* ==== Login Box ==== */
+    section {
+        max-width: 450px;
+        margin: 48px auto 28px auto;
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 4px 32px rgba(37,99,235,0.11);
+        padding: 44px 44px 36px 44px;
+        text-align: center;
     }
     h2 {
-      margin-bottom: 20px;
-      color: #333;
+        color: #2563eb;
+        font-size: 2em;
+        margin-top: 0;
+        font-weight: 700;
     }
     input {
-      width: 90%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+        width: 90%;
+        padding: 12px;
+        margin: 12px 0;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
     }
     button {
-      width: 45%;
-      padding: 10px;
-      margin: 10px 5px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-      transition: 0.3s;
+        width: 45%;
+        padding: 12px;
+        margin: 12px 5px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: 0.3s;
+        color: #fff;
     }
-    button:nth-child(1) {
-      background: #4facfe;
-      color: white;
-    }
-    button:nth-child(2) {
-      background: #00c9a7;
-      color: white;
-    }
-    button:hover {
-      opacity: 0.8;
-    }
+    button:nth-of-type(1) { background: #2563eb; }
+    button:nth-of-type(2) { background: #00c9a7; }
+    button:hover { opacity: 0.85; }
     #message {
-      margin-top: 10px;
-      color: red;
-      font-size: 14px;
+        margin-top: 10px;
+        color: red;
+        font-size: 14px;
+    }
+    .forgot {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #2563eb;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    footer {
+        background: linear-gradient(90deg, #2563eb 0%, #60a5fa 100%);
+        color: #fff;
+        text-align: center;
+        padding: 26px 0;
+        margin-top: 52px;
+        font-size: 1em;
+        border-top: 3px solid #ffe066;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+        section { padding: 20px 15px; margin: 24px auto; }
+        .school-logo { width: 40px; height: 40px; }
+        .logo-text { font-size: 1.2em; }
+        .menu-btn { font-size: 28px; margin-right: 12px; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Login / Signup</h2>
-
-    <input type="email" id="email" placeholder="Email"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-
-    <button onclick="login()">Login</button>
-    <button onclick="signup()">Sign Up</button>
-
-    <p id="message"></p>
+  <!-- Navbar -->
+  <div class="navbar">
+    <span class="menu-btn" onclick="openMenu()">☰</span>
+    <div class="navbar-center">
+      <img src="school-logo.png" alt="Logo" class="school-logo">
+      <span class="logo-text">St Paul Learning Centre</span>
+    </div>
   </div>
 
+  <!-- Sidebar -->
+  <div id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="#">Admissions</a>
+    <a href="#">Parent Portal</a>
+    <a href="#">Teacher Resources</a>
+  </div>
+
+  <!-- Login / Signup Section -->
+  <section>
+    <h2>Login / Signup</h2>
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <button onclick="signup()">Sign Up</button>
+    <span class="forgot" onclick="resetPassword()">Forgot Password?</span>
+    <p id="message"></p>
+  </section>
+
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
+
+  <script>
+    function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+    function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+  </script>
+
+  <!-- Firebase Authentication -->
   <script type="module">
-    // Import Firebase functions
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail } 
       from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
-    // Your Firebase configuration
     const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBKAYfQl_o",
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
       projectId: "my-school-st-paul-1455a"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Login function
+    // Login
     window.login = function() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.href = "index.html";
-        })
-        .catch((error) => {
-          document.getElementById("message").innerText = error.message;
-        });
+        .then(() => window.location.href = "index.html")
+        .catch(err => document.getElementById("message").innerText = err.message);
     }
 
-    // Signup function
+    // Signup
     window.signup = function() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
-
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => {
-          window.location.href = "index.html";
-        })
-        .catch((error) => {
-          document.getElementById("message").innerText = error.message;
-        });
+        .then(() => window.location.href = "index.html")
+        .catch(err => document.getElementById("message").innerText = err.message);
+    }
+
+    // Password Reset
+    window.resetPassword = function() {
+      const email = document.getElementById("email").value;
+      if (!email) {
+        document.getElementById("message").innerText = "Enter your email to reset password.";
+        return;
+      }
+      sendPasswordResetEmail(auth, email)
+        .then(() => document.getElementById("message").innerText = "Password reset email sent!")
+        .catch(err => document.getElementById("message").innerText = err.message);
     }
   </script>
 </body>
