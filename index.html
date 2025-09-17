@@ -84,22 +84,24 @@
         }
     });
     </script>
-    <!-- Firebase Initialization: place this after all HTML for best compatibility -->
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use:
-      // https://firebase.google.com/docs/web/setup#available-libraries
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyC8U3O0uj24JqRT2KLfmVu2prR5Of_8z8U",
-        authDomain: "my-school-st-paul-bf857.firebaseapp.com",
-        projectId: "my-school-st-paul-bf857",
-        storageBucket: "my-school-st-paul-bf857.appspot.com", <!-- Corrected domain: .appspot.com not .storage.app -->
-        messagingSenderId: "846479828685",
-        appId: "1:846479828685:web:2308649a255c8c251e2b84"
-      };
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC2t_Azhw6McMu_uG7L3i3UVJOcZyDYkT0",
+    authDomain: "my-school-st-paul-74f39.firebaseapp.com",
+    projectId: "my-school-st-paul-74f39",
+    storageBucket: "my-school-st-paul-74f39.firebasestorage.app",
+    messagingSenderId: "565569714075",
+    appId: "1:565569714075:web:0c0d45e25844ebb213933e"
+  };
 
-      const app = initializeApp(firebaseConfig);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
     </script>
 </body>
 </html>
