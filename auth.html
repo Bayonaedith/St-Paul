@@ -10,6 +10,7 @@
     <!-- Firebase CDN SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -72,6 +73,11 @@
         <p id="forgotMessage"></p>
     </section>
 
+    <section id="usersSection" style="display:none;">
+        <h2>Signed In Users</h2>
+        <ul id="usersList"></ul>
+    </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
@@ -94,7 +100,7 @@
         document.getElementById('authSection').style.display = section === 'login' ? 'block' : 'none';
         document.getElementById('signupSection').style.display = section === 'signup' ? 'block' : 'none';
         document.getElementById('forgotSection').style.display = section === 'forgot' ? 'block' : 'none';
-        // Clear messages
+        document.getElementById('usersSection').style.display = section === 'users' ? 'block' : 'none';
         document.getElementById('loginMessage').textContent = '';
         document.getElementById('signupMessage').textContent = '';
         document.getElementById('forgotMessage').textContent = '';
@@ -111,6 +117,7 @@
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
 
     // Login logic
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -118,8 +125,13 @@
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
       auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((userCredential) => {
           document.getElementById('loginMessage').textContent = "Login successful! Redirecting...";
+          // Log to Firestore
+          db.collection('signedInUsers').doc(userCredential.user.uid).set({
+            email: userCredential.user.email,
+            lastSignIn: new Date().toISOString()
+          });
           setTimeout(function() {
             window.location.href = "index.html";
           }, 1200);
@@ -135,8 +147,13 @@
       const email = document.getElementById('signupEmail').value;
       const password = document.getElementById('signupPassword').value;
       auth.createUserWithEmailAndPassword(email, password)
-        .then(() => {
+        .then((userCredential) => {
           document.getElementById('signupMessage').textContent = "Sign up successful! You may now log in.";
+          // Log to Firestore
+          db.collection('signedInUsers').doc(userCredential.user.uid).set({
+            email: userCredential.user.email,
+            registered: new Date().toISOString()
+          });
           setTimeout(function() {
             showSection('login');
           }, 1200);
@@ -159,8 +176,25 @@
         });
     });
 
+    // List signed in users (Admin Only: call showSection('users') to view)
+    function loadSignedInUsers() {
+      db.collection('signedInUsers').get().then(snapshot => {
+        const usersList = document.getElementById('usersList');
+        usersList.innerHTML = '';
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const li = document.createElement('li');
+          li.textContent = `${data.email} (Last sign in: ${data.lastSignIn || data.registered || 'N/A'})`;
+          usersList.appendChild(li);
+        });
+      });
+    }
+
     // Default to login section
     showSection('login');
+
+    // If you want to call the users list, use this in browser console:
+    // showSection('users'); loadSignedInUsers();
     </script>
 </body>
-  </html>
+        </html>
