@@ -1,200 +1,57 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login, Sign Up & Forgot Password - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Inter font and your CSS -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <!-- Firebase CDN SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js"></script>
-</head>
-<body>
-    <div class="navbar">
-        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
-        <div class="navbar-center">
-            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-            <span class="logo-text">St Paul Learning Centre</span>
-        </div>
-    </div>
+  <title>Login / Signup</title>
+  <script type="module">
+    // Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
-    <!-- Sidebar Menu -->
-    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">Showcase</a>
-        <a href="contact.html">Contact</a>
-        <a href="timetable.html">Timetable</a>
-        <a href="teacher-resources.html">Teacher Resources</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
-
-    <section id="authSection">
-        <h2>Login</h2>
-        <form id="loginForm">
-            <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" required>
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" required>
-            <button type="submit" class="button">Login</button>
-        </form>
-        <button class="link-btn" onclick="showSection('signup')">Don't have an account? Sign Up</button>
-        <button class="link-btn" onclick="showSection('forgot')">Forgot Password?</button>
-        <p id="loginMessage"></p>
-    </section>
-
-    <section id="signupSection" style="display:none;">
-        <h2>Sign Up</h2>
-        <form id="signupForm">
-            <label for="signupEmail">Email</label>
-            <input type="email" id="signupEmail" required>
-            <label for="signupPassword">Password</label>
-            <input type="password" id="signupPassword" required>
-            <button type="submit" class="button">Sign Up</button>
-        </form>
-        <button class="link-btn" onclick="showSection('login')">Already have an account? Login</button>
-        <p id="signupMessage"></p>
-    </section>
-
-    <section id="forgotSection" style="display:none;">
-        <h2>Forgot Password</h2>
-        <form id="forgotForm">
-            <label for="forgotEmail">Email</label>
-            <input type="email" id="forgotEmail" required>
-            <button type="submit" class="button">Send Reset Link</button>
-        </form>
-        <button class="link-btn" onclick="showSection('login')">Back to Login</button>
-        <p id="forgotMessage"></p>
-    </section>
-
-    <section id="usersSection" style="display:none;">
-        <h2>Signed In Users</h2>
-        <ul id="usersList"></ul>
-    </section>
-
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
-    <script>
-    // Navigation menu JS
-    function openMenu() {
-        document.getElementById("sideMenu").style.width = "260px";
-    }
-    function closeMenu() {
-        document.getElementById("sideMenu").style.width = "0";
-    }
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            closeMenu();
-        }
-    });
-
-    // Show/hide sections
-    function showSection(section) {
-        document.getElementById('authSection').style.display = section === 'login' ? 'block' : 'none';
-        document.getElementById('signupSection').style.display = section === 'signup' ? 'block' : 'none';
-        document.getElementById('forgotSection').style.display = section === 'forgot' ? 'block' : 'none';
-        document.getElementById('usersSection').style.display = section === 'users' ? 'block' : 'none';
-        document.getElementById('loginMessage').textContent = '';
-        document.getElementById('signupMessage').textContent = '';
-        document.getElementById('forgotMessage').textContent = '';
-    }
-
-    // Firebase setup
+    // Your Firebase config
     const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+      apiKey: "AIzaSyBvLXO...YOUR_KEY",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
       projectId: "my-school-st-paul-1455a",
-      storageBucket: "my-school-st-paul-1455a.firebasestorage.app",
+      storageBucket: "my-school-st-paul-1455a.appspot.com",
       messagingSenderId: "122530310728",
-      appId: "1:122530310728:web:7c9eff29abf9b8283cc67d"
+      appId: "1:122530310728:web:YOUR_APP_ID"
     };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
 
-    // Login logic
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          document.getElementById('loginMessage').textContent = "Login successful! Redirecting...";
-          // Log to Firestore
-          db.collection('signedInUsers').doc(userCredential.user.uid).set({
-            email: userCredential.user.email,
-            lastSignIn: new Date().toISOString()
-          });
-          setTimeout(function() {
-            window.location.href = "index.html";
-          }, 1200);
-        })
-        .catch(error => {
-          document.getElementById('loginMessage').textContent = error.message;
-        });
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Signup
+    window.signUp = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => alert("Signup successful"))
+[17/09, 12:00] Grasyson: .catch(err => alert(err.message));
+    };
+
+    // Login
+    window.login = () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => alert("Login successful"))
+        .catch(err => alert(err.message));
+    };
+
+    // Redirect if logged in
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        window.location.href = "index.html"; // redirect after login
+      }
     });
-
-    // Sign up logic
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('signupEmail').value;
-      const password = document.getElementById('signupPassword').value;
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          document.getElementById('signupMessage').textContent = "Sign up successful! You may now log in.";
-          // Log to Firestore
-          db.collection('signedInUsers').doc(userCredential.user.uid).set({
-            email: userCredential.user.email,
-            registered: new Date().toISOString()
-          });
-          setTimeout(function() {
-            showSection('login');
-          }, 1200);
-        })
-        .catch(error => {
-          document.getElementById('signupMessage').textContent = error.message;
-        });
-    });
-
-    // Forgot password logic
-    document.getElementById('forgotForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('forgotEmail').value;
-      auth.sendPasswordResetEmail(email)
-        .then(() => {
-          document.getElementById('forgotMessage').textContent = "Password reset email sent! Check your inbox.";
-        })
-        .catch(error => {
-          document.getElementById('forgotMessage').textContent = error.message;
-        });
-    });
-
-    // List signed in users (Admin Only: call showSection('users') to view)
-    function loadSignedInUsers() {
-      db.collection('signedInUsers').get().then(snapshot => {
-        const usersList = document.getElementById('usersList');
-        usersList.innerHTML = '';
-        snapshot.forEach(doc => {
-          const data = doc.data();
-          const li = document.createElement('li');
-          li.textContent = `${data.email} (Last sign in: ${data.lastSignIn || data.registered || 'N/A'})`;
-          usersList.appendChild(li);
-        });
-      });
-    }
-
-    // Default to login section
-    showSection('login');
-
-    // If you want to call the users list, use this in browser console:
-    // showSection('users'); loadSignedInUsers();
-    </script>
+  </script>
+</head>
+<body>
+  <h2>Login / Signup</h2>
+  <input type="email" id="email" placeholder="Email"><br><br>
+  <input type="password" id="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+  <button onclick="signUp()">Sign Up</button>
 </body>
-        </html>
+</html>
