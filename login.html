@@ -2,128 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login / Signup</title>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js"></script>
-  <!-- ... keep your CSS ... -->
-</head>
-<body>
-  <!-- ... your navbar, sidebar, section ... -->
-  <section>
-    <h2>Login / Signup</h2>
-    <input type="email" id="email" placeholder="Email"><br>
-    <input type="password" id="password" placeholder="Password"><br>
-    <button onclick="login()">Login</button>
-    <button onclick="signup()">Sign Up</button>
-    <span class="forgot" onclick="resetPassword()">Forgot Password?</span>
-    <p id="message"></p>
-  </section>
-  <footer>
-    &copy; 2025 St Paul Learning Centre. All rights reserved.
-  </footer>
-  <script>
-    function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
-    function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Admin Login – St Paul</title>
+  <link rel="stylesheet" href="style.css">
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
-      from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
+    // Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-      projectId: "my-school-st-paul-1455a"
+      projectId: "my-school-st-paul-1455a",
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    async function logUser(uid, email, type) {
-      await setDoc(doc(db, "signedInUsers", uid), {
-        email,
-        type,
-        lastAction: new Date().toISOString()
+    // Only allowed admin email
+    const adminEmail = "nicholasbagenda@gmail.com";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // Login form submit
+      document.getElementById("loginForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        signInWithEmailAndPassword(auth, email, password)
+          .then(userCred => {
+            if (userCred.user.email === adminEmail) {
+              // Show sensitive page menu
+              document.getElementById("loginSection").style.display = "none";
+              document.getElementById("menuSection").style.display = "block";
+            } else {
+              alert("⛔ Access Denied. Unauthorized email.");
+              signOut(auth);
+            }
+          })
+          .catch(err => alert("Login failed: " + err.message));
       });
-    }
+    });
 
-    // Login
-    window.login = function() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCred) => {
-          logUser(userCred.user.uid, userCred.user.email, "login");
-          window.location.href = "index.html";
-        })
-        .catch(err => document.getElementById("message").innerText = err.message);
-    }
-
-    // Signup
-    window.signup = function() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCred) => {
-          logUser(userCred.user.uid, userCred.user.email, "signup");
-          window.location.href = "index.html";
-        })
-        .catch(err => document.getElementById("message").innerText = err.message);
-    }
-
-    // Password Reset
-    window.resetPassword = function() {
-      const email = document.getElementById("email").value;
-      if (!email) {
-        document.getElementById("message").innerText = "Enter your email to reset password.";
-        return;
-      }
-      sendPasswordResetEmail(auth, email)
-        .then(() => document.getElementById("message").innerText = "Password reset email sent!")
-        .catch(err => document.getElementById("message").innerText = err.message);
-    }
+    // Redirect to selected page
+    window.goToPage = function(page) {
+      window.location.href = page;
+    };
   </script>
-</body>
-</html>
-<head>
-    <meta charset="UTF-8">
-    <title>Student Portal Login - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
-    <section>
-        <h2>Student Login</h2>
-        <form class="login-form">
-            <label for="username">Username or Email:</label>
-            <input type="text" id="username" name="username" required>
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="register.html">Register here</a>.</p>
-    </section>
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <p>Restricted Access – Admin Only</p>
+  </header>
+
+  <!-- Login Form -->
+  <section id="loginSection">
+    <h2>Admin Login</h2>
+    <form id="loginForm">
+      <label>Email:</label><br>
+      <input type="email" id="email" required><br><br>
+
+      <label>Password:</label><br>
+      <input type="password" id="password" required><br><br>
+
+      <button type="submit">Login</button>
+    </form>
+  </section>
+
+  <!-- Sensitive Page Menu -->
+  <section id="menuSection" style="display:none;">
+    <h2>Welcome, Nicholas</h2>
+    <p>Select a page to access:</p>
+    <ul>
+      <li><button onclick="goToPage('exams.html')">Exams</button></li>
+      <li><button onclick="goToPage('homework.html')">Homework</button></li>
+      <li><button onclick="goToPage('notes.html')">Notes</button></li>
+      <li><button onclick="goToPage('parent-portal.html')">Parent Portal</button></li>
+      <li><button onclick="goToPage('resources.html')">Resources</button></li>
+      <li><button onclick="goToPage('student-portal.html')">Student Portal</button></li>
+      <li><button onclick="goToPage('teacher-resources.html')">Teacher Resources</button></li>
+      <li><button onclick="goToPage('timetable.html')">Timetable</button></li>
+    </ul>
+    <button onclick="signOut(auth).then(()=>window.location.reload())">Logout</button>
+  </section>
 </body>
 </html>
