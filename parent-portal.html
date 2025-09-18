@@ -5,6 +5,29 @@
     <title>Parent Portal - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script>
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+            projectId: "my-school-st-paul-1455a",
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Protect page
+        auth.onAuthStateChanged(user => {
+            if (!user || user.email !== "nicholasbagenda@gmail.com") {
+                window.location.href = "login.html";
+            }
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -12,6 +35,7 @@
         <div class="motto">Strive For Success</div>
         <p>Empowering students, connecting families, supporting teachers.</p>
     </header>
+
     <nav>
         <a href="index.html">News & Announcements</a>
         <a href="student-portal.html">Student Portal</a>
@@ -21,9 +45,11 @@
         <a href="contact.html">Contact</a>
         <a href="parent-portal.html">Parent Portal</a>
     </nav>
+
     <section>
         <h2>Parent Portal</h2>
         <p>Welcome parents! Access your child's academic progress, school events, and communicate with teachers.</p>
+
         <form class="login-form">
             <label for="parent-username">Username or Email:</label>
             <input type="text" id="parent-username" name="parent-username" required>
@@ -33,8 +59,10 @@
             
             <button type="submit">Login</button>
         </form>
+
         <p>Need help? <a href="contact.html">Contact school administration</a>.</p>
     </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
