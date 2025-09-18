@@ -1,88 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Parent Portal - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Parent Portal - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-            projectId: "my-school-st-paul-1455a",
-        };
+<!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a"
+  };
 
-        // Protect page
-        auth.onAuthStateChanged(user => {
-            if (!user || user.email !== "nicholasbagenda@gmail.com") {
-                window.location.href = "login.html";
-            }
-        });
-    </script>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Redirect already logged-in parent
+  onAuthStateChanged(auth, (user) => {
+    if(user && user.email.toLowerCase().trim() === "nicholasbagenda@gmail.com") {
+      window.location.href = "parent-dashboard.html";
+    }
+  });
+
+  // Email login
+  window.loginParent = () => {
+    const email = document.getElementById("parent-email").value;
+    const password = document.getElementById("parent-password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCred => {
+        if(userCred.user.email.toLowerCase().trim() === "nicholasbagenda@gmail.com") {
+          window.location.href = "parent-dashboard.html";
+        } else {
+          auth.signOut();
+          document.getElementById("message").innerText = "Access denied. Only authorized parent can log in.";
+        }
+      })
+      .catch(err => document.getElementById("message").innerText = err.message);
+  };
+
+  // Google login
+  window.loginWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then(result => {
+        if(result.user.email.toLowerCase().trim() === "nicholasbagenda@gmail.com") {
+          window.location.href = "parent-dashboard.html";
+        } else {
+          auth.signOut();
+          document.getElementById("message").innerText = "Access denied. Only authorized parent can log in.";
+        }
+      })
+      .catch(err => document.getElementById("message").innerText = err.message);
+  };
+</script>
 </head>
 <body>
-    <!-- Top Bar with Hamburger Menu and Logo -->
-    <div class="navbar">
-        <span class="menu-btn" onclick="openMenu()">&#9776;</span>
-        <div class="navbar-center">
-            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-            <span class="logo-text">St Paul Learning Centre</span>
-        </div>
-    </div>
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <div class="motto">Strive For Success</div>
+  <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
 
-    <!-- Sidebar Menu -->
-    <nav id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">Showcase</a>
-        <a href="contact.html">Contact</a>
-        <a href="timetable.html">Timetable</a>
-        <a href="teacher-resources.html">Teacher Resources</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+<nav>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">About Us</a>
+  <a href="contact.html">Contact</a>
+  <a href="parent-portal.html">Parent Portal</a>
+</nav>
 
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+<section>
+  <h2>Parent Login</h2>
+  <input type="email" id="parent-email" placeholder="Email" required><br>
+  <input type="password" id="parent-password" placeholder="Password" required><br>
+  <button onclick="loginParent()">Login</button>
+  <button onclick="loginWithGoogle()">Sign in with Google</button>
+  <p id="message" style="color:red; font-weight:600;"></p>
+</section>
 
-    <section>
-        <h2>Parent Portal</h2>
-        <p>Welcome parents! Access your child's academic progress, school events, and communicate with teachers.</p>
-
-        <form class="login-form">
-            <label for="parent-username">Username or Email:</label>
-            <input type="text" id="parent-username" name="parent-username" required>
-            
-            <label for="parent-password">Password:</label>
-            <input type="password" id="parent-password" name="parent-password" required>
-            
-            <button type="submit">Login</button>
-        </form>
-
-        <p>Need help? <a href="contact.html">Contact school administration</a>.</p>
-    </section>
-
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
-
-    <script>
-        function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
-        function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
-    </script>
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
 </body>
 </html>
