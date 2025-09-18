@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Parent Dashboard - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Protect dashboard
+  onAuthStateChanged(auth, (user) => {
+    if(!user || user.email.toLowerCase().trim() !== "nicholasbagenda@gmail.com") {
+      window.location.href = "parent-portal.html";
+    } else {
+      document.getElementById("welcomeMsg").innerText = `Welcome, ${user.email}`;
+    }
+  });
+
+  // Logout
+  window.logoutParent = () => {
+    signOut(auth).then(() => {
+      window.location.href = "parent-portal.html";
+    });
+  };
+</script>
+</head>
+<body>
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <div class="motto">Strive For Success</div>
+  <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
+
+<nav>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">About Us</a>
+  <a href="contact.html">Contact</a>
+  <a href="parent-portal.html">Parent Portal</a>
+</nav>
+
+<section>
+  <h2 id="welcomeMsg">Welcome, Parent</h2>
+  <p>Here you can access your child's academic progress, school events, and communicate with teachers.</p>
+  <button onclick="logoutParent()">Logout</button>
+</section>
+
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
+</body>
+</html>
