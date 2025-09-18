@@ -6,26 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase App (Core SDK) -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <script>
-        // Your Firebase Config
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
             authDomain: "my-school-st-paul-1455a.firebaseapp.com",
             projectId: "my-school-st-paul-1455a",
-            storageBucket: "my-school-st-paul-1455a.appspot.com",
-            messagingSenderId: "122530310728",
-            appId: "1:122530310728:web:exampleid"
         };
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Protect sensitive pages
-        function protectPage() {
+        // Protect links to sensitive pages
+        function protectLinks() {
             const sensitivePages = [
                 "exams.html",
                 "homework.html",
@@ -43,7 +40,7 @@
                     link.addEventListener("click", (e) => {
                         e.preventDefault();
                         auth.onAuthStateChanged(user => {
-                            if (user && user.email === "nicholasbagenda@gmail.com") {
+                            if (user) {
                                 window.location.href = href;
                             } else {
                                 window.location.href = "login.html";
@@ -54,25 +51,38 @@
             });
         }
 
-        document.addEventListener("DOMContentLoaded", protectPage);
+        document.addEventListener("DOMContentLoaded", protectLinks);
     </script>
 </head>
 <body>
+    <!-- Top Bar with Hamburger Menu -->
+    <div class="navbar">
+        <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+        <div class="navbar-center">
+            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+            <span class="logo-text">St Paul Learning Centre</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+        <a href="index.html">News & Announcements</a>
+        <a href="student-portal.html">Student Portal</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="resources.html">Resources</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="contact.html">Contact</a>
+        <a href="timetable.html">Timetable</a>
+        <a href="teacher-resources.html">Teacher Resources</a>
+        <a href="parent-portal.html">Parent Portal</a>
+    </nav>
+
     <header>
         <h1>St Paul Learning Centre</h1>
         <div class="motto">Strive For Success</div>
         <p>Empowering students, connecting families, supporting teachers.</p>
     </header>
-  
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
 
     <section>
         <h2>Contact & Parent Engagement</h2>
@@ -86,5 +96,10 @@
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
+
+    <script>
+        function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+        function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+    </script>
 </body>
 </html>
