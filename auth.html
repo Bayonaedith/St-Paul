@@ -5,7 +5,7 @@
   <title>Login / Signup - St Paul Learning Centre</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -38,7 +38,10 @@
     <input type="email" id="email" placeholder="Email" required><br>
     <input type="password" id="password" placeholder="Password" required><br>
     <button onclick="login()">Login</button>
-    <button onclick="signup()">Sign Up</button>
+    <button onclick="signup()">Sign Up</button><br><br>
+    <button onclick="googleSignIn()" style="background-color:#4285F4;color:white;padding:10px 20px;border:none;border-radius:5px;">
+      Sign in with Google
+    </button>
     <p><span class="forgot" onclick="resetPassword()">Forgot Password?</span></p>
     <p id="message" style="color:red; font-weight:600;"></p>
   </section>
@@ -60,11 +63,12 @@
       getAuth, 
       signInWithEmailAndPassword, 
       createUserWithEmailAndPassword, 
-      sendPasswordResetEmail 
+      sendPasswordResetEmail,
+      GoogleAuthProvider,
+      signInWithPopup
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
@@ -83,26 +87,37 @@
       });
     }
 
-    // Login
+    // Login with email/password
     window.login = function() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       signInWithEmailAndPassword(auth, email, password)
-        .then((userCred) => {
+        .then(userCred => {
           logUser(userCred.user.uid, userCred.user.email, "login");
-          window.location.href = "login.html"; // ✅ redirect to sensitive-login gate
+          window.location.href = "index.html"; // ✅ redirect to main page
         })
         .catch(err => document.getElementById("message").innerText = err.message);
     }
 
-    // Signup
+    // Signup with email/password
     window.signup = function() {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCred) => {
+        .then(userCred => {
           logUser(userCred.user.uid, userCred.user.email, "signup");
-          window.location.href = "login.html"; // ✅ redirect after signup
+          window.location.href = "index.html"; // ✅ redirect to main page
+        })
+        .catch(err => document.getElementById("message").innerText = err.message);
+    }
+
+    // Google Sign-in
+    window.googleSignIn = function() {
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
+        .then(result => {
+          logUser(result.user.uid, result.user.email, "google-login");
+          window.location.href = "index.html"; // ✅ redirect to main page
         })
         .catch(err => document.getElementById("message").innerText = err.message);
     }
@@ -120,4 +135,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
