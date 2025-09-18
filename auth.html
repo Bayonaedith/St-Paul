@@ -2,36 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login / Signup</title>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js"></script>
-  <!-- ... keep your CSS ... -->
+  <title>Login / Signup - St Paul Learning Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ... your navbar, sidebar, section ... -->
+  <!-- Top Bar -->
+  <div class="navbar">
+      <span class="menu-btn" onclick="openMenu()" tabindex="0">&#9776;</span>
+      <div class="navbar-center">
+          <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+          <span class="logo-text">St Paul Learning Centre</span>
+      </div>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <nav id="sideMenu" class="side-menu">
+      <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+      <a href="index.html">News & Announcements</a>
+      <a href="student-portal.html">Student Portal</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="resources.html">Resources</a>
+      <a href="showcase.html">Showcase</a>
+      <a href="contact.html">Contact</a>
+      <a href="timetable.html">Timetable</a>
+      <a href="teacher-resources.html">Teacher Resources</a>
+      <a href="parent-portal.html">Parent Portal</a>
+  </nav>
+
+  <!-- Login / Signup Section -->
   <section>
     <h2>Login / Signup</h2>
-    <input type="email" id="email" placeholder="Email"><br>
-    <input type="password" id="password" placeholder="Password"><br>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
     <button onclick="login()">Login</button>
     <button onclick="signup()">Sign Up</button>
-    <span class="forgot" onclick="resetPassword()">Forgot Password?</span>
-    <p id="message"></p>
+    <p><span class="forgot" onclick="resetPassword()">Forgot Password?</span></p>
+    <p id="message" style="color:red; font-weight:600;"></p>
   </section>
+
   <footer>
     &copy; 2025 St Paul Learning Centre. All rights reserved.
   </footer>
+
+  <!-- Sidebar Toggle -->
   <script>
     function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
     function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
   </script>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
-      from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js";
 
+  <!-- Firebase Auth -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword, 
+      createUserWithEmailAndPassword, 
+      sendPasswordResetEmail 
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // Firebase config
     const firebaseConfig = {
       apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
@@ -57,7 +90,7 @@
       signInWithEmailAndPassword(auth, email, password)
         .then((userCred) => {
           logUser(userCred.user.uid, userCred.user.email, "login");
-          window.location.href = "index.html";
+          window.location.href = "login.html"; // ✅ redirect to sensitive-login gate
         })
         .catch(err => document.getElementById("message").innerText = err.message);
     }
@@ -69,7 +102,7 @@
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCred) => {
           logUser(userCred.user.uid, userCred.user.email, "signup");
-          window.location.href = "index.html";
+          window.location.href = "login.html"; // ✅ redirect after signup
         })
         .catch(err => document.getElementById("message").innerText = err.message);
     }
