@@ -4,23 +4,39 @@
     <meta charset="UTF-8">
     <title>Teacher Resources - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
-    <nav>
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
+        <div class="navbar-center">
+            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+            <span class="logo-text">St Paul Learning Centre</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
         <a href="index.html">News & Announcements</a>
         <a href="student-portal.html">Student Portal</a>
         <a href="admissions.html">Admissions</a>
         <a href="resources.html">Resources</a>
         <a href="showcase.html">About Us</a>
         <a href="contact.html">Contact</a>
+        <a href="timetable.html">Timetable</a>
+        <a href="teacher-resources.html">Teacher Resources</a>
         <a href="parent-portal.html">Parent Portal</a>
     </nav>
+
+    <header>
+        <h1>St Paul Learning Centre</h1>
+        <div class="motto">Strive For Success</div>
+        <p>Empowering students, connecting families, supporting teachers.</p>
+    </header>
+
     <section>
         <h2>Teacher Resources</h2>
         <p>Materials and guides for teachers to create engaging lessons. More resources will be added soon!</p>
@@ -30,11 +46,27 @@
             <li><a href="#">Assessment Templates</a></li>
         </ul>
     </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
 
-    <!-- Firebase Auth Script -->
+    <!-- Sidebar Menu JS -->
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "260px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+    </script>
+
+    <!-- Firebase Admin Auth -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -47,16 +79,13 @@
 
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
-
       const adminEmail = "nicholasbagenda@gmail.com";
 
-      // Check auth state
       onAuthStateChanged(auth, (user) => {
         if (!user || user.email.toLowerCase().trim() !== adminEmail.toLowerCase().trim()) {
-          signOut(auth); // optional: log out non-admins
-          window.location.href = "admin-login.html"; // redirect to login
+          signOut(auth);
+          window.location.href = "login.html"; // redirect non-admins
         }
-        // else: user is allowed, do nothing
       });
     </script>
 </body>
