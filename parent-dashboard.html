@@ -20,72 +20,135 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Protect dashboard and get user info
+  // Protect dashboard
   onAuthStateChanged(auth, (user) => {
     if (!user || user.email.toLowerCase().trim() !== "nicholasbagenda@gmail.com") {
-      window.location.href = "parent-portal.html"; // redirect unauthorized
+      window.location.href = "parent-portal.html";
     } else {
       document.getElementById("welcomeMsg").innerText = `Welcome, ${user.email}`;
     }
   });
 
-  // Logout function
   window.logoutParent = () => {
     signOut(auth).then(() => {
       window.location.href = "parent-portal.html";
     });
   };
 </script>
+
+<!-- Sidebar toggle -->
+<script>
+  function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+  function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+</script>
+
+<style>
+  /* Simple card styles for dashboard */
+  .dashboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .dashboard-card {
+    background: #f4f4f4;
+    padding: 20px;
+    flex: 1 1 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  .dashboard-card h3 {
+    margin-top: 0;
+  }
+  .dashboard-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .dashboard-card ul li {
+    margin: 8px 0;
+  }
+  button.logout-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #2b6cb0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button.logout-btn:hover { background: #2c5282; }
+</style>
+
 </head>
 <body>
 
-<header>
-  <h1>St Paul Learning Centre</h1>
-  <div class="motto">Strive For Success</div>
-  <p>Empowering students, connecting families, supporting teachers.</p>
-</header>
+<!-- Top Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()" tabindex="0">&#9776;</span>
+  <div class="navbar-center">
+    <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+    <span class="logo-text">St Paul Learning Centre</span>
+  </div>
+</div>
 
-<nav>
+<!-- Sidebar Menu -->
+<nav id="sideMenu" class="side-menu">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
   <a href="index.html">News & Announcements</a>
   <a href="student-portal.html">Student Portal</a>
   <a href="admissions.html">Admissions</a>
   <a href="resources.html">Resources</a>
-  <a href="showcase.html">About Us</a>
+  <a href="showcase.html">Showcase</a>
   <a href="contact.html">Contact</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="teacher-resources.html">Teacher Resources</a>
   <a href="parent-portal.html">Parent Portal</a>
 </nav>
 
 <section>
   <h2 id="welcomeMsg">Welcome, Parent</h2>
 
-  <div class="dashboard-section">
-    <h3>Student Overview</h3>
-    <ul>
-      <li>Grades: <a href="resources.html#grades">View Report Cards</a></li>
-      <li>Attendance: <a href="resources.html#attendance">Check Attendance</a></li>
-    </ul>
+  <div class="dashboard-container">
+    <div class="dashboard-card">
+      <h3>Student Info</h3>
+      <ul>
+        <li>Name: John Bagenda</li>
+        <li>Grade: 10</li>
+        <li>Class Teacher: Ms. Sophie</li>
+      </ul>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Grades</h3>
+      <ul>
+        <li>Math: 88%</li>
+        <li>English: 92%</li>
+        <li>Science: 85%</li>
+        <li>History: 90%</li>
+      </ul>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Attendance</h3>
+      <ul>
+        <li>Total Days: 180</li>
+        <li>Present: 172</li>
+        <li>Absent: 8</li>
+        <li>Attendance Rate: 95%</li>
+      </ul>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>School Events</h3>
+      <ul>
+        <li>Sports Day: 25th Sept 2025</li>
+        <li>Parent-Teacher Meeting: 15th Oct 2025</li>
+        <li>Holiday Notice: 1st Nov 2025</li>
+      </ul>
+    </div>
   </div>
 
-  <div class="dashboard-section">
-    <h3>School Events & Notices</h3>
-    <ul>
-      <li>Upcoming Sports Day: 25th Sept 2025</li>
-      <li>Parent-Teacher Meeting: 15th Oct 2025</li>
-      <li>Holiday Notice: 1st Nov 2025</li>
-    </ul>
-  </div>
-
-  <div class="dashboard-section">
-    <h3>Quick Links</h3>
-    <ul>
-      <li><a href="timetable.html">Class Timetables</a></li>
-      <li><a href="homework.html">Homework Assignments</a></li>
-      <li><a href="notes.html">Class Notes</a></li>
-      <li><a href="contact.html">Contact Teachers</a></li>
-    </ul>
-  </div>
-
-  <button onclick="logoutParent()">Logout</button>
+  <button class="logout-btn" onclick="logoutParent()">Logout</button>
 </section>
 
 <footer>
