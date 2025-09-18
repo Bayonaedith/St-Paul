@@ -1,174 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Online Admissions - St Paul Learning Centre</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Professional Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Admissions Form Styling */
-    .form-container {
-      max-width: 700px;
+<meta charset="UTF-8">
+<title>Online Admission - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+   (function(){
+      emailjs.init("S17h9x6ExMG6mKaQh"); // Your Public Key
+   })();
+</script>
+<style>
+   .admission-form {
+      max-width: 600px;
       margin: 20px auto;
       padding: 20px;
-      background: #f9f9f9;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .form-container h3 {
-      margin-bottom: 15px;
-      font-weight: 700;
-      color: #333;
-    }
-    .form-group {
-      margin-bottom: 15px;
-    }
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+      background: #f4f4f4;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+   }
+   .admission-form input, .admission-form select, .admission-form textarea, .admission-form button {
       width: 100%;
       padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 14px;
-    }
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-    .form-actions {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .form-actions button {
-      padding: 10px 20px;
-      background: #0077cc;
-      color: white;
-      font-weight: 600;
+   }
+   button.submit-btn {
+      background: #2b6cb0;
+      color: #fff;
       border: none;
-      border-radius: 8px;
       cursor: pointer;
-    }
-    .form-actions button:hover {
-      background: #005fa3;
-    }
-  </style>
+   }
+   button.submit-btn:hover {
+      background: #2c5282;
+   }
+</style>
 </head>
 <body>
-  <!-- Top Bar -->
-  <div class="navbar">
-    <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
-    <div class="navbar-center">
-      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-      <span class="logo-text">St Paul Learning Centre</span>
-    </div>
-  </div>
 
-  <!-- Sidebar Menu -->
-  <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
-    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
-    <a href="index.html">News & Announcements</a>
-    <a href="student-portal.html">Student Portal</a>
-    <a href="admissions.html">Admissions</a>
-    <a href="resources.html">Resources</a>
-    <a href="showcase.html">Showcase</a>
-    <a href="contact.html">Contact</a>
-    <a href="timetable.html">Timetable</a>
-    <a href="teacher-resources.html">Teacher Resources</a>
-    <a href="parent-portal.html">Parent Portal</a>
-  </nav>
+<header>
+   <h1>St Paul Learning Centre</h1>
+   <div class="motto">Strive For Success</div>
+   <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
 
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <div class="motto">Strive For Success</div>
-    <p>Empowering students, connecting families, supporting teachers.</p>
-  </header>
+<nav>
+   <a href="index.html">News & Announcements</a>
+   <a href="student-portal.html">Student Portal</a>
+   <a href="admissions.html">Admissions</a>
+   <a href="resources.html">Resources</a>
+   <a href="showcase.html">Showcase</a>
+   <a href="contact.html">Contact</a>
+   <a href="parent-portal.html">Parent Portal</a>
+</nav>
 
-  <section>
-    <h2>Online Admissions</h2>
-    <p>
-      New students can apply and register online. Fill out the admission form below and our admissions office will review your application.
-    </p>
+<section>
+   <h2>Online Admission Form</h2>
+   <form class="admission-form" id="admissionForm">
+      <input type="text" name="fullname" placeholder="Full Name" required>
+      <input type="email" name="email" placeholder="Email Address" required>
+      <input type="text" name="phone" placeholder="Phone Number" required>
+      <select name="grade" required>
+         <option value="">Select Grade</option>
+         <option value="8">Grade 8</option>
+         <option value="9">Grade 9</option>
+         <option value="10">Grade 10</option>
+      </select>
+      <textarea name="address" placeholder="Home Address" required></textarea>
+      <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
+      <button type="submit" class="submit-btn">Submit Application</button>
+      <p id="formMessage" style="color:green; font-weight:600;"></p>
+   </form>
+</section>
 
-    <!-- Admissions Form -->
-    <div class="form-container">
-      <h3>Application Form</h3>
-      <form id="admissionsForm">
-        <div class="form-group">
-          <label for="studentName">Student Full Name</label>
-          <input type="text" id="studentName" name="studentName" required>
-        </div>
-        <div class="form-group">
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" name="dob" required>
-        </div>
-        <div class="form-group">
-          <label for="grade">Applying for Grade/Class</label>
-          <select id="grade" name="grade" required>
-            <option value="">Select Grade</option>
-            <option value="Primary 1">Primary 1</option>
-            <option value="Primary 2">Primary 2</option>
-            <option value="Primary 3">Primary 3</option>
-            <option value="Primary 4">Primary 4</option>
-            <option value="Primary 5">Primary 5</option>
-            <option value="Primary 6">Primary 6</option>
-            <option value="Primary 7">Primary 7</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="parentName">Parent/Guardian Full Name</label>
-          <input type="text" id="parentName" name="parentName" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Parent/Guardian Email</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="address">Home Address</label>
-          <textarea id="address" name="address" required></textarea>
-        </div>
-        <div class="form-actions">
-          <button type="submit">Submit Application</button>
-        </div>
-      </form>
-    </div>
-  </section>
+<footer>
+   &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
 
-  <footer>
-    &copy; 2025 St Paul Learning Centre. All rights reserved.
-  </footer>
+<script>
+document.getElementById('admissionForm').addEventListener('submit', function(event){
+   event.preventDefault();
+   const form = event.target;
 
-  <!-- JS for menu toggle -->
-  <script>
-    function openMenu() {
-      document.getElementById("sideMenu").style.width = "260px";
-    }
-    function closeMenu() {
-      document.getElementById("sideMenu").style.width = "0";
-    }
-    document.addEventListener('keydown', function(event) {
-      if (event.key === "Escape") {
-        closeMenu();
-      }
-    });
+   // Send main submission to your email
+   emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
+   .then(function(response) {
+       console.log('Submission SUCCESS!', response.status, response.text);
 
-    // Temporary form submission handler
-    document.getElementById("admissionsForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      alert("✅ Application submitted successfully! We will contact you soon.");
-      this.reset();
-    });
-  </script>
+       // Send confirmation email to the parent
+       const parentEmail = form.email.value;
+       emailjs.send('service_ndh30l8', 'template_0k9iqza', {
+          to_email: parentEmail,
+          subject: "Admission Form Received",
+          message: `Hello ${form.fullname.value},\n\nThank you for submitting your admission form to St Paul Learning Centre. We will review it and get back to you soon.\n\n- St Paul Learning Centre`
+       });
+
+       document.getElementById('formMessage').innerText = "Application submitted successfully!";
+       form.reset();
+   }, function(error) {
+       console.log('Submission FAILED...', error);
+       document.getElementById('formMessage').innerText = "Oops! Something went wrong.";
+   });
+});
+</script>
+
 </body>
 </html>
