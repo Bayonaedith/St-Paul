@@ -59,15 +59,88 @@
       .catch(err => document.getElementById("message").innerText = err.message);
   };
 </script>
+
+<style>
+/* Simple hamburger menu styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e3a8a;
+  color: white;
+  padding: 10px 20px;
+}
+.navbar .menu-btn {
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+}
+.navbar-center {
+  display: flex;
+  align-items: center;
+}
+.navbar-center img {
+  height: 40px;
+  margin-right: 10px;
+}
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #1e3a8a;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 1000;
+}
+.side-menu a {
+  display: block;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+.side-menu .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 36px;
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .navbar .menu-btn { display: block; }
+}
+</style>
 </head>
 <body>
-<header>
-  <h1>St Paul Learning Centre</h1>
-  <div class="motto">Strive For Success</div>
-  <p>Empowering students, connecting families, supporting teachers.</p>
-</header>
 
-<nav>
+<!-- Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <div class="navbar-center">
+    <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo">
+    <span>St Paul Learning Centre</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">News & Announcements</a>
+    <a href="student-portal.html">Student Portal</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="resources.html">Resources</a>
+    <a href="showcase.html">About Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="parent-portal.html">Parent Portal</a>
+  </div>
+</div>
+
+<!-- Side menu for mobile -->
+<nav id="sideMenu" class="side-menu">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
   <a href="index.html">News & Announcements</a>
   <a href="student-portal.html">Student Portal</a>
   <a href="admissions.html">Admissions</a>
@@ -89,5 +162,11 @@
 <footer>
   &copy; 2025 St Paul Learning Centre. All rights reserved.
 </footer>
+
+<script>
+function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+</script>
+
 </body>
 </html>
