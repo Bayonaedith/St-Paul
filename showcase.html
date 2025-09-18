@@ -4,36 +4,68 @@
     <meta charset="UTF-8">
     <title>About Us & Achievements - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
-    <nav>
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
+        <div class="navbar-center">
+            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+            <span class="logo-text">St Paul Learning Centre</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
         <a href="index.html">News & Announcements</a>
         <a href="student-portal.html">Student Portal</a>
         <a href="admissions.html">Admissions</a>
         <a href="resources.html">Resources</a>
         <a href="showcase.html">About Us</a>
         <a href="contact.html">Contact</a>
+        <a href="timetable.html">Timetable</a>
+        <a href="teacher-resources.html">Teacher Resources</a>
         <a href="parent-portal.html">Parent Portal</a>
     </nav>
+
+    <header>
+        <h1>St Paul Learning Centre</h1>
+        <div class="motto">Strive For Success</div>
+        <p>Empowering students, connecting families, supporting teachers.</p>
+    </header>
+
     <section>
         <h2>About St Paul Learning Centre & Achievements</h2>
         <p>
             St Paul Learning Centre is dedicated to academic excellence and holistic development. We celebrate our students’ achievements, vibrant staff, and enriching activities.
         </p>
         <ul class="feature-list">
-            <li>National Science Fair Winners 2025</li>
-            <li>Active drama and music clubs</li>
-            <li>Experienced, caring teachers and staff</li>
+            <li>🏆 National Science Fair Winners 2025</li>
+            <li>🎭 Active drama and music clubs</li>
+            <li>👩‍🏫 Experienced, caring teachers and staff</li>
         </ul>
     </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
+
+    <!-- JS for Sidebar Menu -->
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "260px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+    </script>
 </body>
 </html>
