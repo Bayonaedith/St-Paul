@@ -6,7 +6,7 @@
   <title>Secure Admin Login – St Paul</title>
   <link rel="stylesheet" href="style.css">
   <script type="module">
-    // Firebase SDK
+    // Firebase SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
@@ -20,7 +20,7 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Only allowed admin email
+    // Allowed admin email
     const adminEmail = "nicholasbagenda@gmail.com";
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -28,14 +28,13 @@
       document.getElementById("loginForm").addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const email = document.getElementById("email").value;
+        const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
 
         signInWithEmailAndPassword(auth, email, password)
           .then(userCred => {
-            // Corrected check: Convert both emails to lowercase and trim whitespace
-            if (userCred.user.email.toLowerCase().trim() === adminEmail.toLowerCase().trim()) {
-              // Show sensitive page menu
+            if (userCred.user.email.trim().toLowerCase() === adminEmail.toLowerCase()) {
+              // ✅ Show menu
               document.getElementById("loginSection").style.display = "none";
               document.getElementById("menuSection").style.display = "block";
             } else {
@@ -43,7 +42,14 @@
               signOut(auth);
             }
           })
-          .catch(err => alert("Login failed: " + err.message));
+          .catch(err => alert("⚠️ Login failed: " + err.message));
+      });
+
+      // Logout button
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        signOut(auth).then(() => {
+          window.location.reload();
+        });
       });
     });
 
@@ -59,19 +65,21 @@
     <p>Restricted Access – Admin Only</p>
   </header>
 
+  <!-- Login Section -->
   <section id="loginSection">
     <h2>Admin Login</h2>
     <form id="loginForm">
-      <label>Email:</label><br>
+      <label for="email">Email:</label><br>
       <input type="email" id="email" required><br><br>
 
-      <label>Password:</label><br>
+      <label for="password">Password:</label><br>
       <input type="password" id="password" required><br><br>
 
       <button type="submit">Login</button>
     </form>
   </section>
 
+  <!-- Admin Menu Section -->
   <section id="menuSection" style="display:none;">
     <h2>Welcome, Nicholas</h2>
     <p>Select a page to access:</p>
@@ -85,7 +93,7 @@
       <li><button onclick="goToPage('teacher-resources.html')">Teacher Resources</button></li>
       <li><button onclick="goToPage('timetable.html')">Timetable</button></li>
     </ul>
-    <button onclick="signOut(auth).then(()=>window.location.reload())">Logout</button>
+    <button id="logoutBtn">Logout</button>
   </section>
 </body>
 </html>
