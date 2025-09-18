@@ -5,6 +5,57 @@
     <title>Contact & Parent Engagement - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase App (Core SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script>
+        // Your Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+            projectId: "my-school-st-paul-1455a",
+            storageBucket: "my-school-st-paul-1455a.appspot.com",
+            messagingSenderId: "122530310728",
+            appId: "1:122530310728:web:exampleid"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Protect sensitive pages
+        function protectPage() {
+            const sensitivePages = [
+                "exams.html",
+                "homework.html",
+                "notes.html",
+                "parent-portal.html",
+                "resources.html",
+                "student-portal.html",
+                "teacher-resources.html",
+                "timetable.html"
+            ];
+
+            document.querySelectorAll("a").forEach(link => {
+                const href = link.getAttribute("href");
+                if (sensitivePages.includes(href)) {
+                    link.addEventListener("click", (e) => {
+                        e.preventDefault();
+                        auth.onAuthStateChanged(user => {
+                            if (user && user.email === "nicholasbagenda@gmail.com") {
+                                window.location.href = href;
+                            } else {
+                                window.location.href = "login.html";
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", protectPage);
+    </script>
 </head>
 <body>
     <header>
@@ -12,15 +63,17 @@
         <div class="motto">Strive For Success</div>
         <p>Empowering students, connecting families, supporting teachers.</p>
     </header>
-  <nav>
-    <a href="index.html">News & Announcements</a>
-    <a href="student-portal.html">Student Portal</a>
-    <a href="admissions.html">Admissions</a>
-    <a href="resources.html">Resources</a>
-    <a href="showcase.html">About Us</a>
-    <a href="contact.html">Contact</a>
-    <a href="parent-portal.html">Parent Portal</a>
-</nav>
+  
+    <nav>
+        <a href="index.html">News & Announcements</a>
+        <a href="student-portal.html">Student Portal</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="resources.html">Resources</a>
+        <a href="showcase.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="parent-portal.html">Parent Portal</a>
+    </nav>
+
     <section>
         <h2>Contact & Parent Engagement</h2>
         <p>Stay connected! Parents can get updates, reach teachers, and participate in school events.</p>
@@ -29,6 +82,7 @@
             <a href="parent-portal.html">Parent Portal</a>
         </div>
     </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
