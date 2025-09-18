@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="style.css">
 
+<!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -19,16 +20,16 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
-  // Protect dashboard
+  // Protect dashboard and get user info
   onAuthStateChanged(auth, (user) => {
-    if(!user || user.email.toLowerCase().trim() !== "nicholasbagenda@gmail.com") {
-      window.location.href = "parent-portal.html";
+    if (!user || user.email.toLowerCase().trim() !== "nicholasbagenda@gmail.com") {
+      window.location.href = "parent-portal.html"; // redirect unauthorized
     } else {
       document.getElementById("welcomeMsg").innerText = `Welcome, ${user.email}`;
     }
   });
 
-  // Logout
+  // Logout function
   window.logoutParent = () => {
     signOut(auth).then(() => {
       window.location.href = "parent-portal.html";
@@ -37,6 +38,7 @@
 </script>
 </head>
 <body>
+
 <header>
   <h1>St Paul Learning Centre</h1>
   <div class="motto">Strive For Success</div>
@@ -55,12 +57,40 @@
 
 <section>
   <h2 id="welcomeMsg">Welcome, Parent</h2>
-  <p>Here you can access your child's academic progress, school events, and communicate with teachers.</p>
+
+  <div class="dashboard-section">
+    <h3>Student Overview</h3>
+    <ul>
+      <li>Grades: <a href="resources.html#grades">View Report Cards</a></li>
+      <li>Attendance: <a href="resources.html#attendance">Check Attendance</a></li>
+    </ul>
+  </div>
+
+  <div class="dashboard-section">
+    <h3>School Events & Notices</h3>
+    <ul>
+      <li>Upcoming Sports Day: 25th Sept 2025</li>
+      <li>Parent-Teacher Meeting: 15th Oct 2025</li>
+      <li>Holiday Notice: 1st Nov 2025</li>
+    </ul>
+  </div>
+
+  <div class="dashboard-section">
+    <h3>Quick Links</h3>
+    <ul>
+      <li><a href="timetable.html">Class Timetables</a></li>
+      <li><a href="homework.html">Homework Assignments</a></li>
+      <li><a href="notes.html">Class Notes</a></li>
+      <li><a href="contact.html">Contact Teachers</a></li>
+    </ul>
+  </div>
+
   <button onclick="logoutParent()">Logout</button>
 </section>
 
 <footer>
   &copy; 2025 St Paul Learning Centre. All rights reserved.
 </footer>
+
 </body>
 </html>
