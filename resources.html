@@ -4,35 +4,68 @@
     <meta charset="UTF-8">
     <title>Resources & Downloads - St Paul Learning Centre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
+        <div class="navbar-center">
+            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+            <span class="logo-text">St Paul Learning Centre</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
+        <a href="index.html">News & Announcements</a>
+        <a href="student-portal.html">Student Portal</a>
+        <a href="admissions.html">Admissions</a>
+        <a href="resources.html">Resources</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="contact.html">Contact</a>
+        <a href="timetable.html">Timetable</a>
+        <a href="teacher-resources.html">Teacher Resources</a>
+        <a href="parent-portal.html">Parent Portal</a>
+    </nav>
+
     <header>
         <h1>St Paul Learning Centre</h1>
         <div class="motto">Strive For Success</div>
         <p>Empowering students, connecting families, supporting teachers.</p>
     </header>
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+
     <section>
         <h2>Resources & Downloads</h2>
+        <p>Access and download educational materials to support learning. Stay updated with notes, homework, timetables, exam schedules, and teacher resources.</p>
         <ul class="feature-list">
-            <li><a href="notes.html">Class Notes</a></li>
-            <li><a href="homework.html">Homework Assignments</a></li>
-            <li><a href="timetable.html">Class Timetables</a></li>
-            <li><a href="exams.html">Exam Schedules</a></li>
-            <li><a href="teacher-resources.html">Teacher Resources</a></li>
+            <li><a href="notes.html">📘 Class Notes</a></li>
+            <li><a href="homework.html">📝 Homework Assignments</a></li>
+            <li><a href="timetable.html">⏰ Class Timetables</a></li>
+            <li><a href="exams.html">📅 Exam Schedules</a></li>
+            <li><a href="teacher-resources.html">👩‍🏫 Teacher Resources</a></li>
         </ul>
     </section>
+
     <footer>
         &copy; 2025 St Paul Learning Centre. All rights reserved.
     </footer>
+
+    <!-- JS for Sidebar Menu -->
+    <script>
+        function openMenu() {
+            document.getElementById("sideMenu").style.width = "260px";
+        }
+        function closeMenu() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+        });
+    </script>
 </body>
 </html>
