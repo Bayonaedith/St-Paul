@@ -31,6 +31,7 @@
       const grade = document.getElementById("grade").value;
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
+      const messageBox = document.getElementById("message");
 
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -44,10 +45,18 @@
           registeredAt: new Date().toISOString()
         });
 
-        alert("🎉 Registration successful! Welcome " + fullname + "!");
-        window.location.href = "student-dashboard.html";
+        // Success message on page
+        messageBox.style.color = "green";
+        messageBox.textContent = "🎉 Registration successful! Redirecting to dashboard...";
+
+        // Redirect after 2 seconds
+        setTimeout(() => {
+          window.location.href = "student-dashboard.html";
+        }, 2000);
+
       } catch (error) {
-        alert("❌ Error: " + error.message);
+        messageBox.style.color = "red";
+        messageBox.textContent = "❌ Error: " + error.message;
       }
     };
   </script>
@@ -94,6 +103,7 @@
 
       <button type="submit">Register</button>
     </form>
+    <p id="message" style="font-weight:bold; margin-top:10px;"></p>
     <p>Already registered? <a href="login.html">Login here</a>.</p>
   </section>
 
