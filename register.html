@@ -1,103 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Registration - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Student Registration - St Paul Learning Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-            projectId: "my-school-st-paul-1455a",
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+      projectId: "my-school-st-paul-1455a",
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        window.registerStudent = async function(event) {
-            event.preventDefault();
-            
-            const fullname = document.getElementById("fullname").value;
-            const email = document.getElementById("email").value;
-            const grade = document.getElementById("grade").value;
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+    window.registerStudent = async function(event) {
+      event.preventDefault();
 
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const uid = userCredential.user.uid;
-                
-                await setDoc(doc(db, "students", uid), {
-                    fullname,
-                    email,
-                    grade,
-                    username,
-                    registeredAt: new Date().toISOString()
-                });
+      const fullname = document.getElementById("fullname").value;
+      const email = document.getElementById("email").value;
+      const grade = document.getElementById("grade").value;
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const messageBox = document.getElementById("message");
 
-                alert("✅ Registration successful! You can now login.");
-                window.location.href = "login.html";
-            } catch (error) {
-                alert("❌ Error: " + error.message);
-            }
-        };
-    </script>
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = userCredential.user.uid;
+
+        await setDoc(doc(db, "students", uid), {
+          fullname,
+          email,
+          grade,
+          username,
+          registeredAt: new Date().toISOString()
+        });
+
+        messageBox.style.color = "green";
+        messageBox.innerText = "✅ Registration successful! Redirecting to login...";
+
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
+
+      } catch (error) {
+        messageBox.style.color = "red";
+        messageBox.innerText = "❌ Error: " + error.message;
+      }
+    };
+  </script>
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success</div>
+    <p>Empowering students, connecting families, supporting teachers.</p>
+  </header>
 
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+  <nav>
+    <a href="index.html">News & Announcements</a>
+    <a href="student-portal.html">Student Portal</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="resources.html">Resources</a>
+    <a href="showcase.html">About Us</a>
+    <a href="contact.html">Contact</a>
+    <a href="parent-portal.html">Parent Portal</a>
+  </nav>
 
-    <section>
-        <h2>Student Registration</h2>
-        <form class="register-form" onsubmit="registerStudent(event)">
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname" required>
+  <section>
+    <h2>Student Registration</h2>
+    <form class="register-form" onsubmit="registerStudent(event)">
+      <label for="fullname">Full Name:</label>
+      <input type="text" id="fullname" name="fullname" required>
 
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
 
-            <label for="grade">Grade:</label>
-            <select id="grade" name="grade" required>
-                <option value="">Select Grade</option>
-                <option value="8">Grade 8</option>
-                <option value="9">Grade 9</option>
-                <option value="10">Grade 10</option>
-            </select>
+      <label for="grade">Grade:</label>
+      <select id="grade" name="grade" required>
+        <option value="">Select Grade</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+      </select>
 
-            <label for="username">Choose a Username:</label>
-            <input type="text" id="username" name="username" required>
+      <label for="username">Choose a Username:</label>
+      <input type="text" id="username" name="username" required>
 
-            <label for="password">Create Password:</label>
-            <input type="password" id="password" name="password" required>
+      <label for="password">Create Password:</label>
+      <input type="password" id="password" name="password" required>
 
-            <button type="submit">Register</button>
-        </form>
-        <p>Already registered? <a href="login.html">Login here</a>.</p>
-    </section>
+      <button type="submit">Register</button>
+    </form>
 
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+    <!-- Message appears here -->
+    <p id="message" style="font-weight:600; margin-top:10px;"></p>
+
+    <p>Already registered? <a href="login.html">Login here</a>.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
 </body>
 </html>
