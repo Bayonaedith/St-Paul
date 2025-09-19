@@ -1,67 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Class Notes - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-            projectId: "my-school-st-paul-1455a",
-            storageBucket: "my-school-st-paul-1455a.appspot.com",
-            messagingSenderId: "122530310728",
-            appId: "1:122530310728:web:exampleid"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Protect page
-        auth.onAuthStateChanged(user => {
-            if (!user || user.email !== "nicholasbagenda@gmail.com") {
-                window.location.href = "login.html";
-            }
-        });
-    </script>
+  <meta charset="UTF-8">
+  <title>Notes - St Paul Learning Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success</div>
+    <p>Empowering students, connecting families, supporting teachers.</p>
+  </header>
 
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+  <nav>
+    <a href="student-dashboard.html">Dashboard</a>
+    <a href="timetable.html">Timetable</a>
+    <a href="notes.html">Notes</a>
+    <a href="homework.html">Homework</a>
+    <a href="logout.html">Logout</a>
+  </nav>
 
-    <section>
-        <h2>Class Notes</h2>
-        <p>Download class notes organized by subject and grade. More content coming soon!</p>
-        <ul class="feature-list">
-            <li><a href="#">Mathematics Notes (Grade 8)</a></li>
-            <li><a href="#">Science Notes (Grade 8)</a></li>
-            <li><a href="#">English Literature Notes (Grade 8)</a></li>
-            <!-- Add more links as needed -->
-        </ul>
-    </section>
+  <section>
+    <h2>📘 Class Notes</h2>
+    <ul>
+      <li><a href="docs/mathematics_notes.pdf" target="_blank">Mathematics Notes</a></li>
+      <li><a href="docs/english_notes.pdf" target="_blank">English Notes</a></li>
+      <li><a href="docs/science_notes.pdf" target="_blank">Science Notes</a></li>
+      <li><a href="docs/history_notes.pdf" target="_blank">History Notes</a></li>
+      <li><a href="docs/geography_notes.pdf" target="_blank">Geography Notes</a></li>
+    </ul>
+    <p>More notes will be uploaded regularly.</p>
+  </section>
 
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
 </body>
 </html>
