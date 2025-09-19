@@ -5,90 +5,78 @@
 <title>Online Admission - St Paul Learning Centre</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="style.css">
+
+<!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
    (function(){
       emailjs.init("S17h9x6ExMG6mKaQh"); // Your Public Key
    })();
 </script>
-<style>
-   .admission-form {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 12px;
-      background: #f4f4f4;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-   }
-   .admission-form input, .admission-form select, .admission-form textarea, .admission-form button {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-   }
-   button.submit-btn {
-      background: #2b6cb0;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-   }
-   button.submit-btn:hover {
-      background: #2c5282;
-   }
-</style>
 </head>
 <body>
 
-<header>
-   <h1>St Paul Learning Centre</h1>
-   <div class="motto">Strive For Success</div>
-   <p>Empowering students, connecting families, supporting teachers.</p>
-</header>
+<!-- Top Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+  <div class="navbar-center">
+    <img src="logo.png" alt="School Logo" class="school-logo">
+    <span class="logo-text">St Paul Learning Centre</span>
+  </div>
+</div>
 
-<!-- Corrected Navbar -->
+<!-- Sidebar Menu -->
 <nav id="sideMenu" class="side-menu">
-      <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-      <a href="index.html">News & Announcements</a>
-      <a href="student-portal.html">Student Portal</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="resources.html">Resources</a>
-      <a href="showcase.html">Showcase</a>
-      <a href="contact.html">Contact</a>
-      <a href="timetable.html">Timetable</a>
-      <a href="teacher-resources.html">Teacher Resources</a>
-      <a href="parent-portal.html">Parent Portal</a>
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">Showcase</a>
+  <a href="contact.html">Contact</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="teacher-resources.html">Teacher Resources</a>
+  <a href="parent-portal.html">Parent Portal</a>
 </nav>
 
+<!-- Main Section -->
 <section>
-   <h2>Online Admission Form</h2>
-   <form class="admission-form" id="admissionForm">
-      <input type="text" name="fullname" placeholder="Full Name" required>
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="text" name="phone" placeholder="Phone Number" required>
-      <select name="grade" required>
-         <option value="">Select Grade</option>
-         <option value="8">Grade 8</option>
-         <option value="9">Grade 9</option>
-         <option value="10">Grade 10</option>
-      </select>
-      <textarea name="address" placeholder="Home Address" required></textarea>
-      <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
-      <button type="submit" class="submit-btn">Submit Application</button>
-      <p id="formMessage" style="color:green; font-weight:600;"></p>
-   </form>
+  <h2>Online Admission Form</h2>
+  <form class="admission-form" id="admissionForm">
+    <input type="text" name="fullname" placeholder="Full Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <input type="text" name="phone" placeholder="Phone Number" required>
+    <select name="grade" required>
+      <option value="">Select Grade</option>
+      <option value="8">Grade 8</option>
+      <option value="9">Grade 9</option>
+      <option value="10">Grade 10</option>
+    </select>
+    <textarea name="address" placeholder="Home Address" required></textarea>
+    <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
+    <button type="submit" class="submit-btn">Submit Application</button>
+    <p id="formMessage" style="color:green; font-weight:600;"></p>
+  </form>
 </section>
 
 <footer>
-   &copy; 2025 St Paul Learning Centre. All rights reserved.
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
 </footer>
 
 <script>
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "280px";
+}
+
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+// Form Submission
 document.getElementById('admissionForm').addEventListener('submit', function(event){
    event.preventDefault();
    const form = event.target;
 
-   // Send main submission to your email
    emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
    .then(function(response) {
        console.log('Submission SUCCESS!', response.status, response.text);
@@ -111,4 +99,4 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
 </script>
 
 </body>
-</html>
+   </html>
