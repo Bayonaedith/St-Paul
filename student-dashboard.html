@@ -1,74 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard - St Paul Learning Centre</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Student Dashboard - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-      projectId: "my-school-st-paul-1455a",
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+  authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+  projectId: "my-school-st-paul-1455a",
+};
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    // Protect page
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html"; // not signed in
-      } else {
-        document.getElementById("student-email").innerText = user.email;
-      }
-    });
+// Protect page: redirect if not logged in
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    window.location.href = "register.html";
+  } else {
+    document.getElementById("welcome-msg").textContent = `Welcome, ${user.email}!`;
+  }
+});
 
-    // Logout
-    window.logout = function() {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    }
-  </script>
+// Logout function
+window.logout = () => {
+  signOut(auth).then(() => {
+    window.location.href = "register.html";
+  });
+};
+</script>
 </head>
 <body>
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <div class="motto">Strive For Success</div>
-    <p>Empowering students, connecting families, supporting teachers.</p>
-  </header>
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <div class="motto">Strive For Success</div>
+  <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
 
-  <nav>
-    <a href="index.html">News & Announcements</a>
-    <a href="student-dashboard.html">Dashboard</a>
-    <a href="student-portal.html">Student Portal</a>
-    <a href="admissions.html">Admissions</a>
-    <a href="resources.html">Resources</a>
-    <a href="showcase.html">About Us</a>
-    <a href="contact.html">Contact</a>
-    <a href="parent-portal.html">Parent Portal</a>
-    <button style="float:right;" onclick="logout()">Logout</button>
-  </nav>
+<nav>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">About Us</a>
+  <a href="contact.html">Contact</a>
+  <a href="parent-portal.html">Parent Portal</a>
+  <a href="#" onclick="logout()">Logout</a>
+</nav>
 
-  <section>
-    <h2>Welcome, <span id="student-email"></span></h2>
-    <p>Here are your resources:</p>
+<section>
+  <h2>Student Dashboard</h2>
+  <p id="welcome-msg" style="font-weight:bold; color:green;"></p>
+  
+  <ul class="student-links">
+    <li><a href="timetable.html">📅 Timetable</a></li>
+    <li><a href="homework.html">📝 Homework</a></li>
+    <li><a href="notes.html">📚 Notes</a></li>
+  </ul>
+</section>
 
-    <ul>
-      <li><a href="timetable.html">📅 View Timetable</a></li>
-      <li><a href="notes.html">📘 View Notes</a></li>
-      <li><a href="homework.html">✏️ View Homework</a></li>
-    </ul>
-  </section>
-
-  <footer>
-    &copy; 2025 St Paul Learning Centre. All rights reserved.
-  </footer>
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
 </body>
 </html>
