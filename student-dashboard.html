@@ -52,11 +52,8 @@
     const db = getFirestore(app);
 
     const welcomeEl = document.getElementById("welcome");
-    const homeworkBtn = document.getElementById("homework-btn");
-    const notesBtn = document.getElementById("notes-btn");
-    const timetableBtn = document.getElementById("timetable-btn");
 
-    // Redirect to grade-specific pages
+    // Check auth and fetch student name
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
         window.location.href = "login.html"; // redirect if not signed in
@@ -67,18 +64,8 @@
         if (studentSnap.exists()) {
           const studentData = studentSnap.data();
           welcomeEl.textContent = `🎉 Welcome, ${studentData.fullname}!`;
-
-          const grade = studentData.grade;
-          // Set links based on grade
-          homeworkBtn.href = `homework-grade${grade}.html`;
-          notesBtn.href = `notes-grade${grade}.html`;
-          timetableBtn.href = `timetable-grade${grade}.html`;
         } else {
           welcomeEl.textContent = `🎉 Welcome, ${user.email}!`;
-          // Default links if no data
-          homeworkBtn.href = "homework.html";
-          notesBtn.href = "notes.html";
-          timetableBtn.href = "timetable.html";
         }
       }
     });
@@ -104,9 +91,9 @@
   <section>
     <div id="welcome" class="welcome-message"></div>
     <div class="dashboard-buttons">
-      <a id="homework-btn" href="#">Homework</a>
-      <a id="notes-btn" href="#">Notes</a>
-      <a id="timetable-btn" href="#">Timetable</a>
+      <a href="homework.html">Homework</a>
+      <a href="notes.html">Notes</a>
+      <a href="timetable.html">Timetable</a>
     </div>
   </section>
 
@@ -114,4 +101,4 @@
     &copy; 2025 St Paul Learning Centre. All rights reserved.
   </footer>
 </body>
-        </html>
+</html>
