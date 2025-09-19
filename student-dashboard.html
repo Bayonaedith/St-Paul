@@ -20,12 +20,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Protect page: redirect if not logged in
+const linksSection = document.getElementById("student-links");
+const welcomeMsg = document.getElementById("welcome-msg");
+const notSignedMsg = document.getElementById("not-signed-msg");
+
+// Protect page & show links dynamically
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "register.html";
+    // Not signed in
+    linksSection.style.display = "none";
+    notSignedMsg.textContent = "❌ Please register or log in to access Timetable, Homework, and Notes.";
   } else {
-    document.getElementById("welcome-msg").textContent = `Welcome, ${user.email}!`;
+    // Signed in
+    notSignedMsg.style.display = "none";
+    linksSection.style.display = "block";
+    welcomeMsg.textContent = `Welcome, ${user.email}! 🎉`;
   }
 });
 
@@ -58,8 +67,9 @@ window.logout = () => {
 <section>
   <h2>Student Dashboard</h2>
   <p id="welcome-msg" style="font-weight:bold; color:green;"></p>
-  
-  <ul class="student-links">
+  <p id="not-signed-msg" style="color:red; font-weight:bold;"></p>
+
+  <ul id="student-links" class="student-links" style="display:none;">
     <li><a href="timetable.html">📅 Timetable</a></li>
     <li><a href="homework.html">📝 Homework</a></li>
     <li><a href="notes.html">📚 Notes</a></li>
