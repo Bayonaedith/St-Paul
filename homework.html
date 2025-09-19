@@ -1,68 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Homework Assignments - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-            projectId: "my-school-st-paul-1455a",
-            storageBucket: "my-school-st-paul-1455a.appspot.com",
-            messagingSenderId: "122530310728",
-            appId: "1:122530310728:web:exampleid"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Protect page
-        auth.onAuthStateChanged(user => {
-            if (!user || user.email !== "nicholasbagenda@gmail.com") {
-                // Redirect unauthorized users to login
-                window.location.href = "login.html";
-            }
-        });
-    </script>
+  <meta charset="UTF-8">
+  <title>Homework - St Paul Learning Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success</div>
+    <p>Empowering students, connecting families, supporting teachers.</p>
+  </header>
 
-    <nav>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+  <nav>
+    <a href="student-dashboard.html">Dashboard</a>
+    <a href="timetable.html">Timetable</a>
+    <a href="notes.html">Notes</a>
+    <a href="homework.html">Homework</a>
+    <a href="logout.html">Logout</a>
+  </nav>
 
-    <section>
-        <h2>Homework Assignments</h2>
-        <p>Access and download homework assignments for all classes. More assignments will be added regularly!</p>
-        <ul class="feature-list">
-            <li><a href="#">Mathematics Homework (Grade 8)</a></li>
-            <li><a href="#">Science Homework (Grade 8)</a></li>
-            <li><a href="#">English Literature Homework (Grade 8)</a></li>
-            <!-- Add more links as needed -->
-        </ul>
-    </section>
+  <section>
+    <h2>📝 Homework Assignments</h2>
+    <ul>
+      <li>Mathematics: Solve exercises 1–10 from Chapter 3 (due Friday)</li>
+      <li>English: Write an essay on “My Role Model” (due Monday)</li>
+      <li>Science: Prepare a presentation on renewable energy (due Wednesday)</li>
+      <li>History: Research project on African kingdoms (due next week)</li>
+    </ul>
+    <p>Keep checking for updates every week.</p>
+  </section>
 
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
 </body>
 </html>
