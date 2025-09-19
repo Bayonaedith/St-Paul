@@ -1,43 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Homework - St Paul Learning Centre</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Homework - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <div class="motto">Strive For Success</div>
-    <p>Empowering students, connecting families, supporting teachers.</p>
-  </header>
 
-  nav id="sideMenu" class="side-menu">
-      <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-      <a href="index.html">News & Announcements</a>
-      <a href="student-portal.html">Student Portal</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="resources.html">Resources</a>
-      <a href="showcase.html">Showcase</a>
-      <a href="contact.html">Contact</a>
-      <a href="timetable.html">Timetable</a>
-      <a href="teacher-resources.html">Teacher Resources</a>
-      <a href="parent-portal.html">Parent Portal</a>
-  </nav>
-  <section>
-    <h2>📝 Homework Assignments</h2>
-    <ul>
-      <li>Mathematics: Solve exercises 1–10 from Chapter 3 (due Friday)</li>
-      <li>English: Write an essay on “My Role Model” (due Monday)</li>
-      <li>Science: Prepare a presentation on renewable energy (due Wednesday)</li>
-      <li>History: Research project on African kingdoms (due next week)</li>
-    </ul>
-    <p>Keep checking for updates every week.</p>
-  </section>
+<!-- Top Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+  <div class="navbar-center">
+    <img src="logo.png" alt="School Logo" class="school-logo">
+    <span class="logo-text">St Paul Learning Centre</span>
+  </div>
+</div>
 
-  <footer>
-    &copy; 2025 St Paul Learning Centre. All rights reserved.
-  </footer>
+<!-- Sidebar Menu -->
+<nav id="sideMenu" class="side-menu">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">Showcase</a>
+  <a href="contact.html">Contact</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="teacher-resources.html">Teacher Resources</a>
+  <a href="parent-portal.html">Parent Portal</a>
+</nav>
+
+<!-- Main Section -->
+<section>
+  <h2>📝 Homework Assignments</h2>
+  <ul>
+    <li>Mathematics: Solve exercises 1–10 from Chapter 3 (due Friday)</li>
+    <li>English: Write an essay on “My Role Model” (due Monday)</li>
+    <li>Science: Prepare a presentation on renewable energy (due Wednesday)</li>
+    <li>History: Research project on African kingdoms (due next week)</li>
+  </ul>
+  <p>Keep checking for updates every week.</p>
+</section>
+
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
+
+<script>
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "280px";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+</script>
+
 </body>
 </html>
