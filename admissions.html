@@ -10,12 +10,12 @@
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
    (function(){
-      emailjs.init("S17h9x6ExMG6mKaQh"); // Your Public Key
+      emailjs.init("S17h9x6ExMG6mKaQh"); // Your EmailJS Public Key
    })();
 </script>
 
 <style>
-/* Simple spinner CSS animation (optional if no gif) */
+/* Simple spinner CSS animation */
 .spinner {
   border: 5px solid #f3f3f3;
   border-top: 5px solid #3498db;
@@ -31,9 +31,10 @@
   100% { transform: rotate(360deg); }
 }
 
-/* Optional: style form and message */
+/* Optional: style message */
 #admissionForm p {
   margin-top: 10px;
+  font-weight: 600;
 }
 </style>
 </head>
@@ -78,10 +79,8 @@
     <textarea name="address" placeholder="Home Address" required></textarea>
     <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
     <button type="submit" class="submit-btn">Submit Application</button>
-    <p id="formMessage" style="font-weight:600;"></p>
+    <p id="formMessage"></p>
     <div id="spinner" style="display:none; text-align:center; margin-top:10px;">
-      <!-- You can use either GIF or CSS spinner -->
-      <!-- <img src="spinner.gif" alt="Loading..." width="50"> -->
       <div class="spinner"></div>
       <p>Submitting your application...</p>
     </div>
@@ -101,7 +100,7 @@ function closeMenu() {
   document.getElementById("sideMenu").style.width = "0";
 }
 
-// Form Submission - BOTH EmailJS & Google Sheets
+// Form Submission
 document.getElementById('admissionForm').addEventListener('submit', function(event){
    event.preventDefault();
    const form = event.target;
@@ -111,7 +110,7 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
    // Show spinner
    spinner.style.display = "block";
    messageEl.innerText = "";
-   
+
    // Flags to track success
    let emailSuccess = false;
    let sheetSuccess = false;
