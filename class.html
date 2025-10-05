@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Class - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #1e293b;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.school-logo {
+    height: 40px;
+}
+
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+}
+
+.side-menu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-menu a:hover {
+    background-color: #575757;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 36px;
+}
+
+.container {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #00bcd4;
+}
+
+.class-btn {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: #1e40af;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.class-btn:hover {
+    background: #2563eb;
+    transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+  <div class="navbar-center">
+    <img src="logo.png" alt="School Logo" class="school-logo">
+    <span class="logo-text">St Paul Learning Centre</span>
+  </div>
+</div>
+
+<!-- Sidebar Menu -->
+<nav id="sideMenu" class="side-menu">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">Showcase</a>
+  <a href="contact.html">Contact</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="teacher-resources.html">Teacher Resources</a>
+  <a href="parent-portal.html">Parent Portal</a>
+</nav>
+
+<div class="container">
+    <h2>Select Your Class</h2>
+    <button class="class-btn" onclick="selectClass('Primary One')">Primary One</button>
+    <button class="class-btn" onclick="selectClass('Primary Two')">Primary Two</button>
+    <button class="class-btn" onclick="selectClass('Primary Three')">Primary Three</button>
+    <button class="class-btn" onclick="selectClass('Primary Four')">Primary Four</button>
+    <button class="class-btn" onclick="selectClass('Primary Five')">Primary Five</button>
+    <button class="class-btn" onclick="selectClass('Primary Six')">Primary Six</button>
+    <button class="class-btn" onclick="selectClass('Primary Seven')">Primary Seven</button>
+</div>
+
+<script>
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "280px";
+}
+
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+function selectClass(selectedClass){
+    alert("You selected: " + selectedClass);
+    // You can redirect or save the choice here
+    // Example: redirect to admission form with class prefilled
+    // window.location.href = `admissions.html?class=${encodeURIComponent(selectedClass)}`;
+}
+</script>
+
+</body>
+</html>
