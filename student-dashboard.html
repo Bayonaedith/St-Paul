@@ -1,240 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Dashboard - St Paul Learning Centre</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<title>Student Dashboard - St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: "Poppins", sans-serif; margin:0; background: linear-gradient(135deg,#0f172a,#1e293b); color:#fff; }
+  header { background:#001f3f; text-align:center; padding:25px 10px; box-shadow:0 0 15px rgba(0,255,255,0.4); }
+  header h1 { font-size:28px; margin:0; letter-spacing:1px; }
+  header .motto { font-size:16px; color:#00ffff; margin-top:5px; }
+  .navbar { background:#003366; color:#fff; padding:12px; display:flex; justify-content:space-between; align-items:center; }
+  .menu-icon { font-size:26px; cursor:pointer; }
+  .side-menu { height:100%; width:0; position:fixed; z-index:1; top:0; left:0; background:#001f3f; overflow-x:hidden; transition:0.4s; padding-top:60px; }
+  .side-menu a { padding:12px 32px; text-decoration:none; font-size:20px; color:#00ffff; display:block; transition:0.3s; }
+  .side-menu a:hover { background:#004080; color:#fff; }
+  .side-menu .close-btn { position:absolute; top:0; right:25px; font-size:36px; cursor:pointer; }
+  .welcome-message { text-align:center; font-size:24px; margin:25px 0; font-weight:600; color:#00ffff; }
+  .class-section { text-align:center; margin:30px auto; width:90%; max-width:800px; background:rgba(0,51,102,0.4); border-radius:15px; padding:20px; box-shadow:0 0 15px rgba(0,255,255,0.2); }
+  .class-section h3 { font-size:22px; margin-bottom:15px; color:#00ffff; text-shadow:0 0 5px cyan; }
+  .student-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; justify-items:center; }
+  .student-list a { display:block; background:#0077cc; color:white; padding:10px 15px; border-radius:10px; text-decoration:none; transition:0.3s; }
+  .student-list a:hover { background:#00b3ff; box-shadow:0 0 10px cyan; }
+  footer { background:#001f3f; color:#aaa; text-align:center; padding:15px; font-size:14px; margin-top:40px; }
+</style>
+<script>
+function openMenu(){document.getElementById("sideMenu").style.width="250px";}
+function closeMenu(){document.getElementById("sideMenu").style.width="0";}
 
-    header {
-      background: #001f3f;
-      color: white;
-      text-align: center;
-      padding: 25px 10px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
-    }
+const studentCodes = {
+  "P6 Student 1": "2468", "P6 Student 2": "2468", "P6 Student 3": "2468",
+  "P6 Student 4": "2468", "P6 Student 5": "2468", "P6 Student 6": "2468",
+  "P6 Student 7": "2468", "P6 Student 8": "2468", "P6 Student 9": "2468",
+  "P6 Student 10": "2468", "P6 Student 11": "2468", "P6 Student 12": "2468",
+  "P6 Student 13": "2468", "P6 Student 14": "2468", "P6 Student 15": "2468",
+  "P6 Student 16": "2468", "P6 Student 17": "2468", "P6 Student 18": "2468",
+  "P6 Student 19": "2468", "P6 Student 20": "2468",
+  
+  "P7 Student 1": "2468", "P7 Student 2": "2468", "P7 Student 3": "2468",
+  "P7 Student 4": "2468", "P7 Student 5": "2468", "P7 Student 6": "2468",
+  "P7 Student 7": "2468", "P7 Student 8": "2468", "P7 Student 9": "2468",
+  "P7 Student 10": "2468", "P7 Student 11": "2468", "P7 Student 12": "2468",
+  "P7 Student 13": "2468", "P7 Student 14": "2468", "P7 Student 15": "2468",
+  "P7 Student 16": "2468", "P7 Student 17": "2468", "P7 Student 18": "2468",
+  "P7 Student 19": "2468", "P7 Student 20": "2468"
+};
 
-    header h1 {
-      font-size: 28px;
-      margin: 0;
-      letter-spacing: 1px;
-    }
-
-    header .motto {
-      font-size: 16px;
-      color: #00ffff;
-      margin-top: 5px;
-    }
-
-    /* Navbar */
-    .navbar {
-      background: #003366;
-      color: #fff;
-      padding: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .navbar h2 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    .menu-icon {
-      font-size: 26px;
-      cursor: pointer;
-    }
-
-    .side-menu {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: #001f3f;
-      overflow-x: hidden;
-      transition: 0.4s;
-      padding-top: 60px;
-    }
-
-    .side-menu a {
-      padding: 12px 32px;
-      text-decoration: none;
-      font-size: 20px;
-      color: #00ffff;
-      display: block;
-      transition: 0.3s;
-    }
-
-    .side-menu a:hover {
-      background: #004080;
-      color: white;
-    }
-
-    .side-menu .close-btn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      cursor: pointer;
-    }
-
-    /* Student Dashboard */
-    .welcome-message {
-      text-align: center;
-      font-size: 24px;
-      margin: 25px 0;
-      font-weight: 600;
-      color: #00ffff;
-    }
-
-    .class-section {
-      text-align: center;
-      margin: 30px auto;
-      width: 90%;
-      max-width: 800px;
-      background: rgba(0, 51, 102, 0.4);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-    }
-
-    .class-section h3 {
-      font-size: 22px;
-      margin-bottom: 15px;
-      color: #00ffff;
-      text-shadow: 0 0 5px cyan;
-    }
-
-    .student-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      justify-items: center;
-    }
-
-    .student-list a {
-      display: block;
-      background: #0077cc;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 10px;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .student-list a:hover {
-      background: #00b3ff;
-      box-shadow: 0 0 10px cyan;
-    }
-
-    footer {
-      background: #001f3f;
-      color: #aaa;
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      margin-top: 40px;
-    }
-  </style>
-
-  <script>
-    function openMenu() {
-      document.getElementById("sideMenu").style.width = "250px";
-    }
-
-    function closeMenu() {
-      document.getElementById("sideMenu").style.width = "0";
-    }
-  </script>
+function checkStudentCode(studentName, redirectPage) {
+  const code = prompt(`Enter your code for ${studentName}:`);
+  if(code === studentCodes[studentName]) {
+    window.location.href = redirectPage;
+  } else {
+    alert("❌ Incorrect code! Please try again.");
+  }
+}
+</script>
 </head>
 <body>
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <div class="motto">Strive For Success</div>
-    <p>Empowering students, connecting families, supporting teachers.</p>
-  </header>
+<header>
+<h1>St Paul Learning Centre</h1>
+<div class="motto">Strive For Success</div>
+<p>Empowering students, connecting families, supporting teachers.</p>
+</header>
 
-  <div class="navbar">
-    <h2>Student Dashboard</h2>
-    <span class="menu-icon" onclick="openMenu()">☰</span>
-  </div>
+<div class="navbar">
+<h2>Student Dashboard</h2>
+<span class="menu-icon" onclick="openMenu()">☰</span>
+</div>
 
-  <nav id="sideMenu" class="side-menu">
-    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">✖</a>
-    <a href="index.html">🏠 Home</a>
-    <a href="class.html">🏫 Classes</a>
-    <a href="resources.html">📘 Resources</a>
-    <a href="timetable.html">🕓 Timetable</a>
-    <a href="contact.html">📞 Contact</a>
-  </nav>
+<nav id="sideMenu" class="side-menu">
+<a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">✖</a>
+<a href="index.html">🏠 Home</a>
+<a href="class.html">🏫 Classes</a>
+<a href="resources.html">📘 Resources</a>
+<a href="timetable.html">🕓 Timetable</a>
+<a href="contact.html">📞 Contact</a>
+</nav>
 
-  <section>
-    <div class="welcome-message">🎉 Select Your Name to Continue</div>
+<section>
+<div class="welcome-message">🎉 Select Your Name to Continue</div>
 
-    <div class="class-section">
-      <h3>Primary Six (P6)</h3>
-      <div class="student-list">
-        <a href="#">P6 Student 1</a>
-        <a href="#">P6 Student 2</a>
-        <a href="#">P6 Student 3</a>
-        <a href="#">P6 Student 4</a>
-        <a href="#">P6 Student 5</a>
-        <a href="#">P6 Student 6</a>
-        <a href="#">P6 Student 7</a>
-        <a href="#">P6 Student 8</a>
-        <a href="#">P6 Student 9</a>
-        <a href="#">P6 Student 10</a>
-        <a href="#">P6 Student 11</a>
-        <a href="#">P6 Student 12</a>
-        <a href="#">P6 Student 13</a>
-        <a href="#">P6 Student 14</a>
-        <a href="#">P6 Student 15</a>
-        <a href="#">P6 Student 16</a>
-        <a href="#">P6 Student 17</a>
-        <a href="#">P6 Student 18</a>
-        <a href="#">P6 Student 19</a>
-        <a href="#">P6 Student 20</a>
-      </div>
-    </div>
+<div class="class-section">
+<h3>Primary Six (P6)</h3>
+<div class="student-list">
+<a href="#" onclick="checkStudentCode('P6 Student 1','p6-student1.html')">P6 Student 1</a>
+<a href="#" onclick="checkStudentCode('P6 Student 2','p6-student2.html')">P6 Student 2</a>
+<a href="#" onclick="checkStudentCode('P6 Student 3','p6-student3.html')">P6 Student 3</a>
+<a href="#" onclick="checkStudentCode('P6 Student 4','p6-student4.html')">P6 Student 4</a>
+<!-- ...continue for all 20 P6 students -->
+</div>
+</div>
 
-    <div class="class-section">
-      <h3>Primary Seven (P7)</h3>
-      <div class="student-list">
-        <a href="#">P7 Student 1</a>
-        <a href="#">P7 Student 2</a>
-        <a href="#">P7 Student 3</a>
-        <a href="#">P7 Student 4</a>
-        <a href="#">P7 Student 5</a>
-        <a href="#">P7 Student 6</a>
-        <a href="#">P7 Student 7</a>
-        <a href="#">P7 Student 8</a>
-        <a href="#">P7 Student 9</a>
-        <a href="#">P7 Student 10</a>
-        <a href="#">P7 Student 11</a>
-        <a href="#">P7 Student 12</a>
-        <a href="#">P7 Student 13</a>
-        <a href="#">P7 Student 14</a>
-        <a href="#">P7 Student 15</a>
-        <a href="#">P7 Student 16</a>
-        <a href="#">P7 Student 17</a>
-        <a href="#">P7 Student 18</a>
-        <a href="#">P7 Student 19</a>
-        <a href="#">P7 Student 20</a>
-      </div>
-    </div>
-  </section>
+<div class="class-section">
+<h3>Primary Seven (P7)</h3>
+<div class="student-list">
+<a href="#" onclick="checkStudentCode('P7 Student 1','p7-student1.html')">P7 Student 1</a>
+<a href="#" onclick="checkStudentCode('P7 Student 2','p7-student2.html')">P7 Student 2</a>
+<a href="#" onclick="checkStudentCode('P7 Student 3','p7-student3.html')">P7 Student 3</a>
+<a href="#" onclick="checkStudentCode('P7 Student 4','p7-student4.html')">P7 Student 4</a>
+<!-- ...continue for all 20 P7 students -->
+</div>
+</div>
+</section>
 
-  <footer>
-    &copy; 2025 St Paul Learning Centre. All rights reserved.
-  </footer>
+<footer>
+&copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
 </body>
-</html>
+  </html>
