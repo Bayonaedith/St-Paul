@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Select Class | St Paul Learning Centre</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    text-align: center;
+  }
+
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e3a8a;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .menu-btn {
+    font-size: 26px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+  }
+
+  .menu-btn:hover {
+    color: #38bdf8;
+  }
+
+  .navbar-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .school-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .logo-text {
+    font-weight: 600;
+    font-size: 18px;
+  }
+
+  /* Sidebar */
+  .side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1200;
+    top: 0;
+    left: 0;
+    background-color: #111827;
+    overflow-x: hidden;
+    transition: 0.4s;
+    padding-top: 60px;
+  }
+
+  .side-menu a {
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #f1f5f9;
+    display: block;
+    transition: 0.3s;
+  }
+
+  .side-menu a:hover {
+    background-color: #2563eb;
+    color: white;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 30px;
+  }
+
+  /* Section */
+  section {
+    margin-top: 50px;
+  }
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px #38bdf8;
+  }
+
+  /* Class Buttons */
+  .class-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .class-buttons a {
+    background-color: #1e3a8a;
+    color: white;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 500;
+    transition: 0.3s;
+    box-shadow: 0 0 10px #1e40af;
+  }
+
+  .class-buttons a:hover {
+    background-color: #2563eb;
+    transform: translateY(-4px);
+    box-shadow: 0 0 20px #38bdf8;
+  }
+
+  footer {
+    margin-top: 50px;
+    padding: 15px;
+    background: #1e293b;
+    color: #94a3b8;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+  <span class="menu-btn" id="menuToggle" onclick="toggleMenu()">☰</span>
+  <div class="navbar-center">
+    <img src="logo.png" alt="School Logo" class="school-logo">
+    <span class="logo-text">St Paul Learning Centre</span>
+  </div>
+</div>
+
+<!-- Sidebar -->
+<nav id="sideMenu" class="side-menu">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
+  <a href="index.html">Home</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="timetable.html">Timetable</a>
+  <a href="resources.html">Resources</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<!-- Main Content -->
+<section>
+  <h2>Select Your Class</h2>
+  <div class="class-buttons">
+    <a href="primary-one.html">Primary One</a>
+    <a href="primary-two.html">Primary Two</a>
+    <a href="primary-three.html">Primary Three</a>
+    <a href="primary-four.html">Primary Four</a>
+    <a href="primary-five.html">Primary Five</a>
+    <a href="primary-six.html">Primary Six</a>
+    <a href="primary-seven.html">Primary Seven</a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById("sideMenu");
+  const btn = document.getElementById("menuToggle");
+  if (menu.style.width === "280px") {
+    menu.style.width = "0";
+    btn.innerHTML = "☰";
+  } else {
+    menu.style.width = "280px";
+    btn.innerHTML = "×";
+  }
+}
+
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+  document.getElementById("menuToggle").innerHTML = "☰";
+}
+</script>
+
+</body>
+</html>
