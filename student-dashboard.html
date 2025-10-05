@@ -4,71 +4,156 @@
   <meta charset="UTF-8">
   <title>Student Dashboard - St Paul Learning Centre</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
   <style>
-    .dashboard-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-      flex-wrap: wrap;
-    }
-    .dashboard-buttons a {
-      display: inline-block;
-      padding: 30px 50px;
-      text-align: center;
-      background-color: #0077cc;
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
       color: #fff;
+    }
+
+    header {
+      background: #001f3f;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    header .motto {
+      font-size: 16px;
+      color: #00ffff;
+      margin-top: 5px;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #003366;
+      color: #fff;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h2 {
       font-size: 20px;
-      font-weight: bold;
-      border-radius: 12px;
+      margin: 0;
+    }
+
+    .menu-icon {
+      font-size: 26px;
+      cursor: pointer;
+    }
+
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      background-color: #001f3f;
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 60px;
+    }
+
+    .side-menu a {
+      padding: 12px 32px;
       text-decoration: none;
-      transition: background-color 0.3s;
+      font-size: 20px;
+      color: #00ffff;
+      display: block;
+      transition: 0.3s;
     }
-    .dashboard-buttons a:hover {
-      background-color: #005fa3;
+
+    .side-menu a:hover {
+      background: #004080;
+      color: white;
     }
+
+    .side-menu .close-btn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      cursor: pointer;
+    }
+
+    /* Student Dashboard */
     .welcome-message {
       text-align: center;
       font-size: 24px;
-      margin-top: 20px;
+      margin: 25px 0;
       font-weight: 600;
+      color: #00ffff;
+    }
+
+    .class-section {
+      text-align: center;
+      margin: 30px auto;
+      width: 90%;
+      max-width: 800px;
+      background: rgba(0, 51, 102, 0.4);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    .class-section h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #00ffff;
+      text-shadow: 0 0 5px cyan;
+    }
+
+    .student-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .student-list a {
+      display: block;
+      background: #0077cc;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .student-list a:hover {
+      background: #00b3ff;
+      box-shadow: 0 0 10px cyan;
+    }
+
+    footer {
+      background: #001f3f;
+      color: #aaa;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+      margin-top: 40px;
     }
   </style>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "250px";
+    }
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-      projectId: "my-school-st-paul-1455a",
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const welcomeEl = document.getElementById("welcome");
-
-    // Check auth and fetch student name
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "login.html"; // redirect if not signed in
-      } else {
-        // Get student info from Firestore
-        const studentRef = doc(db, "students", user.uid);
-        const studentSnap = await getDoc(studentRef);
-        if (studentSnap.exists()) {
-          const studentData = studentSnap.data();
-          welcomeEl.textContent = `🎉 Welcome, ${studentData.fullname}!`;
-        } else {
-          welcomeEl.textContent = `🎉 Welcome, ${user.email}!`;
-        }
-      }
-    });
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
   </script>
 </head>
 <body>
@@ -78,25 +163,73 @@
     <p>Empowering students, connecting families, supporting teachers.</p>
   </header>
 
-  nav id="sideMenu" class="side-menu">
-      <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-      <a href="index.html">News & Announcements</a>
-      <a href="student-portal.html">Student Portal</a>
-      <a href="admissions.html">Admissions</a>
-      <a href="resources.html">Resources</a>
-      <a href="showcase.html">Showcase</a>
-      <a href="contact.html">Contact</a>
-      <a href="timetable.html">Timetable</a>
-      <a href="teacher-resources.html">Teacher Resources</a>
-      <a href="parent-portal.html">Parent Portal</a>
+  <div class="navbar">
+    <h2>Student Dashboard</h2>
+    <span class="menu-icon" onclick="openMenu()">☰</span>
+  </div>
+
+  <nav id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">✖</a>
+    <a href="index.html">🏠 Home</a>
+    <a href="class.html">🏫 Classes</a>
+    <a href="resources.html">📘 Resources</a>
+    <a href="timetable.html">🕓 Timetable</a>
+    <a href="contact.html">📞 Contact</a>
   </nav>
 
   <section>
-    <div id="welcome" class="welcome-message"></div>
-    <div class="dashboard-buttons">
-      <a href="class.html">Homework</a>
-      <a href="class.html">Notes</a>
-      <a href="class.html">Timetable</a>
+    <div class="welcome-message">🎉 Select Your Name to Continue</div>
+
+    <div class="class-section">
+      <h3>Primary Six (P6)</h3>
+      <div class="student-list">
+        <a href="#">P6 Student 1</a>
+        <a href="#">P6 Student 2</a>
+        <a href="#">P6 Student 3</a>
+        <a href="#">P6 Student 4</a>
+        <a href="#">P6 Student 5</a>
+        <a href="#">P6 Student 6</a>
+        <a href="#">P6 Student 7</a>
+        <a href="#">P6 Student 8</a>
+        <a href="#">P6 Student 9</a>
+        <a href="#">P6 Student 10</a>
+        <a href="#">P6 Student 11</a>
+        <a href="#">P6 Student 12</a>
+        <a href="#">P6 Student 13</a>
+        <a href="#">P6 Student 14</a>
+        <a href="#">P6 Student 15</a>
+        <a href="#">P6 Student 16</a>
+        <a href="#">P6 Student 17</a>
+        <a href="#">P6 Student 18</a>
+        <a href="#">P6 Student 19</a>
+        <a href="#">P6 Student 20</a>
+      </div>
+    </div>
+
+    <div class="class-section">
+      <h3>Primary Seven (P7)</h3>
+      <div class="student-list">
+        <a href="#">P7 Student 1</a>
+        <a href="#">P7 Student 2</a>
+        <a href="#">P7 Student 3</a>
+        <a href="#">P7 Student 4</a>
+        <a href="#">P7 Student 5</a>
+        <a href="#">P7 Student 6</a>
+        <a href="#">P7 Student 7</a>
+        <a href="#">P7 Student 8</a>
+        <a href="#">P7 Student 9</a>
+        <a href="#">P7 Student 10</a>
+        <a href="#">P7 Student 11</a>
+        <a href="#">P7 Student 12</a>
+        <a href="#">P7 Student 13</a>
+        <a href="#">P7 Student 14</a>
+        <a href="#">P7 Student 15</a>
+        <a href="#">P7 Student 16</a>
+        <a href="#">P7 Student 17</a>
+        <a href="#">P7 Student 18</a>
+        <a href="#">P7 Student 19</a>
+        <a href="#">P7 Student 20</a>
+      </div>
     </div>
   </section>
 
