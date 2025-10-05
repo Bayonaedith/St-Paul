@@ -67,18 +67,13 @@
 <section>
   <h2>Online Admission Form</h2>
   <form class="admission-form" id="admissionForm">
-    <input type="text" name="fullname" placeholder="Full Name" required>
-    <input type="email" name="email" placeholder="Email Address" required>
-    <input type="text" name="phone" placeholder="Phone Number" required>
-    <select name="grade" required>
-      <option value="">Select Grade</option>
-      <option value="8">Grade 8</option>
-      <option value="9">Grade 9</option>
-      <option value="10">Grade 10</option>
-    </select>
-    <textarea name="address" placeholder="Home Address" required></textarea>
-    <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
-    <button type="submit" class="submit-btn">Submit Application</button>
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="name" placeholder="Name" required>
+    <input type="text" name="time" placeholder="Time" required>
+    <input type="text" name="message" placeholder="Message" required>
+    <input type="text" name="class" placeholder="Class" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit" class="submit-btn">Send</button>
     <p id="formMessage"></p>
     <div id="spinner" style="display:none; text-align:center; margin-top:10px;">
       <div class="spinner"></div>
@@ -118,14 +113,6 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
    .then(function(response) {
        console.log('EmailJS SUCCESS!', response.status, response.text);
        emailSuccess = true;
-
-       // Optional: send confirmation email
-       const parentEmail = form.email.value;
-       emailjs.send('service_ndh30l8', 'template_0k9iqza', {
-          to_email: parentEmail,
-          subject: "Admission Form Received",
-          message: `Hello ${form.fullname.value},\n\nThank you for submitting your admission form to St Paul Learning Centre. We will review it and get back to you soon.\n\n- St Paul Learning Centre`
-       });
        checkBothSuccess();
    }, function(error) {
        console.log('EmailJS FAILED...', error);
