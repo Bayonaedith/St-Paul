@@ -1,152 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Select Class - St Paul Learning Centre</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes - St Paul Learning Centre</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      min-height: 100vh;
+    }
 
-<style>
-body {
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: #fff;
-    margin: 0;
-    padding: 0;
-}
+    /* Header / Navbar */
+    header {
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
 
-.navbar {
-    background-color: #1e293b;
-    padding: 10px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
+    }
 
-.navbar-center {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+    nav {
+      display: flex;
+      gap: 20px;
+    }
 
-.school-logo {
-    height: 40px;
-}
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
 
-.side-menu {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 60px;
-}
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
 
-.side-menu a {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    transition: 0.3s;
-}
+    nav a:hover::after {
+      width: 100%;
+    }
 
-.side-menu a:hover {
-    background-color: #575757;
-}
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.3s ease;
+    }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 36px;
-}
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: #1e3a8a;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        width: 200px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      }
 
-.container {
-    text-align: center;
-    padding: 50px 20px;
-}
+      nav.active {
+        display: flex;
+      }
 
-h2 {
-    margin-bottom: 30px;
-    color: #00bcd4;
-}
+      .menu-toggle {
+        display: block;
+      }
+    }
 
-.class-btn {
-    display: inline-block;
-    margin: 10px;
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    background: #1e40af;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.3s;
-}
+    /* Main Section */
+    section {
+      text-align: center;
+      padding: 50px 20px;
+    }
 
-.class-btn:hover {
-    background: #2563eb;
-    transform: scale(1.05);
-}
-</style>
+    h2 {
+      color: #60a5fa;
+      margin-bottom: 30px;
+      font-size: 2rem;
+    }
+
+    .class-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .class-card {
+      background: rgba(30, 58, 138, 0.85);
+      border-radius: 15px;
+      padding: 30px 20px;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      font-size: 1.2rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .class-card:hover {
+      transform: translateY(-6px);
+      background: #2563eb;
+      box-shadow: 0 6px 15px rgba(37, 99, 235, 0.6);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1e3a8a;
+      color: white;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="logo">St Paul Learning Centre</div>
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <nav id="navbar">
+      <a href="index.html">Home</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="class.html" class="active">Classes</a>
+      <a href="teacher-resources.html">Teacher Resources</a>
+      <a href="parent-portal.html">Parent Portal</a>
+    </nav>
+  </header>
 
-<!-- Top Navbar -->
-<div class="navbar">
-  <span class="menu-btn" onclick="openMenu()">&#9776;</span>
-  <div class="navbar-center">
-    <img src="logo.png" alt="School Logo" class="school-logo">
-    <span class="logo-text">St Paul Learning Centre</span>
-  </div>
-</div>
-
-<!-- Sidebar Menu -->
-<nav id="sideMenu" class="side-menu">
-  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-  <a href="index.html">News & Announcements</a>
-  <a href="student-portal.html">Student Portal</a>
-  <a href="admissions.html">Admissions</a>
-  <a href="resources.html">Resources</a>
-  <a href="showcase.html">Showcase</a>
-  <a href="contact.html">Contact</a>
-  <a href="timetable.html">Timetable</a>
-  <a href="teacher-resources.html">Teacher Resources</a>
-  <a href="parent-portal.html">Parent Portal</a>
-</nav>
-
-<div class="container">
+  <section>
     <h2>Select Your Class</h2>
-    <button class="class-btn" onclick="selectClass('Primary One')">Primary One</button>
-    <button class="class-btn" onclick="selectClass('Primary Two')">Primary Two</button>
-    <button class="class-btn" onclick="selectClass('Primary Three')">Primary Three</button>
-    <button class="class-btn" onclick="selectClass('Primary Four')">Primary Four</button>
-    <button class="class-btn" onclick="selectClass('Primary Five')">Primary Five</button>
-    <button class="class-btn" onclick="selectClass('Primary Six')">Primary Six</button>
-    <button class="class-btn" onclick="selectClass('Primary Seven')">Primary Seven</button>
-</div>
+    <div class="class-grid">
+      <a href="primary-one.html" class="class-card">Primary One</a>
+      <a href="primary-two.html" class="class-card">Primary Two</a>
+      <a href="primary-three.html" class="class-card">Primary Three</a>
+      <a href="primary-four.html" class="class-card">Primary Four</a>
+      <a href="primary-five.html" class="class-card">Primary Five</a>
+      <a href="primary-six.html" class="class-card">Primary Six</a>
+      <a href="primary-seven.html" class="class-card">Primary Seven</a>
+    </div>
+  </section>
 
-<script>
-function openMenu() {
-  document.getElementById("sideMenu").style.width = "280px";
-}
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
 
-function closeMenu() {
-  document.getElementById("sideMenu").style.width = "0";
-}
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navbar = document.getElementById('navbar');
 
-function selectClass(selectedClass){
-    alert("You selected: " + selectedClass);
-    // You can redirect or save the choice here
-    // Example: redirect to admission form with class prefilled
-    // window.location.href = `admissions.html?class=${encodeURIComponent(selectedClass)}`;
-}
-</script>
-
+    menuToggle.addEventListener('click', () => {
+      navbar.classList.toggle('active');
+      menuToggle.textContent = navbar.classList.contains('active') ? '✖' : '☰';
+    });
+  </script>
 </body>
 </html>
