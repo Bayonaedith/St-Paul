@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Select Class | St Paul Learning Centre</title>
+<title>Primary Two | St Paul Learning Centre</title>
 <style>
   body {
     margin: 0;
     font-family: "Poppins", sans-serif;
     background: linear-gradient(135deg, #0f172a, #1e293b);
     color: white;
-    text-align: center;
   }
 
   /* Navbar */
@@ -23,6 +22,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    box-shadow: 0 0 10px #2563eb;
   }
 
   .menu-btn {
@@ -90,41 +90,109 @@
 
   /* Section */
   section {
-    margin-top: 50px;
+    text-align: center;
+    padding: 40px 20px;
   }
 
   h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px #38bdf8;
+    font-size: 32px;
+    color: #38bdf8;
+    text-shadow: 0 0 15px #38bdf8;
+    margin-bottom: 10px;
   }
 
-  /* Class Buttons */
-  .class-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 15px;
-    padding: 20px;
-    max-width: 800px;
-    margin: auto;
-  }
-
-  .class-buttons a {
-    background-color: #1e3a8a;
-    color: white;
-    text-decoration: none;
-    padding: 15px;
+  .teacher-info {
+    background: #1e293b;
     border-radius: 12px;
-    font-size: 18px;
-    font-weight: 500;
+    padding: 15px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 0 10px #1e3a8a;
+  }
+
+  .teacher-info p {
+    margin: 5px 0;
+    color: #e2e8f0;
+    font-size: 16px;
+  }
+
+  /* Subjects */
+  .subjects {
+    margin: 30px auto;
+    max-width: 700px;
+    text-align: left;
+  }
+
+  .subjects h3 {
+    color: #38bdf8;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .subjects ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .subjects li {
+    background: #1e3a8a;
+    margin: 8px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
     transition: 0.3s;
     box-shadow: 0 0 10px #1e40af;
   }
 
-  .class-buttons a:hover {
+  .subjects li:hover {
+    background: #2563eb;
+    box-shadow: 0 0 15px #38bdf8;
+  }
+
+  /* Timetable */
+  table {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: #1e293b;
+    box-shadow: 0 0 15px #1e40af;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    border: 1px solid #2d3f75;
+    padding: 12px;
+    text-align: center;
+    color: #e2e8f0;
+  }
+
+  th {
+    background-color: #1e3a8a;
+    color: #38bdf8;
+  }
+
+  tr:hover {
+    background-color: #2563eb33;
+  }
+
+  /* Back Button */
+  .back-btn {
+    display: inline-block;
+    margin-top: 25px;
     background-color: #2563eb;
-    transform: translateY(-4px);
-    box-shadow: 0 0 20px #38bdf8;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  .back-btn:hover {
+    background-color: #38bdf8;
+    box-shadow: 0 0 15px #38bdf8;
   }
 
   footer {
@@ -132,6 +200,7 @@
     padding: 15px;
     background: #1e293b;
     color: #94a3b8;
+    text-align: center;
   }
 </style>
 </head>
@@ -150,25 +219,88 @@
 <nav id="sideMenu" class="side-menu">
   <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">×</a>
   <a href="index.html">Home</a>
-  <a href="admissions.html">Admissions</a>
+  <a href="class.html">Select Class</a>
   <a href="student-portal.html">Student Portal</a>
   <a href="timetable.html">Timetable</a>
   <a href="resources.html">Resources</a>
   <a href="contact.html">Contact</a>
 </nav>
 
-<!-- Main Content -->
+<!-- Main Section -->
 <section>
-  <h2>Select Your Class</h2>
-  <div class="class-buttons">
-    <a href="primary-one.html">Primary One</a>
-    <a href="primary-two.html">Primary Two</a>
-    <a href="primary-three.html">Primary Three</a>
-    <a href="primary-four.html">Primary Four</a>
-    <a href="primary-five.html">Primary Five</a>
-    <a href="primary-six.html">Primary Six</a>
-    <a href="primary-seven.html">Primary Seven</a>
+  <h2>Primary Two</h2>
+
+  <div class="teacher-info">
+    <p><strong>Class Teacher:</strong> Ms. Namatovu Sarah</p>
+    <p><strong>Assistant Teacher:</strong> Mr. Ouma Michael</p>
+    <p><strong>Class Motto:</strong> “Learning with Joy and Light ✨”</p>
   </div>
+
+  <div class="subjects">
+    <h3>Subjects Taught</h3>
+    <ul>
+      <li>English</li>
+      <li>Mathematics</li>
+      <li>Science</li>
+      <li>Social Studies</li>
+      <li>Religious Education</li>
+      <li>Reading and Writing Skills</li>
+    </ul>
+  </div>
+
+  <h3 style="color:#38bdf8;">Weekly Timetable</h3>
+  <table>
+    <tr>
+      <th>Day</th>
+      <th>8:00 - 9:00</th>
+      <th>9:00 - 10:00</th>
+      <th>10:30 - 11:30</th>
+      <th>11:30 - 12:30</th>
+      <th>2:00 - 3:00</th>
+    </tr>
+    <tr>
+      <td>Monday</td>
+      <td>English</td>
+      <td>Mathematics</td>
+      <td>Science</td>
+      <td>Break</td>
+      <td>Reading</td>
+    </tr>
+    <tr>
+      <td>Tuesday</td>
+      <td>Social Studies</td>
+      <td>English</td>
+      <td>Mathematics</td>
+      <td>Break</td>
+      <td>Religious Ed.</td>
+    </tr>
+    <tr>
+      <td>Wednesday</td>
+      <td>Mathematics</td>
+      <td>Science</td>
+      <td>English</td>
+      <td>Break</td>
+      <td>Story Time</td>
+    </tr>
+    <tr>
+      <td>Thursday</td>
+      <td>English</td>
+      <td>Social Studies</td>
+      <td>Science</td>
+      <td>Break</td>
+      <td>Drawing</td>
+    </tr>
+    <tr>
+      <td>Friday</td>
+      <td>Mathematics</td>
+      <td>English</td>
+      <td>Science</td>
+      <td>Break</td>
+      <td>Games</td>
+    </tr>
+  </table>
+
+  <a href="class.html" class="back-btn">⬅ Back to Classes</a>
 </section>
 
 <footer>
