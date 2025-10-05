@@ -9,9 +9,9 @@
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-   (function(){
-      emailjs.init("S17h9x6ExMG6mKaQh"); // Your EmailJS Public Key
-   })();
+  window.onload = function() {
+    emailjs.init("S17h9x6ExMG6mKaQh"); // Your EmailJS Public Key
+  }
 </script>
 
 <style>
@@ -107,21 +107,19 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
    const messageEl = document.getElementById('formMessage');
    const spinner = document.getElementById('spinner');
 
-   // Show spinner
    spinner.style.display = "block";
    messageEl.innerText = "";
 
-   // Flags to track success
    let emailSuccess = false;
    let sheetSuccess = false;
 
-   // --- EmailJS Submission ---
+   // EmailJS Submission
    emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
    .then(function(response) {
        console.log('EmailJS SUCCESS!', response.status, response.text);
        emailSuccess = true;
 
-       // Optional: send confirmation email to parent
+       // Optional: send confirmation email
        const parentEmail = form.email.value;
        emailjs.send('service_ndh30l8', 'template_0k9iqza', {
           to_email: parentEmail,
@@ -136,8 +134,8 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
        messageEl.style.color = "red";
    });
 
-   // --- Google Sheets Submission ---
-   const scriptURL = 'https://script.google.com/macros/s/AKfycbzYb0eivp134ubrqkhoB7hQPPtVyM-M7-iuhM-BC3eELJK_npbPZ7YRVhTFIKxer17QIg/exec';
+   // Google Sheets Submission
+   const scriptURL = 'https://script.google.com/macros/s/AKfycbzYb0eivp134ubrqkhoB7hQPPtVyM-M/exec';
    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
    .then(response => {
        console.log('Google Sheets SUCCESS', response);
@@ -151,7 +149,6 @@ document.getElementById('admissionForm').addEventListener('submit', function(eve
        messageEl.style.color = "red";
    });
 
-   // Function to check if both succeeded
    function checkBothSuccess() {
        if(emailSuccess && sheetSuccess){
            spinner.style.display = "none";
