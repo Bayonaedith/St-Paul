@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primary One - St Paul Learning Centre</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      min-height: 100vh;
+    }
+
+    /* Navbar */
+    header {
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: white;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+        flex-direction: column;
+        background: #1e3a8a;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        width: 200px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    /* Main Content */
+    .content {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #60a5fa;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .teacher-info {
+      background: rgba(30, 58, 138, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .teacher-info p {
+      margin: 8px 0;
+      font-size: 1rem;
+    }
+
+    .subjects {
+      background: rgba(37, 99, 235, 0.2);
+      border: 1px solid #2563eb;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+
+    .subjects h3 {
+      color: #60a5fa;
+      margin-bottom: 10px;
+    }
+
+    .subjects ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .subjects li {
+      background: rgba(30, 58, 138, 0.6);
+      margin: 8px auto;
+      padding: 10px;
+      border-radius: 10px;
+      width: 70%;
+      transition: transform 0.3s ease;
+    }
+
+    .subjects li:hover {
+      transform: scale(1.05);
+      background: #2563eb;
+    }
+
+    /* Timetable */
+    .timetable {
+      background: rgba(30, 58, 138, 0.8);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 30px auto;
+      width: 90%;
+      overflow-x: auto;
+    }
+
+    .timetable h3 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: white;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #60a5fa;
+      text-align: center;
+    }
+
+    th {
+      background: #1e3a8a;
+    }
+
+    td {
+      background: rgba(37, 99, 235, 0.3);
+    }
+
+    /* Back Button */
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 10px 25px;
+      background: #2563eb;
+      color: white;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: #1e3a8a;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1e3a8a;
+      color: white;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">St Paul Learning Centre</div>
+    <div class="menu-toggle" id="menuToggle">☰</div>
+    <nav id="navbar">
+      <a href="index.html">Home</a>
+      <a href="admissions.html">Admissions</a>
+      <a href="class.html" class="active">Classes</a>
+      <a href="teacher-resources.html">Teacher Resources</a>
+      <a href="parent-portal.html">Parent Portal</a>
+    </nav>
+  </header>
+
+  <div class="content">
+    <h2>Primary One</h2>
+    <div class="teacher-info">
+      <p><strong>Class Teacher:</strong> Mrs. Grace Namatovu</p>
+      <p><strong>Assistant Teacher:</strong> Mr. Brian Mugisha</p>
+      <p><strong>Class Motto:</strong> "We Learn and Grow Together!" 🌱</p>
+    </div>
+
+    <div class="subjects">
+      <h3>Subjects Offered</h3>
+      <ul>
+        <li>English</li>
+        <li>Mathematics</li>
+        <li>Science</li>
+        <li>Social Studies</li>
+        <li>Religious Education</li>
+        <li>Reading & Writing</li>
+      </ul>
+    </div>
+
+    <div class="timetable">
+      <h3>Weekly Timetable</h3>
+      <table>
+        <tr>
+          <th>Day</th>
+          <th>Morning</th>
+          <th>Mid-Morning</th>
+          <th>Afternoon</th>
+        </tr>
+        <tr>
+          <td>Monday</td>
+          <td>English</td>
+          <td>Mathematics</td>
+          <td>Science</td>
+        </tr>
+        <tr>
+          <td>Tuesday</td>
+          <td>Social Studies</td>
+          <td>Reading</td>
+          <td>Mathematics</td>
+        </tr>
+        <tr>
+          <td>Wednesday</td>
+          <td>Science</td>
+          <td>English</td>
+          <td>Religious Education</td>
+        </tr>
+        <tr>
+          <td>Thursday</td>
+          <td>Mathematics</td>
+          <td>Social Studies</td>
+          <td>Science</td>
+        </tr>
+        <tr>
+          <td>Friday</td>
+          <td>English</td>
+          <td>Reading & Writing</td>
+          <td>Games / Music</td>
+        </tr>
+      </table>
+    </div>
+
+    <a href="class.html" class="back-btn">⬅ Back to Classes</a>
+  </div>
+
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navbar = document.getElementById('navbar');
+
+    menuToggle.addEventListener('click', () => {
+      navbar.classList.toggle('active');
+      menuToggle.textContent = navbar.classList.contains('active') ? '✖' : '☰';
+    });
+  </script>
+</body>
+</html>
