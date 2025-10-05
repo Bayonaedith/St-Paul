@@ -13,6 +13,29 @@
       emailjs.init("S17h9x6ExMG6mKaQh"); // Your Public Key
    })();
 </script>
+
+<style>
+/* Simple spinner CSS animation (optional if no gif) */
+.spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Optional: style form and message */
+#admissionForm p {
+  margin-top: 10px;
+}
+</style>
 </head>
 <body>
 
@@ -55,7 +78,13 @@
     <textarea name="address" placeholder="Home Address" required></textarea>
     <textarea name="additionalInfo" placeholder="Additional Information"></textarea>
     <button type="submit" class="submit-btn">Submit Application</button>
-    <p id="formMessage" style="color:green; font-weight:600;"></p>
+    <p id="formMessage" style="font-weight:600;"></p>
+    <div id="spinner" style="display:none; text-align:center; margin-top:10px;">
+      <!-- You can use either GIF or CSS spinner -->
+      <!-- <img src="spinner.gif" alt="Loading..." width="50"> -->
+      <div class="spinner"></div>
+      <p>Submitting your application...</p>
+    </div>
   </form>
 </section>
 
@@ -72,31 +101,68 @@ function closeMenu() {
   document.getElementById("sideMenu").style.width = "0";
 }
 
-// Form Submission
+// Form Submission - BOTH EmailJS & Google Sheets
 document.getElementById('admissionForm').addEventListener('submit', function(event){
    event.preventDefault();
    const form = event.target;
+   const messageEl = document.getElementById('formMessage');
+   const spinner = document.getElementById('spinner');
 
+   // Show spinner
+   spinner.style.display = "block";
+   messageEl.innerText = "";
+   
+   // Flags to track success
+   let emailSuccess = false;
+   let sheetSuccess = false;
+
+   // --- EmailJS Submission ---
    emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
    .then(function(response) {
-       console.log('Submission SUCCESS!', response.status, response.text);
+       console.log('EmailJS SUCCESS!', response.status, response.text);
+       emailSuccess = true;
 
-       // Send confirmation email to the parent
+       // Optional: send confirmation email to parent
        const parentEmail = form.email.value;
        emailjs.send('service_ndh30l8', 'template_0k9iqza', {
           to_email: parentEmail,
           subject: "Admission Form Received",
           message: `Hello ${form.fullname.value},\n\nThank you for submitting your admission form to St Paul Learning Centre. We will review it and get back to you soon.\n\n- St Paul Learning Centre`
        });
-
-       document.getElementById('formMessage').innerText = "Application submitted successfully!";
-       form.reset();
+       checkBothSuccess();
    }, function(error) {
-       console.log('Submission FAILED...', error);
-       document.getElementById('formMessage').innerText = "Oops! Something went wrong.";
+       console.log('EmailJS FAILED...', error);
+       spinner.style.display = "none";
+       messageEl.innerText = "Oops! Something went wrong with email submission.";
+       messageEl.style.color = "red";
    });
+
+   // --- Google Sheets Submission ---
+   const scriptURL = 'https://script.google.com/macros/s/AKfycbzYb0eivp134ubrqkhoB7hQPPtVyM-M7-iuhM-BC3eELJK_npbPZ7YRVhTFIKxer17QIg/exec';
+   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+   .then(response => {
+       console.log('Google Sheets SUCCESS', response);
+       sheetSuccess = true;
+       checkBothSuccess();
+   })
+   .catch(error => {
+       console.error('Google Sheets ERROR', error);
+       spinner.style.display = "none";
+       messageEl.innerText = "Oops! Something went wrong with Google Sheets submission.";
+       messageEl.style.color = "red";
+   });
+
+   // Function to check if both succeeded
+   function checkBothSuccess() {
+       if(emailSuccess && sheetSuccess){
+           spinner.style.display = "none";
+           messageEl.innerText = "Application submitted successfully!";
+           messageEl.style.color = "green";
+           form.reset();
+       }
+   }
 });
 </script>
 
 </body>
-   </html>
+</html>
