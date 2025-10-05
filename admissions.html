@@ -66,14 +66,13 @@
 <!-- Main Section -->
 <section>
   <h2>Online Admission Form</h2>
-  <form class="admission-form" id="admissionForm" enctype="multipart/form-data">
+  <form class="admission-form" id="admissionForm">
     <input type="text" name="title" placeholder="Title" required>
     <input type="text" name="name" placeholder="Name" required>
     <input type="text" name="time" placeholder="Time" required>
     <input type="text" name="message" placeholder="Message" required>
     <input type="text" name="class" placeholder="Class" required>
     <input type="email" name="email" placeholder="Email" required>
-    <input type="file" name="photo" accept="image/*" required>
     <button type="submit" class="submit-btn">Send</button>
     <p id="formMessage"></p>
     <div id="spinner" style="display:none; text-align:center; margin-top:10px;">
@@ -96,87 +95,55 @@ function closeMenu() {
   document.getElementById("sideMenu").style.width = "0";
 }
 
-// Form Submission with EmailJS + Google Sheets
+// Form Submission
 document.getElementById('admissionForm').addEventListener('submit', function(event){
-    event.preventDefault();
-    const form = event.target;
-    const messageEl = document.getElementById('formMessage');
-    const spinner = document.getElementById('spinner');
+   event.preventDefault();
+   const form = event.target;
+   const messageEl = document.getElementById('formMessage');
+   const spinner = document.getElementById('spinner');
 
-    spinner.style.display = "block";
-    messageEl.innerText = "";
+   spinner.style.display = "block";
+   messageEl.innerText = "";
 
-    let emailSuccess = false;
-    let sheetSuccess = false;
+   let emailSuccess = false;
+   let sheetSuccess = false;
 
-    const photoFile = form.photo.files[0];
-    const formData = new FormData(form);
+   // EmailJS Submission
+   emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
+   .then(function(response) {
+       console.log('EmailJS SUCCESS!', response.status, response.text);
+       emailSuccess = true;
+       checkBothSuccess();
+   }, function(error) {
+       console.log('EmailJS FAILED...', error);
+       spinner.style.display = "none";
+       messageEl.innerText = "Oops! Something went wrong with email submission.";
+       messageEl.style.color = "red";
+   });
 
-    if(photoFile){
-        const reader = new FileReader();
-        reader.onload = function(){
-            const base64String = reader.result.split(',')[1]; // Remove "data:image/...;base64,"
-            
-            // Send EmailJS with attachment
-            emailjs.send('service_ndh30l8', 'template_0k9iqza', {
-                title: form.title.value,
-                name: form.name.value,
-                time: form.time.value,
-                message: form.message.value,
-                class: form.class.value,
-                email: form.email.value,
-                attachment: base64String,
-                attachment_filename: photoFile.name
-            }).then(function(response){
-                console.log('EmailJS SUCCESS!', response.status, response.text);
-                emailSuccess = true;
-                checkBothSuccess();
-            }, function(error){
-                console.log('EmailJS FAILED...', error);
-                spinner.style.display = "none";
-                messageEl.innerText = "Oops! Something went wrong with email submission.";
-                messageEl.style.color = "red";
-            });
-        };
-        reader.readAsDataURL(photoFile);
-    } else {
-        // Send email normally if no photo
-        emailjs.sendForm('service_ndh30l8', 'template_0k9iqza', form)
-        .then(function(response){
-            console.log('EmailJS SUCCESS!', response.status, response.text);
-            emailSuccess = true;
-            checkBothSuccess();
-        }, function(error){
-            console.log('EmailJS FAILED...', error);
-            spinner.style.display = "none";
-            messageEl.innerText = "Oops! Something went wrong with email submission.";
-            messageEl.style.color = "red";
-        });
-    }
+   // Google Sheets Submission
+   const scriptURL = 'https://script.google.com/macros/s/AKfycbzYb0eivp134ubrqkhoB7hQPPtVyM-M/exec';
+   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+   .then(response => {
+       console.log('Google Sheets SUCCESS', response);
+       sheetSuccess = true;
+       checkBothSuccess();
+   })
+   .catch(error => {
+       console.error('Google Sheets ERROR', error);
+       spinner.style.display = "none";
+       messageEl.innerText = "Oops! Something went wrong with Google Sheets submission.";
+       messageEl.style.color = "red";
+   });
 
-    // Google Sheets submission
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzYb0eivp134ubrqkhoB7hQPPtVyM-M/exec';
-    fetch(scriptURL, { method: 'POST', body: formData })
-    .then(response => {
-        console.log('Google Sheets SUCCESS', response);
-        sheetSuccess = true;
-        checkBothSuccess();
-    })
-    .catch(error => {
-        console.error('Google Sheets ERROR', error);
-        spinner.style.display = "none";
-        messageEl.innerText = "Oops! Something went wrong with Google Sheets submission.";
-        messageEl.style.color = "red";
-    });
-
-    function checkBothSuccess() {
-        if(emailSuccess && sheetSuccess){
-            spinner.style.display = "none";
-            messageEl.innerText = "Application submitted successfully!";
-            messageEl.style.color = "green";
-            form.reset();
-        }
-    }
+   function checkBothSuccess() {
+       if(emailSuccess && sheetSuccess){
+           spinner.style.display = "none";
+           messageEl.innerText = "Application submitted successfully!";
+           messageEl.style.color = "green";
+           form.reset();
+       }
+   }
 });
 </script>
 
