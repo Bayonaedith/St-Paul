@@ -4,56 +4,148 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Admin Login – St Paul</title>
-  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* ---------------------------------------------------- */
+    /* CSS Styling (Internal for one-file code) */
+    /* ---------------------------------------------------- */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    header {
+        background-color: #004d40;
+        color: white;
+        padding: 20px 0;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        margin: 0;
+    }
+
+    p {
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+
+    section {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    input[type="email"], input[type="password"] {
+        width: calc(100% - 22px);
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #00796b;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin: 5px;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #004d40;
+    }
+
+    #menuSection ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #menuSection li {
+        margin: 10px 0;
+    }
+
+    #menuSection button {
+        width: 80%;
+        background-color: #0288d1;
+    }
+  </style>
+
   <script type="module">
+    // ----------------------------------------------------
+    // JavaScript (Firebase Authentication Logic)
+    // ----------------------------------------------------
+    
     // Firebase SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // Firebase config
+    // ⚠️ IMPORTANT: Please replace this with YOUR secure Firebase Config
     const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-      projectId: "my-school-st-paul-1455a",
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o", // Your provided API Key
+      authDomain: "my-school-st-paul-1455a.firebaseapp.com", // Your provided Auth Domain
+      projectId: "my-school-st-paul-1455a", // Your provided Project ID
+      // Add other required fields like storageBucket, messagingSenderId, appId if necessary
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // Allowed admin email
+    // ✅ The ONLY Allowed admin email
     const adminEmail = "nicholasbagenda@gmail.com";
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Login form submit
+      // Login form submit handler
       document.getElementById("loginForm").addEventListener("submit", (e) => {
         e.preventDefault();
 
         const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
 
+        // Attempt to sign in with the provided email and password
         signInWithEmailAndPassword(auth, email, password)
           .then(userCred => {
+            // **Client-side Restriction Check**
+            // Check if the SUCCESSFULLY logged-in user is the allowed admin
             if (userCred.user.email.trim().toLowerCase() === adminEmail.toLowerCase()) {
-              // ✅ Show menu
+              // ✅ Access Granted: Show menu
               document.getElementById("loginSection").style.display = "none";
               document.getElementById("menuSection").style.display = "block";
             } else {
+              // ⛔ Access Denied: Unauthorized email
               alert("⛔ Access Denied. Unauthorized email.");
+              // Log the user out immediately to prevent access
               signOut(auth);
             }
           })
-          .catch(err => alert("⚠️ Login failed: " + err.message));
+          .catch(err => {
+            // ⚠️ Login Failed: Handles incorrect password or email not registered
+            alert("⚠️ Login failed: " + err.message);
+          });
       });
 
-      // Logout button
+      // Logout button handler
       document.getElementById("logoutBtn").addEventListener("click", () => {
         signOut(auth).then(() => {
+          // Reload the page to reset state and show the login screen
           window.location.reload();
         });
       });
     });
 
-    // Redirect to selected page
+    // Function to redirect to selected page
     window.goToPage = function(page) {
       window.location.href = page;
     };
@@ -65,7 +157,6 @@
     <p>Restricted Access – Admin Only</p>
   </header>
 
-  <!-- Login Section -->
   <section id="loginSection">
     <h2>Admin Login</h2>
     <form id="loginForm">
@@ -79,7 +170,6 @@
     </form>
   </section>
 
-  <!-- Admin Menu Section -->
   <section id="menuSection" style="display:none;">
     <h2>Welcome, Nicholas</h2>
     <p>Select a page to access:</p>
