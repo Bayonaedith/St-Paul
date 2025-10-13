@@ -63,6 +63,18 @@
         margin: 5px;
         transition: background-color 0.3s;
     }
+    
+    /* Style for the Google Sign-In button */
+    #googleLoginBtn {
+        background-color: #db4437; /* Google Red */
+        margin-top: 15px;
+        padding: 12px 15px;
+        width: 100%;
+    }
+    
+    #googleLoginBtn:hover {
+        background-color: #c33227;
+    }
 
     button:hover {
         background-color: #004d40;
@@ -90,56 +102,73 @@
     
     // Firebase SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // ⚠️ IMPORTANT: Please replace this with YOUR secure Firebase Config
+    // ⚠️ IMPORTANT: Replace this with YOUR secure Firebase Config
     const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o", // Your provided API Key
-      authDomain: "my-school-st-paul-1455a.firebaseapp.com", // Your provided Auth Domain
-      projectId: "my-school-st-paul-1455a", // Your provided Project ID
-      // Add other required fields like storageBucket, messagingSenderId, appId if necessary
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+      projectId: "my-school-st-paul-1455a",
+      // Add other required fields if necessary
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider(); // Google Provider instance
 
     // ✅ The ONLY Allowed admin email
     const adminEmail = "nicholasbagenda@gmail.com";
+    
+    // --- Centralized Access Check Function ---
+    // Checks if the successfully authenticated user is the authorized admin.
+    function checkAdminAccess(user) {
+        const userEmail = user.email ? user.email.trim().toLowerCase() : null;
+        
+        if (userEmail === adminEmail.toLowerCase()) {
+            // ✅ Access Granted: Show menu
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("menuSection").style.display = "block";
+        } else {
+            // ⛔ Access Denied: Unauthorized email
+            alert("⛔ Access Denied. Unauthorized email.");
+            // Log the user out immediately
+            signOut(auth);
+        }
+    }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Login form submit handler
+      // 1. Email/Password Login form submit handler
       document.getElementById("loginForm").addEventListener("submit", (e) => {
         e.preventDefault();
 
         const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
 
-        // Attempt to sign in with the provided email and password
         signInWithEmailAndPassword(auth, email, password)
           .then(userCred => {
-            // **Client-side Restriction Check**
-            // Check if the SUCCESSFULLY logged-in user is the allowed admin
-            if (userCred.user.email.trim().toLowerCase() === adminEmail.toLowerCase()) {
-              // ✅ Access Granted: Show menu
-              document.getElementById("loginSection").style.display = "none";
-              document.getElementById("menuSection").style.display = "block";
-            } else {
-              // ⛔ Access Denied: Unauthorized email
-              alert("⛔ Access Denied. Unauthorized email.");
-              // Log the user out immediately to prevent access
-              signOut(auth);
-            }
+            checkAdminAccess(userCred.user);
           })
           .catch(err => {
-            // ⚠️ Login Failed: Handles incorrect password or email not registered
             alert("⚠️ Login failed: " + err.message);
           });
       });
+      
+      // 2. Google Sign-In button handler
+      document.getElementById("googleLoginBtn").addEventListener("click", () => {
+        signInWithPopup(auth, googleProvider)
+          .then((result) => {
+            // The user is signed in with Google, now check their email
+            checkAdminAccess(result.user);
+          })
+          .catch((error) => {
+            // Handle errors during the sign-in pop-up (e.g., user closing the window)
+            alert("⚠️ Google sign-in failed: " + error.message);
+          });
+      });
 
-      // Logout button handler
+      // 3. Logout button handler
       document.getElementById("logoutBtn").addEventListener("click", () => {
         signOut(auth).then(() => {
-          // Reload the page to reset state and show the login screen
           window.location.reload();
         });
       });
@@ -166,8 +195,12 @@
       <label for="password">Password:</label><br>
       <input type="password" id="password" required><br><br>
 
-      <button type="submit">Login</button>
+      <button type="submit">Login with Email/Password</button>
     </form>
+    
+    <hr style="margin: 20px 0; border-top: 1px solid #ccc;">
+    
+    <button id="googleLoginBtn">Sign in with Google</button>
   </section>
 
   <section id="menuSection" style="display:none;">
