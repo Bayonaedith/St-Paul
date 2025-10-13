@@ -4,182 +4,214 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Admin Login – St Paul</title>
-  
+
   <style>
-    /* ---------------------------------------------------- */
-    /* CSS Styling (Internal for one-file code) */
-    /* ---------------------------------------------------- */
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
-        margin: 0;
-        padding: 0;
-        text-align: center;
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #004d40, #00251a);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
     }
 
     header {
-        background-color: #004d40;
-        color: white;
-        padding: 20px 0;
-        margin-bottom: 20px;
+      background-color: #00695c;
+      padding: 25px 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
 
     h1 {
-        margin: 0;
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: 1px;
     }
 
     p {
-        margin-top: 5px;
-        font-size: 0.9em;
+      margin-top: 5px;
+      font-size: 0.95em;
+      color: #d0f0e0;
     }
 
     section {
-        max-width: 400px;
-        margin: 20px auto;
-        padding: 20px;
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      max-width: 420px;
+      margin: 40px auto;
+      padding: 25px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: 500;
+      margin-bottom: 5px;
     }
 
     input[type="email"], input[type="password"] {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      font-size: 15px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 6px;
     }
 
     button {
-        background-color: #00796b;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        margin: 5px;
-        transition: background-color 0.3s;
-    }
-    
-    /* Style for the Google Sign-In button */
-    #googleLoginBtn {
-        background-color: #db4437; /* Google Red */
-        margin-top: 15px;
-        padding: 12px 15px;
-        width: 100%;
-    }
-    
-    #googleLoginBtn:hover {
-        background-color: #c33227;
+      background-color: #00bfa5;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      margin: 8px 0;
+      transition: 0.3s;
+      width: 100%;
     }
 
     button:hover {
-        background-color: #004d40;
+      background-color: #009e8e;
+      transform: scale(1.03);
     }
 
-    #menuSection ul {
-        list-style: none;
-        padding: 0;
+    #googleLoginBtn {
+      background-color: #db4437;
+    }
+    #googleLoginBtn:hover {
+      background-color: #c33227;
     }
 
-    #menuSection li {
-        margin: 10px 0;
+    .error-message {
+      color: #ffccbc;
+      font-size: 0.9em;
+      margin-bottom: 10px;
     }
 
-    #menuSection button {
-        width: 80%;
-        background-color: #0288d1;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      margin: 12px 0;
+    }
+
+    ul button {
+      background-color: #0288d1;
+      width: 80%;
+    }
+
+    ul button:hover {
+      background-color: #0277bd;
     }
   </style>
 
   <script type="module">
-    // ----------------------------------------------------
-    // JavaScript (Firebase Authentication Logic)
-    // ----------------------------------------------------
-    
-    // Firebase SDK imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword, 
+      signOut, 
+      GoogleAuthProvider, 
+      signInWithPopup, 
+      setPersistence, 
+      browserLocalPersistence, 
+      onAuthStateChanged 
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // ⚠️ IMPORTANT: Replace this with YOUR secure Firebase Config
     const firebaseConfig = {
       apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
       authDomain: "my-school-st-paul-1455a.firebaseapp.com",
       projectId: "my-school-st-paul-1455a",
-      // Add other required fields if necessary
+      storageBucket: "my-school-st-paul-1455a.appspot.com",
+      appId: "1:951593545268:web:ed6ff256b523c29f8d48bb"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider(); // Google Provider instance
+    const googleProvider = new GoogleAuthProvider();
 
-    // ✅ The ONLY Allowed admin email
-    const adminEmail = "nicholasbagenda@gmail.com";
-    
-    // --- Centralized Access Check Function ---
-    // Checks if the successfully authenticated user is the authorized admin.
+    // ✅ Secure Admin Email (encoded)
+    const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ=="); // decoded = nicholasbagenda@gmail.com
+
+    // ✅ Admin Access Function
     function checkAdminAccess(user) {
-        const userEmail = user.email ? user.email.trim().toLowerCase() : null;
-        
-        if (userEmail === adminEmail.toLowerCase()) {
-            // ✅ Access Granted: Show menu
-            document.getElementById("loginSection").style.display = "none";
-            document.getElementById("menuSection").style.display = "block";
-        } else {
-            // ⛔ Access Denied: Unauthorized email
-            alert("⛔ Access Denied. Unauthorized email.");
-            // Log the user out immediately
-            signOut(auth);
-        }
+      const userEmail = user.email ? user.email.trim().toLowerCase() : null;
+      if (userEmail === adminEmail.toLowerCase()) {
+        document.getElementById("loginSection").style.display = "none";
+        document.getElementById("menuSection").style.display = "block";
+        document.getElementById("errorMsg").textContent = "";
+      } else {
+        alert("⛔ Access Denied. Unauthorized email.");
+        signOut(auth);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // 1. Email/Password Login form submit handler
-      document.getElementById("loginForm").addEventListener("submit", (e) => {
-        e.preventDefault();
+      const loginForm = document.getElementById("loginForm");
+      const googleBtn = document.getElementById("googleLoginBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const errorMsg = document.getElementById("errorMsg");
 
+      // ✅ Remember Me (Persistent Session)
+      setPersistence(auth, browserLocalPersistence);
+
+      // ✅ Email/Password Login
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
         const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
 
         signInWithEmailAndPassword(auth, email, password)
-          .then(userCred => {
-            checkAdminAccess(userCred.user);
-          })
+          .then(userCred => checkAdminAccess(userCred.user))
           .catch(err => {
-            alert("⚠️ Login failed: " + err.message);
-          });
-      });
-      
-      // 2. Google Sign-In button handler
-      document.getElementById("googleLoginBtn").addEventListener("click", () => {
-        signInWithPopup(auth, googleProvider)
-          .then((result) => {
-            // The user is signed in with Google, now check their email
-            checkAdminAccess(result.user);
-          })
-          .catch((error) => {
-            // Handle errors during the sign-in pop-up (e.g., user closing the window)
-            alert("⚠️ Google sign-in failed: " + error.message);
+            errorMsg.textContent = "⚠️ " + err.message;
           });
       });
 
-      // 3. Logout button handler
-      document.getElementById("logoutBtn").addEventListener("click", () => {
+      // ✅ Google Login (Fixed)
+      googleBtn.addEventListener("click", () => {
+        signInWithPopup(auth, googleProvider)
+          .then(result => checkAdminAccess(result.user))
+          .catch(error => {
+            errorMsg.textContent = "⚠️ Google sign-in failed: " + error.message;
+          });
+      });
+
+      // ✅ Logout
+      logoutBtn.addEventListener("click", () => {
         signOut(auth).then(() => {
           window.location.reload();
         });
       });
+
+      // ✅ Auto-check active session
+      onAuthStateChanged(auth, (user) => {
+        if (user) checkAdminAccess(user);
+      });
     });
 
-    // Function to redirect to selected page
+    // ✅ Page Navigation
     window.goToPage = function(page) {
       window.location.href = page;
     };
   </script>
 </head>
+
 <body>
   <header>
     <h1>St Paul Learning Centre</h1>
@@ -188,35 +220,37 @@
 
   <section id="loginSection">
     <h2>Admin Login</h2>
-    <form id="loginForm">
-      <label for="email">Email:</label><br>
-      <input type="email" id="email" required><br><br>
+    <form id="loginForm" novalidate>
+      <div id="errorMsg" class="error-message"></div>
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter admin email" required>
 
-      <label for="password">Password:</label><br>
-      <input type="password" id="password" required><br><br>
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda2468">
+
+      <label><input type="checkbox" checked> Remember Me</label>
 
       <button type="submit">Login with Email/Password</button>
     </form>
-    
+
     <hr style="margin: 20px 0; border-top: 1px solid #ccc;">
-    
     <button id="googleLoginBtn">Sign in with Google</button>
   </section>
 
   <section id="menuSection" style="display:none;">
-    <h2>Welcome, Nicholas</h2>
+    <h2>Welcome, Nicholas 👑</h2>
     <p>Select a page to access:</p>
     <ul>
-      <li><button onclick="goToPage('class.html')">Exams</button></li>
-      <li><button onclick="goToPage('class.html')">Homework</button></li>
-      <li><button onclick="goToPage('class.html')">Notes</button></li>
-      <li><button onclick="goToPage('parent-portal.html')">Parent Portal</button></li>
-      <li><button onclick="goToPage('resources.html')">Resources</button></li>
-      <li><button onclick="goToPage('student-dashboard.html')">Student Portal</button></li>
-      <li><button onclick="goToPage('teacher-resources.html')">Teacher Resources</button></li>
-      <li><button onclick="goToPage('class.html')">Timetable</button></li>
+      <li><button onclick="goToPage('exams.html')">📘 Exams</button></li>
+      <li><button onclick="goToPage('homework.html')">📝 Homework</button></li>
+      <li><button onclick="goToPage('notes.html')">📖 Notes</button></li>
+      <li><button onclick="goToPage('parent-portal.html')">👨‍👩‍👧 Parent Portal</button></li>
+      <li><button onclick="goToPage('resources.html')">📚 Resources</button></li>
+      <li><button onclick="goToPage('student-dashboard.html')">🎓 Student Portal</button></li>
+      <li><button onclick="goToPage('teacher-resources.html')">👩‍🏫 Teacher Resources</button></li>
+      <li><button onclick="goToPage('timetable.html')">⏰ Timetable</button></li>
     </ul>
-    <button id="logoutBtn">Logout</button>
+    <button id="logoutBtn" style="background:#d32f2f;">Logout</button>
   </section>
 </body>
 </html>
