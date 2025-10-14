@@ -5,118 +5,264 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Secure Admin Login – St Paul</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
   <style>
+    /* -------------------- Global & Background -------------------- */
     body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(135deg, #004d40, #00251a);
-      color: #fff;
+      font-family: "Inter", sans-serif;
+      color: white;
       margin: 0;
       padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
       text-align: center;
+
+      /* Same Neon Gradient Background */
+      background: linear-gradient(270deg, #0f172a, #1e293b, #2563eb, #60a5fa);
+      background-size: 800% 800%;
+      animation: gradientBG 20s ease infinite;
     }
 
+    /* Fix: The body class applied by JS will push content */
+    .menu-open #main-content-wrapper,
+    .menu-open .navbar {
+      transform: translateX(260px); /* Pushes content right by sidebar width */
+    }
+
+    /* Gradient Background Animation */
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* -------------------- Navbar -------------------- */
+    .navbar {
+      display: flex;
+      justify-content: flex-start; /* Aligns items to the left */
+      align-items: center;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      position: sticky;
+      top: 0;
+      height: 60px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      transition: transform 0.4s ease;
+    }
+
+    /* NEW: Logo Container Styling */
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-link {
+        text-decoration: none;
+        color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .logo-text-admin {
+        font-size: 1.2rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
+    }
+
+    /* -------------------- Menu Toggle Button (Hamburger / X) -------------------- */
+    #menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 2001;
+      position: relative; /* Changed to relative inside the flex container */
+      left: 0;
+      top: 0;
+      transform: none; /* Reset transform */
+      margin-right: 15px; /* Space between toggle and logo (if logo was next to it) */
+    }
+
+    .hamburger-icon {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+      border-radius: 2px;
+      box-shadow: 0 0 5px #60a5fa;
+    }
+
+    /* TRANSFORMS HAMBURGER INTO 'X' */
+    .change .bar1 {
+      transform: translateY(7px) rotate(-45deg);
+    }
+    .change .bar2 {
+      opacity: 0;
+    }
+    .change .bar3 {
+      transform: translateY(-7px) rotate(45deg);
+    }
+    
+    /* -------------------- Sidebar -------------------- */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #1e3a8a;
+      overflow-x: hidden;
+      transition: width 0.4s ease;
+      padding-top: 80px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+      z-index: 2000;
+    }
+
+    .side-menu a {
+      display: block;
+      padding: 12px 30px;
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: 0.3s;
+      text-shadow: 0 0 5px #60a5fa;
+    }
+    .side-menu a:hover {
+      background: #2563eb;
+      padding-left: 40px;
+      text-shadow: 0 0 15px #93c5fd;
+    }
+
+    /* -------------------- Main Content Wrapper -------------------- */
+    #main-content-wrapper {
+      transition: transform 0.4s ease;
+    }
+    
+    /* -------------------- Header and Sections -------------------- */
     header {
-      background-color: #00695c;
-      padding: 25px 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      background: none;
+      padding: 25px 0 10px;
+      box-shadow: none;
     }
 
     h1 {
       margin: 0;
-      font-size: 28px;
+      font-size: 2.5rem;
       letter-spacing: 1px;
+      color: #60a5fa;
+      text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
     }
 
     p {
       margin-top: 5px;
-      font-size: 0.95em;
-      color: #d0f0e0;
+      font-size: 1.1em;
+      color: #93c5fd;
     }
 
+    /* -------------------- Section (Login/Menu Box) -------------------- */
     section {
       max-width: 420px;
       margin: 40px auto;
-      padding: 25px;
-      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid #3b82f6;
       border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
+      box-shadow: 0 0 15px #2563eb, 0 0 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
       animation: fadeIn 1s ease-in-out;
+    }
+    
+    h2 {
+      color: #93c5fd;
+      text-shadow: 0 0 5px #60a5fa;
     }
 
     label {
-      display: block;
       text-align: left;
       font-weight: 500;
       margin-bottom: 5px;
+      color: #cbd5e1;
     }
 
     input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
-      font-size: 15px;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 6px;
-    }
-
-    button {
-      background-color: #00bfa5;
+      background-color: rgba(255, 255, 255, 0.1);
       color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      margin: 8px 0;
-      transition: 0.3s;
-      width: 100%;
+      border: 1px solid #60a5fa;
+    }
+    input::placeholder {
+      color: #a0a0a0;
     }
 
-    button:hover {
-      background-color: #009e8e;
+    /* -------------------- Buttons -------------------- */
+    button {
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Main Login Button (Blue Neon Theme) */
+    button[type="submit"] {
+      background-color: #2563eb;
+      box-shadow: 0 0 10px #2563eb;
+    }
+    button[type="submit"]:hover {
+      background-color: #3b82f6;
+      box-shadow: 0 0 15px #60a5fa;
       transform: scale(1.03);
     }
 
+    /* Google Button */
     #googleLoginBtn {
       background-color: #db4437;
     }
     #googleLoginBtn:hover {
       background-color: #c33227;
+      transform: scale(1.03);
     }
 
+    /* Logout Button */
+    #logoutBtn {
+      background:#d32f2f;
+    }
+    #logoutBtn:hover {
+      background-color: #b71c1c;
+    }
+
+    /* Menu Buttons */
+    ul button {
+      background-color: #0288d1;
+      width: 80%;
+      box-shadow: 0 0 8px #0288d1;
+    }
+
+    ul button:hover {
+      background-color: #0277bd;
+      box-shadow: 0 0 12px #02a8f4;
+    }
+
+    /* -------------------- Other Elements -------------------- */
     .error-message {
-      color: #ffccbc;
+      color: #fca5a5;
       font-size: 0.9em;
       margin-bottom: 10px;
+    }
+
+    hr {
+      border-color: #3b82f6;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul li {
-      margin: 12px 0;
-    }
-
-    ul button {
-      background-color: #0288d1;
-      width: 80%;
-    }
-
-    ul button:hover {
-      background-color: #0277bd;
     }
   </style>
 
@@ -146,7 +292,7 @@
     const googleProvider = new GoogleAuthProvider();
 
     // ✅ Secure Admin Email (encoded)
-    const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ=="); // decoded = nicholasbagenda@gmail.com
+    const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ==");
 
     // ✅ Admin Access Function
     function checkAdminAccess(user) {
@@ -209,48 +355,105 @@
     window.goToPage = function(page) {
       window.location.href = page;
     };
+
+    // -------------------- SIDEBAR JAVASCRIPT --------------------
+    /**
+     * Toggles the side menu open or closed.
+     * It also handles the hamburger/X icon transition and pushes the main content.
+     */
+    window.toggleMenu = function() {
+      const sideMenu = document.getElementById("sideMenu");
+      const menuToggle = document.getElementById("menu-toggle");
+      const body = document.body;
+
+      if (sideMenu.style.width === "260px") {
+        // Menu is open, so close it
+        sideMenu.style.width = "0";
+        menuToggle.classList.remove("change"); // Hamburger icon appears
+        body.classList.remove("menu-open"); // Content slides back
+      } else {
+        // Menu is closed, so open it
+        sideMenu.style.width = "260px";
+        menuToggle.classList.add("change"); // 'X' icon appears
+        body.classList.add("menu-open"); // Content slides right
+      }
+    }
+
+    // Close sidebar on Escape key
+    document.addEventListener('keydown', function(event) {
+      if(event.key === "Escape") {
+        document.getElementById("sideMenu").style.width = "0";
+        document.getElementById("menu-toggle").classList.remove("change");
+        document.body.classList.remove("menu-open");
+      }
+    });
   </script>
 </head>
 
 <body>
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <p>Restricted Access – Admin Only</p>
-  </header>
+  <div class="navbar">
+    <button id="menu-toggle" onclick="toggleMenu()">
+      <div class="hamburger-icon bar1"></div>
+      <div class="hamburger-icon bar2"></div>
+      <div class="hamburger-icon bar3"></div>
+    </button>
+    
+    <div class="logo-container">
+        <a href="index.html" class="logo-link">
+            <span class="logo-text-admin">St Paul</span>
+        </a>
+    </div>
+  </div>
 
-  <section id="loginSection">
-    <h2>Admin Login</h2>
-    <form id="loginForm" novalidate>
-      <div id="errorMsg" class="error-message"></div>
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter admin email" required>
+  <nav id="sideMenu" class="side-menu">
+    <a href="index.html">🌐 Public Homepage</a>
+    <a href="#loginSection" onclick="toggleMenu()">🔒 Admin Login</a>
+    <hr style="border-top: 1px solid #3b82f6; width: 80%; margin: 15px auto;">
+    <a href="#" onclick="alert('Functionality requires login.')">👤 User Management</a>
+    <a href="#" onclick="alert('Functionality requires login.')">⚙️ Site Settings</a>
+  </nav>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
+  <div id="main-content-wrapper">
 
-      <label><input type="checkbox" checked> Remember Me</label>
+    <header>
+      <h1>St Paul Learning Centre</h1>
+      <p>Restricted Access – Admin Only</p>
+    </header>
 
-      <button type="submit">Login with Email/Password</button>
-    </form>
+    <section id="loginSection">
+      <h2>Admin Login</h2>
+      <form id="loginForm" novalidate>
+        <div id="errorMsg" class="error-message"></div>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter admin email" required>
 
-    <hr style="margin: 20px 0; border-top: 1px solid #ccc;">
-    <button id="googleLoginBtn">Sign in with Google</button>
-  </section>
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
 
-  <section id="menuSection" style="display:none;">
-    <h2>Welcome, Nicholas 👑</h2>
-    <p>Select a page to access:</p>
-    <ul>
-      <li><button onclick="goToPage('class.html')">📘 Exams</button></li>
-      <li><button onclick="goToPage('class.html')">📝 Homework</button></li>
-      <li><button onclick="goToPage('class.html')">📖 Notes</button></li>
-      <li><button onclick="goToPage('parent-portal.html')">👨‍👩‍👧 Parent Portal</button></li>
-      <li><button onclick="goToPage('resources.html')">📚 Resources</button></li>
-      <li><button onclick="goToPage('student-dashboard.html')">🎓 Student Portal</button></li>
-      <li><button onclick="goToPage('teacher-resources.html')">👩‍🏫 Teacher Resources</button></li>
-      <li><button onclick="goToPage('class.html')">⏰ Timetable</button></li>
-    </ul>
-    <button id="logoutBtn" style="background:#d32f2f;">Logout</button>
-  </section>
-</body>
+        <label><input type="checkbox" checked> Remember Me</label>
+
+        <button type="submit">Login with Email/Password</button>
+      </form>
+
+      <hr style="margin: 20px 0; border-top: 1px solid #3b82f6;">
+      <button id="googleLoginBtn">Sign in with Google</button>
+    </section>
+
+    <section id="menuSection" style="display:none;">
+      <h2>Welcome, Nicholas 👑</h2>
+      <p>Select a page to access:</p>
+      <ul>
+        <li><button onclick="goToPage('class.html')">📘 Exams</button></li>
+        <li><button onclick="goToPage('class.html')">📝 Homework</button></li>
+        <li><button onclick="goToPage('class.html')">📖 Notes</button></li>
+        <li><button onclick="goToPage('parent-portal.html')">👨‍👩‍👧 Parent Portal</button></li>
+        <li><button onclick="goToPage('resources.html')">📚 Resources</button></li>
+        <li><button onclick="goToPage('student-dashboard.html')">🎓 Student Portal</button></li>
+        <li><button onclick="goToPage('teacher-resources.html')">👩‍🏫 Teacher Resources</button></li>
+        <li><button onclick="goToPage('class.html')">⏰ Timetable</button></li>
+      </ul>
+      <button id="logoutBtn" style="background:#d32f2f;">Logout</button>
+    </section>
+
+  </div> </body>
 </html>
