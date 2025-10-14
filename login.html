@@ -1,360 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Admin Login – St Paul</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Admin Login – St Paul</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* -------------------- Global & Background -------------------- */
+    body {
+      font-family: "Inter", sans-serif;
+      color: white;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      text-align: center;
 
-<style>
-/* -------------------- Global & Background -------------------- */
-body {
-  font-family: "Inter", sans-serif;
-  color: white;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  overflow-x: hidden;
-  text-align: center;
+      background: linear-gradient(270deg, #0f172a, #1e293b, #2563eb, #60a5fa);
+      background-size: 800% 800%;
+      animation: gradientBG 20s ease infinite;
+    }
 
-  background: linear-gradient(270deg, #0f172a, #1e293b, #2563eb, #60a5fa);
-  background-size: 800% 800%;
-  animation: gradientBG 20s ease infinite;
-}
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-@keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+    /* -------------------- Navbar -------------------- */
+    .navbar {
+      display: flex;
+      justify-content: center; /* Center the logo */
+      align-items: center;
+      padding: 10px 20px;
+      background: linear-gradient(90deg, #1e3a8a, #2563eb);
+      position: sticky;
+      top: 0;
+      height: 60px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      position: relative;
+    }
 
-/* -------------------- Navbar -------------------- */
-.navbar {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 10px 20px;
-  background: linear-gradient(90deg, #1e3a8a, #2563eb);
-  position: sticky;
-  top: 0;
-  height: 60px;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  transition: transform 0.4s ease;
-}
+    /* Centered Logo */
+    .logo-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-/* Centered Clickable Logo */
-.logo-container {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.logo-link {
-  text-decoration: none;
-  color: white;
-  font-weight: 800;
-  font-size: 1.5rem;
-  text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
-}
-.logo-link:hover {
-  text-shadow: 0 0 20px #93c5fd, 0 0 30px #60a5fa;
-}
+    .school-logo {
+      max-width: 100%;
+      height: auto;
+      width: 120px; /* Adjust logo size */
+      border-radius: 50%;
+      border: 2px solid white;
+    }
 
-/* Hamburger Menu */
-#menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 10px;
-  z-index: 2001;
-  position: relative;
-  margin-right: 15px;
-}
+    @media (max-width: 768px) {
+      .school-logo {
+        width: 100px;
+      }
+    }
 
-.hamburger-icon {
-  width: 25px;
-  height: 3px;
-  background-color: white;
-  margin: 4px 0;
-  transition: 0.4s;
-  border-radius: 2px;
-  box-shadow: 0 0 5px #60a5fa;
-}
+    /* -------------------- Sidebar -------------------- */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: #1e3a8a;
+      overflow-x: hidden;
+      transition: width 0.4s ease;
+      padding-top: 80px;
+      box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+      z-index: 2000;
+    }
 
-.change .bar1 { transform: translateY(7px) rotate(-45deg); }
-.change .bar2 { opacity: 0; }
-.change .bar3 { transform: translateY(-7px) rotate(45deg); }
+    .side-menu a {
+      display: block;
+      padding: 12px 30px;
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: 0.3s;
+      text-shadow: 0 0 5px #60a5fa;
+    }
+    .side-menu a:hover {
+      background: #2563eb;
+      padding-left: 40px;
+      text-shadow: 0 0 15px #93c5fd;
+    }
 
-/* -------------------- Sidebar -------------------- */
-.side-menu {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #1e3a8a;
-  overflow-x: hidden;
-  transition: width 0.4s ease;
-  padding-top: 80px;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.5);
-  z-index: 2000;
-}
+    /* -------------------- Header -------------------- */
+    header {
+      background: none;
+      padding: 25px 0 10px;
+      box-shadow: none;
+    }
 
-.side-menu a {
-  display: block;
-  padding: 12px 30px;
-  text-decoration: none;
-  color: white;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: 0.3s;
-  text-shadow: 0 0 5px #60a5fa;
-}
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      color: #60a5fa;
+      text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
+    }
 
-.side-menu a:hover {
-  background: #2563eb;
-  padding-left: 40px;
-  text-shadow: 0 0 15px #93c5fd;
-}
+    p {
+      margin-top: 5px;
+      font-size: 1.1em;
+      color: #93c5fd;
+    }
 
-/* -------------------- Main Content Wrapper -------------------- */
-#main-content-wrapper { transition: transform 0.4s ease; }
+    /* -------------------- Section (Login/Menu Box) -------------------- */
+    section {
+      max-width: 420px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid #3b82f6;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #2563eb, 0 0 25px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 1s ease-in-out;
+    }
+    
+    h2 {
+      color: #93c5fd;
+      text-shadow: 0 0 5px #60a5fa;
+    }
 
-/* -------------------- Header and Sections -------------------- */
-header {
-  padding: 25px 0 10px;
-}
+    label {
+      text-align: left;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #cbd5e1;
+    }
 
-h1 {
-  margin: 0;
-  font-size: 2.5rem;
-  letter-spacing: 1px;
-  color: #60a5fa;
-  text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
-}
+    input[type="email"], input[type="password"] {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid #60a5fa;
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+    }
 
-p {
-  margin-top: 5px;
-  font-size: 1.1em;
-  color: #fff;
-  text-shadow: 0 0 10px #2563eb;
-}
+    input::placeholder {
+      color: #a0a0a0;
+    }
 
-/* Section styling with overlay */
-section {
-  max-width: 420px;
-  margin: 40px auto;
-  padding: 30px;
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px;
-  box-shadow: 0 0 20px #2563eb, 0 0 25px rgba(0, 0, 0, 0.7);
-  color: #fff;
-  backdrop-filter: blur(5px);
-  animation: fadeIn 1s ease-in-out;
-}
+    button {
+      padding: 12px 15px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s, transform 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 100%;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
 
-h2 { color: #93c5fd; text-shadow: 0 0 10px #60a5fa; }
+    button[type="submit"] {
+      background-color: #2563eb;
+      box-shadow: 0 0 10px #2563eb;
+    }
+    button[type="submit"]:hover {
+      background-color: #3b82f6;
+      box-shadow: 0 0 15px #60a5fa;
+      transform: scale(1.03);
+    }
 
-label { text-align: left; font-weight: 500; margin-bottom: 5px; color: #cbd5e1; }
+    #googleLoginBtn {
+      background-color: #db4437;
+    }
+    #googleLoginBtn:hover {
+      background-color: #c33227;
+      transform: scale(1.03);
+    }
 
-input[type="email"], input[type="password"] {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 1px solid #60a5fa;
-  padding: 10px;
-  width: 100%;
-  margin-bottom: 15px;
-  border-radius: 8px;
-}
-input::placeholder { color: #a0a0a0; }
+    #logoutBtn {
+      background:#d32f2f;
+    }
+    #logoutBtn:hover {
+      background-color: #b71c1c;
+    }
 
-/* Buttons */
-button {
-  padding: 12px 15px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: 0.3s, transform 0.3s;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  cursor: pointer;
-}
+    .error-message {
+      color: #fca5a5;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
 
-/* Main Buttons */
-button[type="submit"] {
-  background-color: #2563eb;
-  box-shadow: 0 0 10px #2563eb;
-  color: #fff;
-}
-button[type="submit"]:hover {
-  background-color: #3b82f6;
-  box-shadow: 0 0 15px #60a5fa;
-  transform: scale(1.03);
-}
-
-#googleLoginBtn {
-  background-color: #db4437;
-  margin-top: 15px;
-}
-#googleLoginBtn:hover {
-  background-color: #c33227;
-  transform: scale(1.03);
-}
-
-#logoutBtn {
-  background:#d32f2f;
-}
-#logoutBtn:hover {
-  background-color: #b71c1c;
-}
-
-/* Error */
-.error-message { color: #ff6b6b; font-size: 0.9em; margin-bottom: 10px; }
-
-@keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-</style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 
 <body>
-<div class="navbar">
-  <button id="menu-toggle" onclick="toggleMenu()">
-    <div class="hamburger-icon bar1"></div>
-    <div class="hamburger-icon bar2"></div>
-    <div class="hamburger-icon bar3"></div>
-  </button>
-
-  <div class="logo-container">
-    <a href="index.html" class="logo-link">St Paul</a>
+  <!-- Navbar with centered clickable logo -->
+  <div class="navbar">
+    <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
+      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+    </a>
   </div>
-</div>
 
-<nav id="sideMenu" class="side-menu">
-  <a href="index.html">🌐 Public Homepage</a>
-  <a href="#loginSection" onclick="toggleMenu()">🔒 Admin Login</a>
-  <hr style="border-top:1px solid #3b82f6;width:80%;margin:15px auto;">
-  <a href="#" onclick="alert('Functionality requires login.')">👤 User Management</a>
-  <a href="#" onclick="alert('Functionality requires login.')">⚙️ Site Settings</a>
-</nav>
+  <!-- Sidebar -->
+  <nav id="sideMenu" class="side-menu">
+    <a href="index.html">🌐 Public Homepage</a>
+    <a href="#loginSection">🔒 Admin Login</a>
+    <hr style="border-top: 1px solid #3b82f6; width: 80%; margin: 15px auto;">
+    <a href="#" onclick="alert('Functionality requires login.')">👤 User Management</a>
+    <a href="#" onclick="alert('Functionality requires login.')">⚙️ Site Settings</a>
+  </nav>
 
-<div id="main-content-wrapper">
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <p>Restricted Access – Admin Only</p>
-  </header>
+  <div id="main-content-wrapper">
+    <header>
+      <h1>St Paul Learning Centre</h1>
+      <p>Restricted Access – Admin Only</p>
+    </header>
 
-  <section id="loginSection">
-    <h2>Admin Login</h2>
-    <form id="loginForm" novalidate>
-      <div id="errorMsg" class="error-message"></div>
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter admin email" required>
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
-      <label><input type="checkbox" checked> Remember Me</label>
-      <button type="submit">Login with Email/Password</button>
-    </form>
-    <hr style="margin:20px 0; border-top:1px solid #3b82f6;">
-    <button id="googleLoginBtn">Sign in with Google</button>
-  </section>
+    <section id="loginSection">
+      <h2>Admin Login</h2>
+      <form id="loginForm" novalidate>
+        <div id="errorMsg" class="error-message"></div>
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter admin email" required>
 
-  <section id="menuSection" style="display:none;">
-    <h2>Welcome, Nicholas 👑</h2>
-    <p>Select a page to access:</p>
-    <ul>
-      <li><button onclick="goToPage('class.html')">📘 Exams</button></li>
-      <li><button onclick="goToPage('class.html')">📝 Homework</button></li>
-      <li><button onclick="goToPage('class.html')">📖 Notes</button></li>
-      <li><button onclick="goToPage('parent-portal.html')">👨‍👩‍👧 Parent Portal</button></li>
-      <li><button onclick="goToPage('resources.html')">📚 Resources</button></li>
-      <li><button onclick="goToPage('student-dashboard.html')">🎓 Student Portal</button></li>
-      <li><button onclick="goToPage('teacher-resources.html')">👩‍🏫 Teacher Resources</button></li>
-      <li><button onclick="goToPage('class.html')">⏰ Timetable</button></li>
-    </ul>
-    <button id="logoutBtn">Logout</button>
-  </section>
-</div>
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        <label><input type="checkbox" checked> Remember Me</label>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-  authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-  projectId: "my-school-st-paul-1455a",
-  storageBucket: "my-school-st-paul-1455a.appspot.com",
-  appId: "1:951593545268:web:ed6ff256b523c29f8d48bb"
-};
+        <button type="submit">Login with Email/Password</button>
+      </form>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const googleProvider = new GoogleAuthProvider();
-const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ==");
-
-function checkAdminAccess(user) {
-  const userEmail = user.email ? user.email.trim().toLowerCase() : null;
-  if (userEmail === adminEmail.toLowerCase()) {
-    document.getElementById("loginSection").style.display = "none";
-    document.getElementById("menuSection").style.display = "block";
-    document.getElementById("errorMsg").textContent = "";
-  } else {
-    alert("⛔ Access Denied. Unauthorized email.");
-    signOut(auth);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-  const googleBtn = document.getElementById("googleLoginBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const errorMsg = document.getElementById("errorMsg");
-
-  setPersistence(auth, browserLocalPersistence);
-
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const email = document.getElementById("email").value.trim().toLowerCase();
-    const password = document.getElementById("password").value;
-    signInWithEmailAndPassword(auth, email, password)
-      .then(userCred => checkAdminAccess(userCred.user))
-      .catch(err => { errorMsg.textContent = "⚠️ " + err.message; });
-  });
-
-  googleBtn.addEventListener("click", () => {
-    signInWithPopup(auth, googleProvider)
-      .then(result => checkAdminAccess(result.user))
-      .catch(error => { errorMsg.textContent = "⚠️ Google sign-in failed: " + error.message; });
-  });
-
-  logoutBtn.addEventListener("click", () => { signOut(auth).then(() => { window.location.reload(); }); });
-
-  onAuthStateChanged(auth, (user) => { if(user) checkAdminAccess(user); });
-});
-
-window.goToPage = function(page){ window.location.href = page; }
-
-function toggleMenu() {
-  const sideMenu = document.getElementById("sideMenu");
-  const menuToggle = document.getElementById("menu-toggle");
-  const body = document.body;
-  if(sideMenu.style.width === "260px") {
-    sideMenu.style.width = "0";
-    menuToggle.classList.remove("change");
-    body.classList.remove("menu-open");
-  } else {
-    sideMenu.style.width = "260px";
-    menuToggle.classList.add("change");
-    body.classList.add("menu-open");
-  }
-}
-
-document.addEventListener('keydown', function(event){
-  if(event.key === "Escape") {
-    document.getElementById("sideMenu").style.width = "0";
-    document.getElementById("menu-toggle").classList.remove("change");
-    document.body.classList.remove("menu-open");
-  }
-});
-</script>
-
+      <hr style="margin: 20px 0; border-top: 1px solid #3b82f6;">
+      <button id="googleLoginBtn">Sign in with Google</button>
+    </section>
+  </div>
 </body>
-  </html>
+</html>
