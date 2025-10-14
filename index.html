@@ -46,7 +46,7 @@ body {
 /* -------------------- Navbar -------------------- */
 .navbar {
   display: flex;
-  justify-content: space-between; /* Change to space-between */
+  justify-content: space-between; /* Adjusted for menu placement */
   align-items: center;
   padding: 10px 20px;
   background: linear-gradient(90deg, #1e3a8a, #2563eb);
@@ -66,7 +66,7 @@ body {
   transform: translateX(-50%);
 }
 
-/* **NEW** Hamburger Menu Button */
+/* -------------------- Menu Toggle Button -------------------- */
 #menu-toggle {
   background: none;
   border: none;
@@ -84,7 +84,7 @@ body {
   height: 3px;
   background-color: white;
   margin: 4px 0;
-  transition: 0.4s;
+  transition: 0.4s; /* Smooth transition for the 'X' */
   border-radius: 2px;
   box-shadow: 0 0 5px #60a5fa;
 }
@@ -95,12 +95,13 @@ body {
 }
 
 .change .bar2 {
-  opacity: 0;
+  opacity: 0; /* Makes the middle bar disappear */
 }
 
 .change .bar3 {
   transform: translateY(-7px) rotate(45deg);
 }
+/* ----------------------------------------------------------- */
 
 .logo-link {
   display: flex;
@@ -141,7 +142,7 @@ body {
   transition: width 0.4s ease;
   padding-top: 80px; /* Space for the navbar */
   box-shadow: 2px 0 12px rgba(0,0,0,0.5);
-  z-index: 2000; /* Ensure it's above content but below the toggle button */
+  z-index: 2000;
 }
 
 .side-menu a {
@@ -160,13 +161,7 @@ body {
   text-shadow: 0 0 15px #93c5fd;
 }
 
-/* Remove close button from sidebar as the toggle button will handle it */
-.side-menu .close-btn {
-  display: none;
-}
-
-
-/* -------------------- Header and other sections (no changes needed) -------------------- */
+/* -------------------- Header -------------------- */
 header {
   text-align: center;
   padding: 30px 20px;
@@ -362,7 +357,8 @@ footer {
 
 <script>
 /**
- * Toggles the side menu open or closed and changes the icon.
+ * Toggles the side menu open or closed and changes the icon 
+ * from a hamburger (☰) to an 'X' via CSS classes.
  */
 function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
@@ -371,11 +367,11 @@ function toggleMenu() {
   if (sideMenu.style.width === "260px") {
     // Menu is open, so close it
     sideMenu.style.width = "0";
-    menuToggle.classList.remove("change");
+    menuToggle.classList.remove("change"); // Remove 'X' class
   } else {
     // Menu is closed, so open it
     sideMenu.style.width = "260px";
-    menuToggle.classList.add("change");
+    menuToggle.classList.add("change"); // Add 'X' class
   }
 }
 
