@@ -63,6 +63,42 @@ body {
   flex-direction: column;
   align-items: center;
 }
+   /* 📱 Side Menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 10;
+      top: 0;
+      left: 0;
+      background-color: #002b5c;
+      overflow-x: hidden;
+      transition: width 0.4s ease;
+      padding-top: 60px;
+    }
+
+    .side-menu a {
+      padding: 15px 30px;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .side-menu a:hover {
+      background-color: #0056b3;
+    }
+
+    .side-menu .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      font-size: 36px;
+      color: white;
+      cursor: pointer;
+    }
+
 
 .logo-link {
   display: flex;
@@ -265,6 +301,22 @@ footer {
     </a>
   </div>
 </div>
+  
+  <!-- 📋 Sidebar Menu -->
+  <nav id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+    <a href="index.html">News & Announcements</a>
+    <a href="student-portal.html">Student Portal</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="resources.html">Resources</a>
+    <a href="showcase.html">Showcase</a>
+    <a href="contact.html">Contact</a>
+    <a href="class.html">Timetable</a>
+    <a href="teacher-resources.html">Teacher Resources</a>
+    <a href="parent-portal.html">Parent Portal</a>
+  </nav>
+
+
 
 <!-- Sidebar -->
 <nav id="sideMenu" class="side-menu">
