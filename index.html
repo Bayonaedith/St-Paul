@@ -58,6 +58,20 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
+.menu-btn {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: white;
+  margin-right: 20px;
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  transition: transform 0.3s;
+}
+.menu-btn:hover {
+  transform: scale(1.2);
+}
+
 .navbar-center {
   display: flex;
   flex-direction: column;
@@ -120,6 +134,14 @@ body {
   background: #2563eb;
   padding-left: 40px;
   text-shadow: 0 0 15px #93c5fd;
+}
+
+.side-menu .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 /* -------------------- Header -------------------- */
@@ -257,75 +279,9 @@ footer {
 
 <!-- Navbar -->
 <div class="navbar">
+  <span class="menu-btn" onclick="openMenu()" tabindex="0">&#9776;</span>
   <div class="navbar-center">
     <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
       <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" 
            alt="School Logo" class="school-logo">
-      <span class="logo-text">St Paul Learning Centre</span>
-    </a>
-  </div>
-</div>
-
-<!-- Sidebar -->
-<nav id="sideMenu" class="side-menu">
-  <span class="close-btn" onclick="closeMenu()">&times;</span>
-  <a href="index.html">News & Announcements</a>
-  <a href="student-portal.html">Student Portal</a>
-  <a href="admissions.html">Admissions</a>
-  <a href="resources.html">Resources</a>
-  <a href="showcase.html">Showcase</a>
-  <a href="contact.html">Contact</a>
-  <a href="teachers.html">Teachers</a>
-  <a href="teacher-resources.html">Teacher Resources</a>
-  <a href="parent-portal.html">Parent Portal</a>
-</nav>
-
-<header>
-  <h1>St Paul Learning Centre</h1>
-  <div class="motto">Strive For Success, Shine With Excellence</div>
-  <p>Empowering bright minds, connecting passionate families, and inspiring dedicated teachers for a brighter future.</p>
-</header>
-
-<section>
-  <h2>Welcome to St Paul Learning Centre</h2>
-  <p>
-    At <strong>St Paul Learning Centre</strong>, we are committed to unlocking every student’s potential and cultivating a dynamic, inclusive community. Explore our intuitive student and parent portals, access rich learning resources, witness our school’s inspiring showcase, and stay informed with the latest news and exciting announcements.
-  </p>
-
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
-    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
-    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
-  </div>
-
-  <h3>Quick Access 😎</h3>
-  <div class="feature-buttons">
-    <a href="student-portal.html" class="neon-btn">Student Portal</a>
-    <a href="parent-portal.html" class="neon-btn">Parent Portal</a>
-    <a href="admissions.html" class="neon-btn">Admissions</a>
-    <a href="resources.html" class="neon-btn">Resources</a>
-    <a href="showcase.html" class="neon-btn">Showcase</a>
-    <a href="contact.html" class="neon-btn">Contact</a>
-  </div>
-</section>
-
-<footer>
-  &copy; 2025 St Paul Learning Centre. All rights reserved.
-</footer>
-
-<script>
-function openMenu() {
-  document.getElementById("sideMenu").style.width = "260px";
-}
-function closeMenu() {
-  document.getElementById("sideMenu").style.width = "0";
-}
-
-// Close sidebar on Escape key
-document.addEventListener('keydown', function(event) {
-  if(event.key === "Escape") closeMenu();
-});
-</script>
-
-</body>
-</html>
+      <span class="logo-text">St Paul Learning Centre</
