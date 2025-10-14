@@ -3,26 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>St Paul Learning Centre</title>
+<title>Homework - St Paul Learning Centre</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-
-<!-- Firebase (public index.html) -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-    projectId: "my-school-st-paul-1455a",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-</script>
 
 <style>
 body {
@@ -115,23 +100,6 @@ body {
   cursor: pointer;
 }
 
-/* Header */
-header {
-  text-align: center;
-  padding: 30px 20px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2.5rem;
-  color: #60a5fa;
-}
-
-header .motto {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-}
-
 /* Main Section */
 section {
   padding: 30px 20px;
@@ -145,23 +113,16 @@ section h2 {
   font-size: 2rem;
 }
 
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
-  margin-bottom: 30px;
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-.gallery img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-}
-
-/* Feature List */
-.feature-list li {
+ul li {
+  background: rgba(30,58,138,0.85);
   margin: 10px 0;
+  padding: 15px;
+  border-radius: 10px;
 }
 
 /* Footer */
@@ -177,10 +138,6 @@ footer {
 @media (max-width: 768px) {
   .logo-text {
     font-size: 1rem;
-  }
-  .gallery {
-    flex-direction: column;
-    align-items: center;
   }
 }
 </style>
@@ -207,38 +164,21 @@ footer {
   <a href="resources.html">Resources</a>
   <a href="showcase.html">Showcase</a>
   <a href="contact.html">Contact</a>
-  <a href="teachers.html">Teachers</a>
+  <a href="timetable.html">Timetable</a>
   <a href="teacher-resources.html">Teacher Resources</a>
   <a href="parent-portal.html">Parent Portal</a>
 </nav>
 
-<header>
-  <h1>St Paul Learning Centre</h1>
-  <div class="motto">Strive For Success</div>
-  <p>Empowering students, connecting families, supporting teachers.</p>
-</header>
-
+<!-- Main Section -->
 <section>
-  <h2>Welcome to St Paul Learning Centre</h2>
-  <p>
-    St Paul Learning Centre is dedicated to nurturing every student’s potential and fostering a vibrant, supportive community for families and educators. Explore our student and parent portals, discover resources, view our school showcase, and stay updated with news and announcements.
-  </p>
-
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
-    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
-    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
-  </div>
-
-  <h3>Quick Access</h3>
-  <ul class="feature-list">
-    <li><a href="student-portal.html">Student Portal</a> – Access learning materials and your timetable</li>
-    <li><a href="parent-portal.html">Parent Portal</a> – Monitor progress and communicate with teachers</li>
-    <li><a href="admissions.html">Admissions</a> – Join our community</li>
-    <li><a href="resources.html">Resources</a> – Study tools and support</li>
-    <li><a href="showcase.html">Showcase</a> – Discover our achievements and history</li>
-    <li><a href="contact.html">Contact</a> – Get in touch with us</li>
+  <h2>📝 Homework Assignments</h2>
+  <ul>
+    <li>Mathematics: Solve exercises 1–10 from Chapter 3 (due Friday)</li>
+    <li>English: Write an essay on “My Role Model” (due Monday)</li>
+    <li>Science: Prepare a presentation on renewable energy (due Wednesday)</li>
+    <li>History: Research project on African kingdoms (due next week)</li>
   </ul>
+  <p>Keep checking for updates every week.</p>
 </section>
 
 <footer>
@@ -260,4 +200,4 @@ document.addEventListener('keydown', function(event) {
 </script>
 
 </body>
-  </html>
+</html>
