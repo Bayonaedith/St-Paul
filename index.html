@@ -29,11 +29,17 @@ body {
   color: white;
   min-height: 100vh;
   overflow-x: hidden;
-
+  
   /* Animated Neon Gradient Background */
   background: linear-gradient(270deg, #0f172a, #1e293b, #2563eb, #60a5fa);
   background-size: 800% 800%;
   animation: gradientBG 20s ease infinite;
+}
+
+/* Fix: The body class applied by JS will push content */
+.menu-open #main-content-wrapper,
+.menu-open .navbar {
+  transform: translateX(260px); /* Pushes content right by sidebar width */
 }
 
 /* Gradient Background Animation */
@@ -46,7 +52,7 @@ body {
 /* -------------------- Navbar -------------------- */
 .navbar {
   display: flex;
-  justify-content: space-between; /* Adjusted for menu placement */
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   background: linear-gradient(90deg, #1e3a8a, #2563eb);
@@ -54,26 +60,26 @@ body {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease; /* Added for smooth push effect */
 }
 
 .navbar-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Center the logo container */
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 }
 
-/* -------------------- Menu Toggle Button -------------------- */
+/* -------------------- Menu Toggle Button (Hamburger / X) -------------------- */
 #menu-toggle {
   background: none;
   border: none;
   cursor: pointer;
   padding: 10px;
-  z-index: 2001; /* Must be above the sidebar */
-  position: absolute; /* Position in the left corner */
+  z-index: 2001;
+  position: absolute;
   left: 10px;
   top: 50%;
   transform: translateY(-50%);
@@ -84,20 +90,18 @@ body {
   height: 3px;
   background-color: white;
   margin: 4px 0;
-  transition: 0.4s; /* Smooth transition for the 'X' */
+  transition: 0.4s;
   border-radius: 2px;
   box-shadow: 0 0 5px #60a5fa;
 }
 
-/* Change icon to 'X' when menu is open (applied via JS) */
+/* TRANSFORMS HAMBURGER INTO 'X' */
 .change .bar1 {
   transform: translateY(7px) rotate(-45deg);
 }
-
 .change .bar2 {
   opacity: 0; /* Makes the middle bar disappear */
 }
-
 .change .bar3 {
   transform: translateY(-7px) rotate(45deg);
 }
@@ -140,7 +144,7 @@ body {
   background: #1e3a8a;
   overflow-x: hidden;
   transition: width 0.4s ease;
-  padding-top: 80px; /* Space for the navbar */
+  padding-top: 80px;
   box-shadow: 2px 0 12px rgba(0,0,0,0.5);
   z-index: 2000;
 }
@@ -161,7 +165,12 @@ body {
   text-shadow: 0 0 15px #93c5fd;
 }
 
-/* -------------------- Header -------------------- */
+/* -------------------- Main Content Wrapper -------------------- */
+#main-content-wrapper {
+  transition: transform 0.4s ease; /* Added for smooth push effect */
+}
+
+/* -------------------- Header and Sections -------------------- */
 header {
   text-align: center;
   padding: 30px 20px;
@@ -184,7 +193,6 @@ header p {
   color: #cbd5e1;
 }
 
-/* -------------------- Main Section -------------------- */
 section {
   padding: 30px 20px;
   max-width: 900px;
@@ -272,7 +280,7 @@ footer {
   text-shadow: 0 0 5px #60a5fa;
 }
 
-/* -------------------- Glow Animation -------------------- */
+/* -------------------- Animations -------------------- */
 @keyframes glow {
   from { text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6; }
   to { text-shadow: 0 0 20px #93c5fd, 0 0 30px #2563eb; }
@@ -322,56 +330,61 @@ footer {
   <a href="parent-portal.html">Parent Portal</a>
 </nav>
 
-<header>
-  <h1>St Paul Learning Centre</h1>
-  <div class="motto">Strive For Success, Shine With Excellence</div>
-  <p>Empowering bright minds, connecting passionate families, and inspiring dedicated teachers for a brighter future.</p>
-</header>
+<div id="main-content-wrapper"> 
 
-<section>
-  <h2>Welcome to St Paul Learning Centre</h2>
-  <p>
-    At <strong>St Paul Learning Centre</strong>, we are committed to unlocking every student’s potential and cultivating a dynamic, inclusive community. Explore our intuitive student and parent portals, access rich learning resources, witness our school’s inspiring showcase, and stay informed with the latest news and exciting announcements.
-  </p>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success, Shine With Excellence</div>
+    <p>Empowering bright minds, connecting passionate families, and inspiring dedicated teachers for a brighter future.</p>
+  </header>
 
-  <div class="gallery">
-    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
-    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
-    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
-  </div>
+  <section>
+    <h2>Welcome to St Paul Learning Centre</h2>
+    <p>
+      At <strong>St Paul Learning Centre</strong>, we are committed to unlocking every student’s potential and cultivating a dynamic, inclusive community. Explore our intuitive student and parent portals, access rich learning resources, witness our school’s inspiring showcase, and stay informed with the latest news and exciting announcements.
+    </p>
 
-  <h3>Quick Access 😎</h3>
-  <div class="feature-buttons">
-    <a href="student-portal.html" class="neon-btn">Student Portal</a>
-    <a href="parent-portal.html" class="neon-btn">Parent Portal</a>
-    <a href="admissions.html" class="neon-btn">Admissions</a>
-    <a href="resources.html" class="neon-btn">Resources</a>
-    <a href="showcase.html" class="neon-btn">Showcase</a>
-    <a href="contact.html" class="neon-btn">Contact</a>
-  </div>
-</section>
+    <div class="gallery">
+      <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
+      <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
+    </div>
 
-<footer>
-  &copy; 2025 St Paul Learning Centre. All rights reserved.
-</footer>
+    <h3>Quick Access 😎</h3>
+    <div class="feature-buttons">
+      <a href="student-portal.html" class="neon-btn">Student Portal</a>
+      <a href="parent-portal.html" class="neon-btn">Parent Portal</a>
+      <a href="admissions.html" class="neon-btn">Admissions</a>
+      <a href="resources.html" class="neon-btn">Resources</a>
+      <a href="showcase.html" class="neon-btn">Showcase</a>
+      <a href="contact.html" class="neon-btn">Contact</a>
+    </div>
+  </section>
 
-<script>
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
+
+</div> <script>
 /**
- * Toggles the side menu open or closed and changes the icon 
- * from a hamburger (☰) to an 'X' via CSS classes.
+ * Toggles the side menu open or closed.
+ * It also handles the hamburger/X icon transition and pushes the main content.
  */
 function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
   const menuToggle = document.getElementById("menu-toggle");
+  const body = document.body;
 
   if (sideMenu.style.width === "260px") {
     // Menu is open, so close it
     sideMenu.style.width = "0";
-    menuToggle.classList.remove("change"); // Remove 'X' class
+    menuToggle.classList.remove("change"); // Hamburger icon appears
+    body.classList.remove("menu-open"); // Content slides back
   } else {
     // Menu is closed, so open it
     sideMenu.style.width = "260px";
-    menuToggle.classList.add("change"); // Add 'X' class
+    menuToggle.classList.add("change"); // 'X' icon appears
+    body.classList.add("menu-open"); // Content slides right
   }
 }
 
@@ -380,6 +393,7 @@ document.addEventListener('keydown', function(event) {
   if(event.key === "Escape") {
     document.getElementById("sideMenu").style.width = "0";
     document.getElementById("menu-toggle").classList.remove("change");
+    document.body.classList.remove("menu-open");
   }
 });
 </script>
