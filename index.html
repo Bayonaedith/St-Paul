@@ -5,10 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>St Paul Learning Centre</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-<!-- Firebase (public index.html) -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -65,15 +63,22 @@ body {
 }
 
 .logo-link {
+  /* Change 1: Flex-direction to column for vertical stacking */
   display: flex;
+  flex-direction: column; 
   align-items: center;
   text-decoration: none;
   color: white;
 }
 
 .school-logo {
+  /* Change 2: Make logo small */
+  width: 45px; 
+  height: 45px;
   border-radius: 50%;
-  margin-right: 10px;
+  /* Change 3: Remove margin-right for centering */
+  margin-right: 0; 
+  margin-bottom: 5px; /* Add a small gap between logo and text */
   border: 2px solid white;
   transition: transform 0.5s;
 }
@@ -82,9 +87,10 @@ body {
 }
 
 .logo-text {
-  font-size: 1.3rem;
+  font-size: 1rem; /* Adjust font size to fit smaller logo */
   font-weight: 700;
   text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
+  text-align: center;
 }
 
 /* -------------------- Sidebar -------------------- */
@@ -257,7 +263,8 @@ footer {
 
 /* -------------------- Responsive -------------------- */
 @media (max-width: 768px) {
-  .logo-text { font-size: 1rem; }
+  /* Change 4: Adjust logo-text size for mobile */
+  .logo-text { font-size: 0.8rem; } 
   .gallery { flex-direction: column; align-items: center; }
   .feature-buttons { flex-direction: column; align-items: center; }
 }
@@ -265,7 +272,6 @@ footer {
 </head>
 <body>
 
-<!-- Navbar -->
 <div class="navbar">
   <span class="menu-btn" onclick="openMenu()" tabindex="0">&#9776;</span>
   <div class="navbar-center">
@@ -276,7 +282,6 @@ footer {
   </div>
 </div>
 
-<!-- Sidebar -->
 <nav id="sideMenu" class="side-menu">
   <span class="close-btn" onclick="closeMenu()">&times;</span>
   <a href="index.html">News & Announcements</a>
