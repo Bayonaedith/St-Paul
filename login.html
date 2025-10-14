@@ -155,7 +155,7 @@ const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ==");
 function checkAdminAccess(user){
   const userEmail = user.email?.trim().toLowerCase();
   if(userEmail === adminEmail.toLowerCase()){
-    window.location.href = "teacher-resources.html";
+    window.location.href = "resources.html";
   } else {
     alert("⛔ Access Denied. Unauthorized email.");
   }
@@ -229,7 +229,7 @@ document.addEventListener('keydown', e=>{if(e.key==="Escape"){document.getElemen
       <label for="email">Email</label>
       <input type="email" id="email" placeholder="Enter admin email" required>
       <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
+      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda2468">
       <label><input type="checkbox" checked> Remember Me</label>
       <button type="submit">Login with Email/Password</button>
     </form>
