@@ -1,105 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Contact & Parent Engagement - St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Contact & Parent Engagement - St Paul Learning Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-            authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-            projectId: "my-school-st-paul-1455a",
-        };
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+      projectId: "my-school-st-paul-1455a",
+    };
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        // Protect links to sensitive pages
-        function protectLinks() {
-            const sensitivePages = [
-                "exams.html",
-                "homework.html",
-                "notes.html",
-                "parent-portal.html",
-                "resources.html",
-                "student-portal.html",
-                "teacher-resources.html",
-                "timetable.html"
-            ];
+    // Protect links
+    function protectLinks() {
+      const sensitivePages = [
+        "exams.html",
+        "homework.html",
+        "notes.html",
+        "parent-portal.html",
+        "resources.html",
+        "student-portal.html",
+        "teacher-resources.html",
+        "timetable.html"
+      ];
 
-            document.querySelectorAll("a").forEach(link => {
-                const href = link.getAttribute("href");
-                if (sensitivePages.includes(href)) {
-                    link.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        auth.onAuthStateChanged(user => {
-                            if (user) {
-                                window.location.href = href;
-                            } else {
-                                window.location.href = "login.html";
-                            }
-                        });
-                    });
-                }
+      document.querySelectorAll("a").forEach(link => {
+        const href = link.getAttribute("href");
+        if (sensitivePages.includes(href)) {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            auth.onAuthStateChanged(user => {
+              if (user) {
+                window.location.href = href;
+              } else {
+                window.location.href = "login.html";
+              }
             });
+          });
         }
+      });
+    }
 
-        document.addEventListener("DOMContentLoaded", protectLinks);
-    </script>
+    document.addEventListener("DOMContentLoaded", protectLinks);
+  </script>
+
+  <style>
+    /* Navbar */
+    .navbar {
+      background: #003366;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .navbar-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+    }
+
+    .school-logo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    /* Sidebar Menu */
+    .side-menu {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #00264d;
+      overflow-x: hidden;
+      transition: 0.4s;
+      padding-top: 60px;
+      z-index: 1000;
+    }
+
+    .side-menu a {
+      padding: 12px 25px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .side-menu a:hover {
+      background-color: #004080;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 30px;
+      color: white;
+      cursor: pointer;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 15px 20px;
+      background: #f0f0f5;
+    }
+
+    .motto {
+      font-style: italic;
+      color: #003366;
+      margin-bottom: 10px;
+    }
+
+    section {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .cta a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #003366;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .cta a:hover {
+      background: #004080;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #003366;
+      color: white;
+      margin-top: 30px;
+    }
+  </style>
 </head>
+
 <body>
-    <!-- Top Bar with Hamburger Menu -->
-    <div class="navbar">
-        <span class="menu-btn" onclick="openMenu()">&#9776;</span>
-        <div class="navbar-center">
-            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-            <span class="logo-text">St Paul Learning Centre</span>
-        </div>
+  <!-- Top Bar -->
+  <div class="navbar">
+    <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+    <div class="navbar-center">
+      <a href="https://nicholasbagenda.netlify.app" target="_blank">
+        <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+      </a>
+      <span class="logo-text">St Paul Learning Centre</span>
     </div>
+  </div>
 
-    <!-- Sidebar Menu -->
-    <nav id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">Showcase</a>
-        <a href="contact.html">Contact</a>
-        <a href="timetable.html">Timetable</a>
-        <a href="teacher-resources.html">Teacher Resources</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+  <!-- Sidebar -->
+  <nav id="sideMenu" class="side-menu">
+    <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+    <a href="index.html">News & Announcements</a>
+    <a href="student-portal.html">Student Portal</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="resources.html">Resources</a>
+    <a href="showcase.html">Showcase</a>
+    <a href="contact.html">Contact</a>
+    <a href="timetable.html">Timetable</a>
+    <a href="teacher-resources.html">Teacher Resources</a>
+    <a href="parent-portal.html">Parent Portal</a>
+  </nav>
 
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success</div>
+    <p>Empowering students, connecting families, supporting teachers.</p>
+  </header>
 
-    <section>
-        <h2>Contact & Parent Engagement</h2>
-        <p>Stay connected! Parents can get updates, reach teachers, and participate in school events.</p>
-        <div class="cta">
-            <a href="contact.html">Contact Us</a>
-            <a href="parent-portal.html">Parent Portal</a>
-        </div>
-    </section>
+  <section>
+    <h2>Contact & Parent Engagement</h2>
+    <p>Stay connected! Parents can get updates, reach teachers, and participate in school events.</p>
+    <div class="cta">
+      <a href="contact.html">Contact Us</a>
+      <a href="parent-portal.html">Parent Portal</a>
+    </div>
+  </section>
 
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
 
-    <script>
-        function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
-        function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
-    </script>
+  <script>
+    function openMenu() {
+      document.getElementById("sideMenu").style.width = "280px";
+    }
+
+    function closeMenu() {
+      document.getElementById("sideMenu").style.width = "0";
+    }
+  </script>
 </body>
-</html>
+                                   </html>
