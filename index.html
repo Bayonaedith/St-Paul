@@ -1,105 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="R3kH-LbUwNa0uZwAc91SCEMZh46mtNGdyCv-h7_bMow" />
-    <meta charset="UTF-8">
-    <title>St Paul Learning Centre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="R3kH-LbUwNa0uZwAc91SCEMZh46mtNGdyCv-h7_bMow" />
+<title>St Paul Learning Centre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
-    <!-- Firebase (for other pages) -->
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<!-- Firebase (for other pages) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-      // Firebase config
-      const firebaseConfig = {
-        apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-        authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-        projectId: "my-school-st-paul-1455a",
-      };
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a",
+  };
 
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      // 👆 index.html does not restrict — it stays public
-    </script>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+</script>
+
+<style>
+  body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    min-height: 100vh;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, #1e3a8a, #2563eb);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  }
+
+  .navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  .logo-link:hover {
+    transform: scale(1.05);
+  }
+
+  .school-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+
+  .logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  .menu-btn {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: white;
+  }
+
+  .side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #1e3a8a;
+    overflow-x: hidden;
+    transition: width 0.4s ease;
+    padding-top: 60px;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+    z-index: 2000;
+  }
+
+  .side-menu a {
+    display: block;
+    padding: 12px 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  .side-menu a:hover {
+    background: #2563eb;
+    padding-left: 40px;
+  }
+
+  .side-menu .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+  }
+
+  header {
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  section {
+    padding: 30px 20px;
+  }
+
+  .gallery img {
+    width: 200px;
+    height: 120px;
+    margin: 10px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 20px;
+    background: #1e3a8a;
+  }
+</style>
 </head>
 <body>
-    <!-- Top Bar -->
-    <div class="navbar">
-        <!-- Hamburger Menu Button on the LEFT -->
-        <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
-        <div class="navbar-center">
-            <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-            <span class="logo-text">St Paul Learning Centre</span>
-        </div>
-    </div>
 
-    <!-- Sidebar Menu -->
-    <nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
-        <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
-        <a href="index.html">News & Announcements</a>
-        <a href="student-portal.html">Student Portal</a>
-        <a href="admissions.html">Admissions</a>
-        <a href="resources.html">Resources</a>
-        <a href="showcase.html">Showcase</a>
-        <a href="contact.html">Contact</a>
-        <a href="teachers.html">Teachers</a>
-        <a href="teacher-resources.html">Teacher Resources</a>
-        <a href="parent-portal.html">Parent Portal</a>
-    </nav>
+<!-- Top Navbar -->
+<div class="navbar">
+  <span class="menu-btn" onclick="openMenu()" tabindex="0" aria-label="Main menu">&#9776;</span>
+  <div class="navbar-center">
+    <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
+      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+      <span class="logo-text">St Paul Learning Centre</span>
+    </a>
+  </div>
+</div>
 
-    <header>
-        <h1>St Paul Learning Centre</h1>
-        <div class="motto">Strive For Success</div>
-        <p>Empowering students, connecting families, supporting teachers.</p>
-    </header>
+<!-- Sidebar Menu -->
+<nav id="sideMenu" class="side-menu" aria-label="Sidebar navigation">
+  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()" tabindex="0" aria-label="Close menu">&times;</a>
+  <a href="index.html">News & Announcements</a>
+  <a href="student-portal.html">Student Portal</a>
+  <a href="admissions.html">Admissions</a>
+  <a href="resources.html">Resources</a>
+  <a href="showcase.html">Showcase</a>
+  <a href="contact.html">Contact</a>
+  <a href="teachers.html">Teachers</a>
+  <a href="teacher-resources.html">Teacher Resources</a>
+  <a href="parent-portal.html">Parent Portal</a>
+</nav>
 
-    <section>
-        <h2>Welcome to St Paul Learning Centre</h2>
-        <p>
-            St Paul Learning Centre is dedicated to nurturing every student’s potential and fostering a vibrant, supportive community for families and educators. Explore our student and parent portals, discover resources, view our school showcase, and stay updated with news and announcements.
-        </p>
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <div class="motto">Strive For Success</div>
+  <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
 
-        <div class="gallery">
-            <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
-            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
-            <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
-        </div>
+<section>
+  <h2>Welcome to St Paul Learning Centre</h2>
+  <p>
+    St Paul Learning Centre is dedicated to nurturing every student’s potential and fostering a vibrant, supportive community for families and educators.
+  </p>
 
-        <h3>Quick Access</h3>
-        <ul class="feature-list">
-            <li><a href="student-portal.html">Student Portal</a> – Access learning materials and your timetable</li>
-            <li><a href="parent-portal.html">Parent Portal</a> – Monitor progress and communicate with teachers</li>
-            <li><a href="admissions.html">Admissions</a> – Join our community</li>
-            <li><a href="resources.html">Resources</a> – Study tools and support</li>
-            <li><a href="showcase.html">Showcase</a> – Discover our achievements and history</li>
-            <li><a href="contact.html">Contact</a> – Get in touch with us</li>
-        </ul>
-    </section>
-    <footer>
-        &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
+    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
+    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
+  </div>
 
-    <!-- Simple JS for menu toggle -->
-    <script>
-    function openMenu() {
-        document.getElementById("sideMenu").style.width = "260px";
-    }
-    function closeMenu() {
-        document.getElementById("sideMenu").style.width = "0";
-    }
+  <h3>Quick Access</h3>
+  <ul class="feature-list">
+    <li><a href="student-portal.html">Student Portal</a> – Access learning materials and your timetable</li>
+    <li><a href="parent-portal.html">Parent Portal</a> – Monitor progress and communicate with teachers</li>
+    <li><a href="admissions.html">Admissions</a> – Join our community</li>
+    <li><a href="resources.html">Resources</a> – Study tools and support</li>
+    <li><a href="showcase.html">Showcase</a> – Discover our achievements and history</li>
+    <li><a href="contact.html">Contact</a> – Get in touch with us</li>
+  </ul>
+</section>
 
-    // Accessibility: Close menu on Escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === "Escape") {
-            closeMenu();
-        }
-    });
-    </script>
+<footer>
+  &copy; 2025 St Paul Learning Centre. All rights reserved.
+</footer>
+
+<script>
+function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === "Escape") { closeMenu(); }
+});
+</script>
+
 </body>
-</html>
+        </html>
