@@ -2,180 +2,243 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Homework - St Paul Learning Centre</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Paul Learning Centre</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<!-- Firebase (public index.html) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+</script>
+
 <style>
-  body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b);
-    color: white;
-    min-height: 100vh;
-  }
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  min-height: 100vh;
+}
 
-  /* Top Navbar */
-  .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: linear-gradient(90deg, #1e3a8a, #2563eb);
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  }
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #1e3a8a, #2563eb);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
 
-  .navbar-center {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.menu-btn {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: white;
+  margin-right: 20px;
+}
 
-  .logo-link {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-  }
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .logo-link:hover {
-    transform: scale(1.05);
-  }
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
 
-  .school-logo {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-    border: 2px solid white;
-  }
+.school-logo {
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 2px solid white;
+}
 
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* Sidebar */
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #1e3a8a;
+  overflow-x: hidden;
+  transition: width 0.4s ease;
+  padding-top: 60px;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.5);
+  z-index: 2000;
+}
+
+.side-menu a {
+  display: block;
+  padding: 12px 30px;
+  text-decoration: none;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.side-menu a:hover {
+  background: #2563eb;
+  padding-left: 40px;
+}
+
+.side-menu .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Header */
+header {
+  text-align: center;
+  padding: 30px 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #60a5fa;
+}
+
+header .motto {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Main Section */
+section {
+  padding: 30px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+section h2 {
+  color: #60a5fa;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.gallery img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Feature List */
+.feature-list li {
+  margin: 10px 0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1e3a8a;
+  color: white;
+  margin-top: 30px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .logo-text {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: white;
-    letter-spacing: 0.5px;
-  }
-
-  .menu-btn {
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: white;
-  }
-
-  /* Sidebar Menu */
-  .side-menu {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: #1e3a8a;
-    overflow-x: hidden;
-    transition: width 0.4s ease;
-    padding-top: 60px;
-    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-  }
-
-  .side-menu a {
-    display: block;
-    padding: 12px 30px;
-    text-decoration: none;
-    color: white;
     font-size: 1rem;
-    font-weight: 500;
-    transition: 0.3s;
   }
-
-  .side-menu a:hover {
-    background: #2563eb;
-    padding-left: 40px;
+  .gallery {
+    flex-direction: column;
+    align-items: center;
   }
-
-  .side-menu .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 2rem;
-    color: white;
-    cursor: pointer;
-  }
-
-  /* Main Section */
-  section {
-    text-align: center;
-    padding: 50px 20px;
-  }
-
-  h2 {
-    color: #60a5fa;
-    margin-bottom: 30px;
-    font-size: 2rem;
-  }
-
-  ul {
-    max-width: 600px;
-    margin: auto;
-    text-align: left;
-    padding-left: 20px;
-  }
-
-  li {
-    margin-bottom: 12px;
-    font-size: 1.1rem;
-  }
-
-  footer {
-    text-align: center;
-    padding: 20px;
-    background: #1e3a8a;
-    color: white;
-    margin-top: 40px;
-    font-size: 0.9rem;
-  }
+}
 </style>
 </head>
 <body>
 
-<!-- Top Navbar -->
+<!-- Navbar -->
 <div class="navbar">
-  <span class="menu-btn" onclick="openMenu()">&#9776;</span>
+  <span class="menu-btn" onclick="openMenu()" tabindex="0">&#9776;</span>
   <div class="navbar-center">
     <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
-      <img src="logo.png" alt="School Logo" class="school-logo">
+      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
       <span class="logo-text">St Paul Learning Centre</span>
     </a>
   </div>
 </div>
 
-<!-- Sidebar Menu -->
+<!-- Sidebar -->
 <nav id="sideMenu" class="side-menu">
-  <a href="javascript:void(0)" class="close-btn" onclick="closeMenu()">&times;</a>
+  <span class="close-btn" onclick="closeMenu()">&times;</span>
   <a href="index.html">News & Announcements</a>
   <a href="student-portal.html">Student Portal</a>
   <a href="admissions.html">Admissions</a>
   <a href="resources.html">Resources</a>
   <a href="showcase.html">Showcase</a>
   <a href="contact.html">Contact</a>
-  <a href="timetable.html">Timetable</a>
+  <a href="teachers.html">Teachers</a>
   <a href="teacher-resources.html">Teacher Resources</a>
   <a href="parent-portal.html">Parent Portal</a>
 </nav>
 
-<!-- Main Section -->
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <div class="motto">Strive For Success</div>
+  <p>Empowering students, connecting families, supporting teachers.</p>
+</header>
+
 <section>
-  <h2>📝 Homework Assignments</h2>
-  <ul>
-    <li>Mathematics: Solve exercises 1–10 from Chapter 3 (due Friday)</li>
-    <li>English: Write an essay on “My Role Model” (due Monday)</li>
-    <li>Science: Prepare a presentation on renewable energy (due Wednesday)</li>
-    <li>History: Research project on African kingdoms (due next week)</li>
+  <h2>Welcome to St Paul Learning Centre</h2>
+  <p>
+    St Paul Learning Centre is dedicated to nurturing every student’s potential and fostering a vibrant, supportive community for families and educators. Explore our student and parent portals, discover resources, view our school showcase, and stay updated with news and announcements.
+  </p>
+
+  <div class="gallery">
+    <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
+    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
+    <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
+  </div>
+
+  <h3>Quick Access</h3>
+  <ul class="feature-list">
+    <li><a href="student-portal.html">Student Portal</a> – Access learning materials and your timetable</li>
+    <li><a href="parent-portal.html">Parent Portal</a> – Monitor progress and communicate with teachers</li>
+    <li><a href="admissions.html">Admissions</a> – Join our community</li>
+    <li><a href="resources.html">Resources</a> – Study tools and support</li>
+    <li><a href="showcase.html">Showcase</a> – Discover our achievements and history</li>
+    <li><a href="contact.html">Contact</a> – Get in touch with us</li>
   </ul>
-  <p>Keep checking for updates every week.</p>
 </section>
 
 <footer>
@@ -183,9 +246,18 @@
 </footer>
 
 <script>
-function openMenu() { document.getElementById("sideMenu").style.width = "280px"; }
-function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
+function openMenu() {
+  document.getElementById("sideMenu").style.width = "260px";
+}
+function closeMenu() {
+  document.getElementById("sideMenu").style.width = "0";
+}
+
+// Close sidebar on Escape key
+document.addEventListener('keydown', function(event) {
+  if(event.key === "Escape") closeMenu();
+});
 </script>
 
 </body>
-</html>
+  </html>
