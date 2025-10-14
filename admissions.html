@@ -15,6 +15,60 @@
 </script>
 
 <style>
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #004080;
+  padding: 10px 15px;
+  color: white;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.school-logo {
+  width: 60px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.school-logo:hover {
+  transform: scale(1.08);
+}
+
+/* Sidebar Menu */
+.side-menu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.4s;
+  padding-top: 60px;
+}
+
+.side-menu a {
+  padding: 10px 25px;
+  text-decoration: none;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.side-menu a:hover {
+  background-color: #575757;
+}
+
 /* Simple spinner CSS animation */
 .spinner {
   border: 5px solid #f3f3f3;
@@ -36,6 +90,14 @@
   margin-top: 10px;
   font-weight: 600;
 }
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #004080;
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -44,7 +106,10 @@
 <div class="navbar">
   <span class="menu-btn" onclick="openMenu()">&#9776;</span>
   <div class="navbar-center">
-    <img src="logo.png" alt="School Logo" class="school-logo">
+    <!-- Clickable Logo -->
+    <a href="https://nicholasbagenda.netlify.app" target="_blank">
+      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+    </a>
     <span class="logo-text">St Paul Learning Centre</span>
   </div>
 </div>
@@ -58,7 +123,7 @@
   <a href="resources.html">Resources</a>
   <a href="showcase.html">Showcase</a>
   <a href="contact.html">Contact</a>
-  <a href="timetable.html">Timetable</a>
+  <a href="class.html">Timetable</a>
   <a href="teacher-resources.html">Teacher Resources</a>
   <a href="parent-portal.html">Parent Portal</a>
 </nav>
