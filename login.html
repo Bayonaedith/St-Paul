@@ -8,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
   
   <style>
-    /* -------------------- Global & Background -------------------- */
     body {
       font-family: "Inter", sans-serif;
       color: white;
@@ -17,7 +16,6 @@
       min-height: 100vh;
       overflow-x: hidden;
       text-align: center;
-
       background: linear-gradient(270deg, #0f172a, #1e293b, #2563eb, #60a5fa);
       background-size: 800% 800%;
       animation: gradientBG 20s ease infinite;
@@ -29,10 +27,10 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* -------------------- Navbar -------------------- */
+    /* Navbar */
     .navbar {
       display: flex;
-      justify-content: center; /* Center the logo */
+      justify-content: flex-start;
       align-items: center;
       padding: 10px 20px;
       background: linear-gradient(90deg, #1e3a8a, #2563eb);
@@ -44,28 +42,50 @@
       position: relative;
     }
 
-    /* Centered Logo */
-    .logo-link {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* Hamburger */
+    #menu-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      margin-right: 20px;
+      z-index: 2001;
     }
 
+    .hamburger-icon {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+      transition: 0.4s;
+      border-radius: 2px;
+      box-shadow: 0 0 5px #60a5fa;
+    }
+
+    .change .bar1 {
+      transform: translateY(7px) rotate(-45deg);
+    }
+    .change .bar2 { opacity: 0; }
+    .change .bar3 { transform: translateY(-7px) rotate(45deg); }
+
+    /* Centered logo */
+    .logo-container {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .logo-link {
+      display: flex;
+      align-items: center;
+    }
     .school-logo {
-      max-width: 100%;
-      height: auto;
-      width: 120px; /* Adjust logo size */
+      width: 120px;
       border-radius: 50%;
       border: 2px solid white;
     }
+    @media (max-width: 768px) { .school-logo { width: 100px; } }
 
-    @media (max-width: 768px) {
-      .school-logo {
-        width: 100px;
-      }
-    }
-
-    /* -------------------- Sidebar -------------------- */
+    /* Sidebar */
     .side-menu {
       height: 100%;
       width: 0;
@@ -79,7 +99,6 @@
       box-shadow: 2px 0 12px rgba(0,0,0,0.5);
       z-index: 2000;
     }
-
     .side-menu a {
       display: block;
       padding: 12px 30px;
@@ -96,28 +115,17 @@
       text-shadow: 0 0 15px #93c5fd;
     }
 
-    /* -------------------- Header -------------------- */
+    /* Main content */
+    #main-content-wrapper { transition: transform 0.4s ease; }
+
     header {
       background: none;
       padding: 25px 0 10px;
       box-shadow: none;
     }
+    h1 { margin: 0; font-size: 2.5rem; color: #60a5fa; text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6; }
+    p { margin-top: 5px; font-size: 1.1em; color: #93c5fd; }
 
-    h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      letter-spacing: 1px;
-      color: #60a5fa;
-      text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6;
-    }
-
-    p {
-      margin-top: 5px;
-      font-size: 1.1em;
-      color: #93c5fd;
-    }
-
-    /* -------------------- Section (Login/Menu Box) -------------------- */
     section {
       max-width: 420px;
       margin: 40px auto;
@@ -125,127 +133,69 @@
       background: rgba(30, 41, 59, 0.7);
       border: 1px solid #3b82f6;
       border-radius: 12px;
-      box-shadow: 0 0 15px #2563eb, 0 0 25px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 15px #2563eb, 0 0 25px rgba(0,0,0,0.5);
       backdrop-filter: blur(5px);
       animation: fadeIn 1s ease-in-out;
     }
-    
-    h2 {
-      color: #93c5fd;
-      text-shadow: 0 0 5px #60a5fa;
-    }
 
-    label {
-      text-align: left;
-      font-weight: 500;
-      margin-bottom: 5px;
-      color: #cbd5e1;
-    }
-
+    h2 { color: #93c5fd; text-shadow: 0 0 5px #60a5fa; }
+    label { text-align: left; font-weight: 500; margin-bottom: 5px; color: #cbd5e1; }
     input[type="email"], input[type="password"] {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid #60a5fa;
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border-radius: 6px;
+      width: 100%; padding: 8px; margin-bottom: 12px;
+      background-color: rgba(255,255,255,0.1); color: white;
+      border: 1px solid #60a5fa; border-radius: 6px;
     }
-
-    input::placeholder {
-      color: #a0a0a0;
-    }
-
+    input::placeholder { color: #a0a0a0; }
     button {
-      padding: 12px 15px;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: 0.3s, transform 0.3s;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      width: 100%;
-      margin-bottom: 10px;
-      cursor: pointer;
+      padding: 12px 15px; border-radius: 8px; font-weight: 600;
+      transition: 0.3s, transform 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 100%; margin-bottom: 10px; cursor: pointer;
     }
+    button[type="submit"] { background-color: #2563eb; box-shadow: 0 0 10px #2563eb; }
+    button[type="submit"]:hover { background-color: #3b82f6; box-shadow: 0 0 15px #60a5fa; transform: scale(1.03); }
+    #googleLoginBtn { background-color: #db4437; }
+    #googleLoginBtn:hover { background-color: #c33227; transform: scale(1.03); }
 
-    button[type="submit"] {
-      background-color: #2563eb;
-      box-shadow: 0 0 10px #2563eb;
-    }
-    button[type="submit"]:hover {
-      background-color: #3b82f6;
-      box-shadow: 0 0 15px #60a5fa;
-      transform: scale(1.03);
-    }
+    .error-message { color: #fca5a5; font-size: 0.9em; margin-bottom: 10px; }
 
-    #googleLoginBtn {
-      background-color: #db4437;
-    }
-    #googleLoginBtn:hover {
-      background-color: #c33227;
-      transform: scale(1.03);
-    }
-
-    #logoutBtn {
-      background:#d32f2f;
-    }
-    #logoutBtn:hover {
-      background-color: #b71c1c;
-    }
-
-    .error-message {
-      color: #fca5a5;
-      font-size: 0.9em;
-      margin-bottom: 10px;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
   </style>
-</head>
 
-<body>
-  <!-- Navbar with centered clickable logo -->
-  <div class="navbar">
-    <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
-      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-    </a>
-  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  <!-- Sidebar -->
-  <nav id="sideMenu" class="side-menu">
-    <a href="index.html">🌐 Public Homepage</a>
-    <a href="#loginSection">🔒 Admin Login</a>
-    <hr style="border-top: 1px solid #3b82f6; width: 80%; margin: 15px auto;">
-    <a href="#" onclick="alert('Functionality requires login.')">👤 User Management</a>
-    <a href="#" onclick="alert('Functionality requires login.')">⚙️ Site Settings</a>
-  </nav>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+      projectId: "my-school-st-paul-1455a",
+      storageBucket: "my-school-st-paul-1455a.appspot.com",
+      appId: "1:951593545268:web:ed6ff256b523c29f8d48bb"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
 
-  <div id="main-content-wrapper">
-    <header>
-      <h1>St Paul Learning Centre</h1>
-      <p>Restricted Access – Admin Only</p>
-    </header>
+    const adminEmail = atob("bmljaG9sYXNiYWdlbmRhQGdtYWlsLmNvbQ==");
 
-    <section id="loginSection">
-      <h2>Admin Login</h2>
-      <form id="loginForm" novalidate>
-        <div id="errorMsg" class="error-message"></div>
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="Enter admin email" required>
+    function checkAdminAccess(user) {
+      const userEmail = user.email ? user.email.trim().toLowerCase() : null;
+      if(userEmail === adminEmail.toLowerCase()) {
+        // Redirect to teacher-resources.html after login
+        window.location.href = "teacher-resources.html";
+      } else {
+        alert("⛔ Access Denied. Unauthorized email.");
+      }
+    }
 
-        <label for="password">Password</label>
-        <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda246">
+    document.addEventListener("DOMContentLoaded", () => {
+      const loginForm = document.getElementById("loginForm");
+      const googleBtn = document.getElementById("googleLoginBtn");
+      const errorMsg = document.getElementById("errorMsg");
 
-        <label><input type="checkbox" checked> Remember Me</label>
-
-        <button type="submit">Login with Email/Password</button>
-      </form>
-
-      <hr style="margin: 20px 0; border-top: 1px solid #3b82f6;">
-      <button id="googleLoginBtn">Sign in with Google</button>
-    </section>
-  </div>
-</body>
-</html>
+      loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then(user
