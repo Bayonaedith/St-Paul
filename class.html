@@ -26,12 +26,23 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
-    /* Centered Logo with Image */
+    /* Centered Logo with Clickable Link */
     .logo-container {
       display: flex;
       align-items: center;
       justify-content: center;
       flex: 1;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-link:hover {
+      transform: scale(1.05);
     }
 
     .school-logo {
@@ -155,8 +166,11 @@
   <header>
     <div class="menu-toggle" onclick="openMenu()">☰</div>
     <div class="logo-container">
-      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-      <span class="logo-text">St Paul Learning Centre</span>
+      <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
+        <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" 
+             alt="School Logo" class="school-logo">
+        <span class="logo-text">St Paul Learning Centre</span>
+      </a>
     </div>
   </header>
 
@@ -190,13 +204,8 @@
   </footer>
 
   <script>
-    function openMenu() {
-      document.getElementById("sideMenu").style.width = "260px";
-    }
-
-    function closeMenu() {
-      document.getElementById("sideMenu").style.width = "0";
-    }
+    function openMenu() { document.getElementById("sideMenu").style.width = "260px"; }
+    function closeMenu() { document.getElementById("sideMenu").style.width = "0"; }
   </script>
 </body>
 </html>
