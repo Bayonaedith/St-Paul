@@ -53,9 +53,15 @@
     border-radius: 2px;
   }
 
-  .change .bar1 { transform: rotate(-45deg) translate(-5px, 6px); }
-  .change .bar2 { opacity: 0; }
-  .change .bar3 { transform: rotate(45deg) translate(-5px, -6px); }
+  .change .bar1 {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+  .change .bar2 {
+    opacity: 0;
+  }
+  .change .bar3 {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
 
   /* Logo */
   .school-logo {
@@ -71,15 +77,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: #1e3a8a;
+    background: rgba(30, 58, 138, 0.97);
     overflow-x: hidden;
     transition: width 0.4s ease;
     padding-top: 80px;
     box-shadow: 2px 0 12px rgba(0,0,0,0.5);
     z-index: 2000;
+    backdrop-filter: blur(6px);
   }
 
-  .side-menu.open { width: 270px; }
+  .side-menu.open {
+    width: 270px;
+  }
 
   .side-menu ul {
     list-style: none;
@@ -110,8 +119,18 @@
     background: none;
     padding: 25px 0 10px;
   }
-  h1 { margin: 0; font-size: 2.5rem; color: #60a5fa; }
-  p { margin-top: 5px; font-size: 1.1em; color: #93c5fd; }
+
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #60a5fa;
+  }
+
+  p {
+    margin-top: 5px;
+    font-size: 1.1em;
+    color: #93c5fd;
+  }
 
   section {
     max-width: 420px;
@@ -124,25 +143,57 @@
     backdrop-filter: blur(5px);
   }
 
-  input[type="email"], input[type="password"] {
-    width: 100%; padding: 8px; margin-bottom: 12px;
-    background-color: rgba(255,255,255,0.1); color: white;
-    border: 1px solid #60a5fa; border-radius: 6px;
+  input[type="email"],
+  input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid #60a5fa;
+    border-radius: 6px;
   }
-  input::placeholder { color: #a0a0a0; }
+
+  input::placeholder {
+    color: #a0a0a0;
+  }
 
   button {
-    padding: 12px 15px; border-radius: 8px; font-weight: 600;
-    transition: 0.3s, transform 0.3s; width: 100%; margin-bottom: 10px; cursor: pointer;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s, transform 0.3s;
+    width: 100%;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: none;
+    color: white;
   }
-  button[type="submit"] { background-color: #2563eb; }
-  button[type="submit"]:hover { background-color: #3b82f6; transform: scale(1.03); }
-  #googleLoginBtn { background-color: #db4437; }
-  #googleLoginBtn:hover { background-color: #c33227; transform: scale(1.03); }
 
-  .error-message { color: #fca5a5; font-size: 0.9em; margin-bottom: 10px; }
+  button[type="submit"] {
+    background-color: #2563eb;
+  }
+  button[type="submit"]:hover {
+    background-color: #3b82f6;
+    transform: scale(1.03);
+  }
+
+  #googleLoginBtn {
+    background-color: #db4437;
+  }
+  #googleLoginBtn:hover {
+    background-color: #c33227;
+    transform: scale(1.03);
+  }
+
+  .error-message {
+    color: #fca5a5;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+  }
 </style>
 
+<!-- Firebase Auth Script -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -191,12 +242,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 
 // Sidebar toggle
-function toggleMenu(){
+window.toggleMenu = function(){
   const sideMenu=document.getElementById("sideMenu");
   const toggle=document.getElementById("menu-toggle");
   sideMenu.classList.toggle("open");
   toggle.classList.toggle("change");
-}
+};
 
 document.addEventListener('keydown', e=>{
   if(e.key==="Escape"){
@@ -209,6 +260,7 @@ document.addEventListener('keydown', e=>{
 
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
   <button id="menu-toggle" onclick="toggleMenu()">
     <div class="hamburger-icon bar1"></div>
@@ -221,7 +273,7 @@ document.addEventListener('keydown', e=>{
   </a>
 </div>
 
-<!-- Sidebar Menu -->
+<!-- Sidebar -->
 <nav id="sideMenu" class="side-menu">
   <ul>
     <li><a href="#">📰 News & Announcements</a></li>
@@ -236,11 +288,13 @@ document.addEventListener('keydown', e=>{
   </ul>
 </nav>
 
+<!-- Page Header -->
 <header>
   <h1>St Paul Learning Centre</h1>
   <p>Restricted Access – Admin Only</p>
 </header>
 
+<!-- Admin Login -->
 <section id="loginSection">
   <h2>Admin Login</h2>
   <form id="loginForm" novalidate>
