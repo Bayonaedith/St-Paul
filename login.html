@@ -23,6 +23,7 @@
   .navbar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 10px 20px;
     background: linear-gradient(90deg, #1e3a8a, #2563eb);
     position: sticky;
@@ -30,7 +31,6 @@
     height: 60px;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-    position: relative;
   }
 
   /* Hamburger */
@@ -39,12 +39,13 @@
     border: none;
     cursor: pointer;
     padding: 10px;
-    margin-right: 20px;
     z-index: 2001;
+    display: flex;
+    flex-direction: column;
   }
 
   .hamburger-icon {
-    width: 25px;
+    width: 28px;
     height: 3px;
     background-color: white;
     margin: 4px 0;
@@ -52,22 +53,13 @@
     border-radius: 2px;
   }
 
-  .change .bar1 { transform: translateY(7px) rotate(-45deg); }
+  .change .bar1 { transform: rotate(-45deg) translate(-5px, 6px); }
   .change .bar2 { opacity: 0; }
-  .change .bar3 { transform: translateY(-7px) rotate(45deg); }
+  .change .bar3 { transform: rotate(45deg) translate(-5px, -6px); }
 
-  /* Centered logo */
-  .logo-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .logo-link {
-    display: flex;
-    align-items: center;
-  }
+  /* Logo */
   .school-logo {
-    width: 120px;
+    width: 110px;
     border-radius: 50%;
     border: 2px solid white;
   }
@@ -87,9 +79,7 @@
     z-index: 2000;
   }
 
-  .side-menu.open {
-    width: 260px;
-  }
+  .side-menu.open { width: 270px; }
 
   .side-menu ul {
     list-style: none;
@@ -113,10 +103,8 @@
 
   .side-menu a:hover {
     background: #2563eb;
-    padding-left: 45px;
+    padding-left: 50px;
   }
-
-  #main-content-wrapper { transition: transform 0.4s ease; }
 
   header {
     background: none;
@@ -217,8 +205,8 @@ document.addEventListener('keydown', e=>{
   }
 });
 </script>
-
 </head>
+
 <body>
 
 <div class="navbar">
@@ -227,46 +215,46 @@ document.addEventListener('keydown', e=>{
     <div class="hamburger-icon bar2"></div>
     <div class="hamburger-icon bar3"></div>
   </button>
-  <div class="logo-container">
-    <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
-      <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
-    </a>
-  </div>
+
+  <a href="https://nicholasbagenda.netlify.app" target="_blank">
+    <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" alt="School Logo" class="school-logo">
+  </a>
 </div>
 
 <!-- Sidebar Menu -->
 <nav id="sideMenu" class="side-menu">
   <ul>
-    <li><a href="index.html">🏠 Public Homepage</a></li>
-    <li><a href="#loginSection" onclick="toggleMenu()">🔐 Admin Login</a></li>
-    <li><a href="resources.html">📂 Teacher Resources</a></li>
-    <li><a href="#" onclick="alert('User Management requires login.')">👤 User Management</a></li>
-    <li><a href="#" onclick="alert('Site Settings requires login.')">⚙️ Site Settings</a></li>
-    <li><a href="mailto:nicholasbagenda@gmail.com">📧 Contact Support</a></li>
+    <li><a href="#">📰 News & Announcements</a></li>
+    <li><a href="#">🎓 Student Portal</a></li>
+    <li><a href="#">📋 Admissions</a></li>
+    <li><a href="#">📘 Resources</a></li>
+    <li><a href="#">🌟 Showcase</a></li>
+    <li><a href="#">📞 Contact</a></li>
+    <li><a href="#">🗓️ Timetable</a></li>
+    <li><a href="#">👩‍🏫 Teacher Resources</a></li>
+    <li><a href="#">👨‍👩‍👧 Parent Portal</a></li>
   </ul>
 </nav>
 
-<div id="main-content-wrapper">
-  <header>
-    <h1>St Paul Learning Centre</h1>
-    <p>Restricted Access – Admin Only</p>
-  </header>
+<header>
+  <h1>St Paul Learning Centre</h1>
+  <p>Restricted Access – Admin Only</p>
+</header>
 
-  <section id="loginSection">
-    <h2>Admin Login</h2>
-    <form id="loginForm" novalidate>
-      <div id="errorMsg" class="error-message"></div>
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter admin email" required>
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda2468">
-      <label><input type="checkbox" checked> Remember Me</label>
-      <button type="submit">Login with Email/Password</button>
-    </form>
-    <hr style="margin:20px 0;border-top:1px solid #3b82f6;">
-    <button id="googleLoginBtn">Sign in with Google</button>
-  </section>
-</div>
+<section id="loginSection">
+  <h2>Admin Login</h2>
+  <form id="loginForm" novalidate>
+    <div id="errorMsg" class="error-message"></div>
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Enter admin email" required>
+    <label for="password">Password</label>
+    <input type="password" id="password" placeholder="Enter password" required value="tebakya&bagenda2468">
+    <label><input type="checkbox" checked> Remember Me</label>
+    <button type="submit">Login with Email/Password</button>
+  </form>
+  <hr style="margin:20px 0;border-top:1px solid #3b82f6;">
+  <button id="googleLoginBtn">Sign in with Google</button>
+</section>
 
 </body>
-      </html>
+</html>
