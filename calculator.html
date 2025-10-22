@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Explaining Calculator</title>
+  <title>Explaining Calculator – English & Luganda</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -15,6 +14,7 @@
 
     h2 {
       color: #333;
+      text-align: center;
     }
 
     .calculator {
@@ -60,10 +60,27 @@
       margin-top: 5px;
       color: #666;
     }
+
+    .lang-switch {
+      background: #0078D7;
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .lang-switch:hover {
+      background: #005fa3;
+    }
   </style>
 </head>
 <body>
- <h2>🧮 Explaining Calculator</h2>
+  <h2 id="title">🧮 Explaining Calculator</h2>
+  <button class="lang-switch" onclick="toggleLanguage()">Switch to Luganda 🇺🇬</button>
+
   <div class="calculator">
     <input type="number" id="num1" placeholder="First number">
     <select id="operation">
@@ -73,13 +90,37 @@
       <option value="/">÷</option>
     </select>
     <input type="number" id="num2" placeholder="Second number">
-    <button onclick="calculate()">Calculate</button>
+    <button id="calcBtn" onclick="calculate()">Calculate</button>
 
     <h3 id="result"></h3>
     <p id="explanation"></p>
   </div>
 
   <script>
+    let currentLang = 'en'; // Default English
+
+    function toggleLanguage() {
+      if (currentLang === 'en') {
+        currentLang = 'lg';
+        document.getElementById('title').innerText = "🧮 Kalikulata ey’Eby’okunnyonnyola";
+        document.querySelector('.lang-switch').innerText = "Switch to English 🇬🇧";
+        document.getElementById('num1').placeholder = "Ennamba esooka";
+        document.getElementById('num2').placeholder = "Ennamba eyokubiri";
+        document.getElementById('calcBtn').innerText = "Bala";
+      } else {
+        currentLang = 'en';
+        document.getElementById('title').innerText = "🧮 Explaining Calculator";
+        document.querySelector('.lang-switch').innerText = "Switch to Luganda 🇺🇬";
+        document.getElementById('num1').placeholder = "First number";
+        document.getElementById('num2').placeholder = "Second number";
+        document.getElementById('calcBtn').innerText = "Calculate";
+      }
+
+      // clear output when switching
+      document.getElementById('result').innerText = "";
+      document.getElementById('explanation').innerText = "";
+    }
+
     function calculate() {
       const a = parseFloat(document.getElementById('num1').value);
       const b = parseFloat(document.getElementById('num2').value);
@@ -88,28 +129,55 @@
 
       if (isNaN(a) || isNaN(b)) {
         result = "Error";
-        explanation = "Please enter valid numbers.";
+        explanation = currentLang === 'en'
+          ? "Please enter valid numbers."
+          : "Bambi tekamu ennamba entuufu.";
       } else if (op === '+') {
         result = a + b;
-        explanation = `We are adding a and{b} to get result.`;
-       else if (op === '-') 
+        explanation = currentLang === 'en'
+          ? `We are adding ${a} and ${b} to get ${result}.`
+          : `Tugattako ${a} ne ${b} okusobola okufuna ${result}.`;
+      } else if (op === '-') {
         result = a - b;
-        explanation = `We are subtracting{b} from a to get{result}.`;
+        explanation = currentLang === 'en'
+          ? `We are subtracting ${b} from ${a} to get ${result}.`
+          : `Tukyuusamu ${b} okuva ku ${a} okusobola okufuna ${result}.`;
       } else if (op === '*') {
         result = a * b;
-        explanation = `We are multiplying a by{b} to get ${result}.`;
+        explanation = currentLang === 'en'
+          ? `We are multiplying ${a} by ${b} to get ${result}.`
+          : `Tukyazisa ${a} ne ${b} okusobola okufuna ${result}.`;
       } else if (op === '/') {
         if (b === 0) {
-[22/10, 09:14] Grasyson: result = "Error!";
-          explanation = "Cannot divide by zero.";
-         else 
+          result = "Error!";
+          explanation = currentLang === 'en'
+            ? "Cannot divide by zero."
+            : "Tosobola okugabanya ku zero.";
+        } else {
           result = a / b;
-          explanation = `We are dividing{a} by b to get{result}.`;
+          explanation = currentLang === 'en'
+            ? `We are dividing ${a} by ${b} to get ${result}.`
+            : `Tugabanya ${a} ku ${b} okusobola okufuna ${result}.`;
         }
       }
 
-      document.getElementById('result').innerText = `Result: ${result}`;
+      document.getElementById('result').innerText = 
+        currentLang === 'en' ? `Result: ${result}` : `Obubonero: ${result}`;
       document.getElementById('explanation').innerText = explanation;
+
+      // Speak result and explanation
+      const speechText = 
+        currentLang === 'en' 
+        ? `Result: ${result}. ${explanation}` 
+        : `Obubonero: ${result}. ${explanation}`;
+      
+      const speech = new SpeechSynthesisUtterance(speechText);
+      speech.rate = 1;
+      speech.pitch = 1;
+      speech.lang = currentLang === 'en' ? 'en-GB' : 'lg-UG'; // English & Luganda (approx)
+      
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(speech);
     }
   </script>
 </body>
