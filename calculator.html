@@ -4,232 +4,78 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Super Explaining Calculator — Nicholas</title>
+
+  <!-- Casio-ish LCD font for display -->
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg-dark: #0b1220;
-      --panel-dark: #0f1724;
-      --accent: #0ea5a4;
-      --muted: #94a3b8;
-      --glass: rgba(255,255,255,0.04);
-      --realistic-bg: #cbd5e1;
-      --realistic-key: #e6eef7;
-      --realistic-accent: #1f2937;
-      --digital-glow: 0 6px 20px rgba(14,165,164,0.14);
-      --rounded: 10px;
+      --accent:#06b6d4; --muted:#94a3b8; --bg1:#071126; --bg2:#0b2540;
+      --panel:#0f1724; --glass: rgba(255,255,255,0.03);
       font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
     }
-
-    /* Reset + base */
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:28px;
-      background: linear-gradient(180deg,#071126 0%, #0b2540 100%);
-      color:#e6eef7;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+    body{margin:0; min-height:100vh; background:linear-gradient(180deg,var(--bg1),var(--bg2)); color:#e6eef7; padding:20px}
+    .app{max-width:1150px;margin:0 auto;display:grid;grid-template-columns:480px 1fr;gap:18px;align-items:start}
+    .controls{background:var(--panel);padding:14px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .switch-btn{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);cursor:pointer;font-weight:700}
+    .switch-btn.active{background:linear-gradient(90deg,var(--accent),#0ea5a4);color:#001522;border:none;box-shadow:0 8px 25px rgba(14,165,164,0.12)}
+    .calc-wrap{display:flex;gap:12px;justify-content:center}
+    .calculator{width:460px;border-radius:12px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .calculator.realistic{background:linear-gradient(180deg,#e6eef7,#cfe8ff);color:#071022}
 
-    .app {
-      width:100%;
-      max-width:980px;
-      display:grid;
-      grid-template-columns: 420px 1fr;
-      gap:20px;
-      align-items:start;
-    }
+    /* Display (Casio-like) */
+    .display{border-radius:10px;padding:12px;min-height:84px;display:flex;flex-direction:column;justify-content:center;text-align:right;gap:6px;overflow:hidden}
+    .expr{font-size:13px;color:var(--muted);opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:Inter}
+    .val{font-size:34px;font-weight:800;font-family: 'VT323', monospace; color: #001922; letter-spacing:1px;}
 
-    /* Controls panel */
-    .controls {
-      background:var(--panel-dark);
-      border-radius:16px;
-      padding:14px;
-      box-shadow:var(--digital-glow);
-    }
+    /* keys */
+    .keys{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+    button.key{background:#0f1724;color:#e6eef7;padding:14px;border-radius:12px;border:none;font-weight:800;cursor:pointer;box-shadow: 0 10px 20px rgba(2,6,23,0.35); transition: transform .06s ease, box-shadow .12s ease, background .12s}
+    .calculator.realistic button.key{background:#e6eef7;color:#071022;box-shadow: inset 0 -6px 0 rgba(0,0,0,0.06)}
+    button.key:active{ transform: translateY(2px) scale(0.996); box-shadow: 0 6px 12px rgba(0,0,0,0.3) }
+    button.fn{background:#f59e0b;color:#071022}
+    button.equal{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#001522;grid-row:span 2;display:flex;align-items:center;justify-content:center;border-radius:14px}
+    .wide{grid-column: span 2}
+    .small{padding:10px;font-size:13px}
 
-    .controls h1{
-      margin:6px 0 12px;
-      font-size:20px;
-      letter-spacing:0.2px;
-    }
+    /* Larger parenthesis button style */
+    .paren-large{ grid-column: span 1; font-size:16px; padding:16px; border-radius:14px; background:#fff5; color:#001522; box-shadow: inset 0 -6px 0 rgba(0,0,0,0.06) }
 
-    .switch-row{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-bottom:12px;
-    }
+    /* Panels */
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.45)}
+    .panel h3{margin:6px 0 10px}
+    .history{max-height:180px;overflow:auto;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01)}
+    .hist-item{padding:8px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;color:var(--muted);cursor:pointer}
+    .explainBox{margin-top:12px;color:#cfeff0;font-size:15px}
+    .steps{margin-top:12px;background:rgba(0,0,0,0.18);padding:10px;border-radius:10px;max-height:calc(100vh - 320px);overflow:auto}
+    .step{padding:8px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02);color:var(--muted);transition:background .25s, transform .12s}
+    .step.highlight{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#001522;transform:scale(1.02)}
+    .meta{margin-top:12px;color:var(--muted);font-size:13px}
+    .compactToggle{margin-left:auto;padding:8px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer;color:var(--muted)}
 
-    .switch-btn{
-      padding:8px 12px;
-      border-radius:12px;
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.06);
-      color:var(--muted);
-      cursor:pointer;
-      font-weight:600;
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-    }
-    .switch-btn.active{
-      background:linear-gradient(90deg,var(--accent),#06b6d4);
-      border: none;
-      color:#041022;
-      box-shadow: 0 6px 20px rgba(6,182,212,0.15);
-    }
+    /* Export button */
+    #exportBtn{margin-left:8px;padding:8px 12px;border-radius:10px;background:linear-gradient(90deg,#0ea5a4,#06b6d4);border:none;color:#001522;font-weight:800;cursor:pointer}
 
-    /* Calculator container (both modes share this) */
-    .calc-wrap{
-      display:flex;
-      gap:20px;
-    }
-
-    .calculator{
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border-radius:18px;
-      padding:14px;
-      width:420px;
-      box-shadow:var(--digital-glow);
-    }
-
-    /* Realistic mode style (simulates physical device) */
-    .calculator.realistic{
-      background: linear-gradient(180deg, #dbeafe, #c7d2fe);
-      color:#0b1220;
-      padding:18px;
-      border-radius:18px;
-      box-shadow: 0 10px 30px rgba(2,6,23,0.25);
-    }
-    .calculator.realistic .display{
-      background: #0b1220;
-      color:#dbeafe;
-      border-radius:8px;
-    }
-    .calculator.realistic button.key{
-      background:var(--realistic-key);
-      color:var(--realistic-accent);
-      box-shadow: inset 0 -4px 0 rgba(0,0,0,0.06);
-    }
-    .calculator.realistic button.fn{ background:#fbbf24; color:#08111a }
-    .calculator.realistic button.equal{ background:#06b6d4; color:#041022; }
-
-    /* Digital mode style (glowing) */
-    .calculator.digital{
-      background: linear-gradient(180deg,#071226,#0b1730);
-      color:#e6eef7;
-    }
-    .calculator.digital .display{
-      background: linear-gradient(180deg,#001018,#001826);
-      color:#00ffb3;
-      box-shadow: 0 6px 20px rgba(0,255,179,0.06) inset;
-    }
-    .calculator.digital button.key{
-      background:#0f1724;
-      color:#e6eef7;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.45);
-    }
-    .calculator.digital button.fn{ background: #334155; color:#e6eef7; }
-    .calculator.digital button.equal{ background: linear-gradient(90deg,#06b6d4,#0ea5a4); color:#001522; box-shadow: 0 12px 30px rgba(14,165,164,0.18); }
-
-    /* Display */
-    .display{
-      height:78px;
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:20px;
-      text-align:right;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:6px;
-      overflow:hidden;
-      white-space:nowrap;
-    }
-    .expr{ font-size:14px; opacity:0.9; color:var(--muted); }
-    .val{ font-size:22px; font-weight:700; }
-
-    /* Keys grid */
-    .keys{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap:8px;
-    }
-    button{
-      padding:12px;
-      border-radius:10px;
-      border:none;
-      cursor:pointer;
-      font-weight:700;
-      font-size:14px;
-      transition:transform .08s ease, box-shadow .12s ease;
-    }
-    button:active{ transform:translateY(2px) scale(0.995) }
-
-    .wide{ grid-column: span 2; }
-    .equal{ grid-row: span 2; display:flex; align-items:center; justify-content:center; }
-
-    .small{ padding:8px; font-size:13px; }
-
-    /* Right column: history + explanation */
-    .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:16px;
-      padding:14px;
-      min-height:420px;
-      box-shadow:var(--digital-glow);
-      color:var(--muted);
-    }
-    .panel h3{ margin:4px 0 8px; color:#e6eef7 }
-    .history{
-      max-height:320px; overflow:auto; padding:8px; border-radius:8px;
-      background: rgba(255,255,255,0.02);
-    }
-    .hist-item{
-      padding:8px; border-radius:8px; margin-bottom:8px; background: rgba(255,255,255,0.01);
-      display:flex; justify-content:space-between; gap:8px; color:var(--muted);
-    }
-    .explain{
-      margin-top:12px; font-size:15px; color:#dbeafe;
-    }
-
-    /* Footer small */
-    .meta{ font-size:13px; opacity:0.75; color:var(--muted); margin-top:12px }
-
-    /* Light theme adjustments */
-    .light body, .light .panel, .light .calculator.digital { }
-    .light-mode{
-      background: linear-gradient(180deg,#f8fafc,#eef2ff);
-      color:#0b1220;
-    }
-
-    /* Responsive */
-    @media (max-width:900px){
-      .app{ grid-template-columns: 1fr; max-width:520px }
-      .calculator{ width:100% }
-    }
+    @media (max-width:980px){.app{grid-template-columns:1fr;padding:12px}.calculator{width:100%}}
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Left column: controls + calc -->
     <div>
       <div class="controls">
-        <h1 id="main-title">🧮 Super Explaining Calculator</h1>
+        <h1 id="title">🧮 Super Explaining Calculator — Steps</h1>
 
-        <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
-          <button id="langBtn" class="switch-btn" title="Language toggle">EN 🇬🇧</button>
-          <button id="designBtn" class="switch-btn active" title="Design: Realistic / Digital">Realistic</button>
-          <button id="themeBtn" class="switch-btn" title="Theme: Light / Dark">Dark</button>
+        <div class="row">
+          <button id="langBtn" class="switch-btn">EN 🇬🇧</button>
+          <button id="designBtn" class="switch-btn active">Realistic</button>
+          <button id="themeBtn" class="switch-btn">Dark</button>
+          <button id="compactBtn" class="compactToggle">Compact</button>
+          <button id="exportBtn" title="Export history as CSV">Export CSV</button>
         </div>
 
-        <div class="calc-wrap" style="margin-top:6px;">
-          <!-- Calculator -->
+        <div class="calc-wrap">
           <div id="calc" class="calculator realistic" role="application" aria-label="Calculator">
             <div id="display" class="display" aria-live="polite">
               <div class="expr" id="exprLine">&nbsp;</div>
@@ -238,18 +84,20 @@
 
             <div class="keys" id="keys">
               <!-- Row1 -->
-              <button class="small key fn" data-action="mc">MC</button>
-              <button class="small key fn" data-action="mr">MR</button>
-              <button class="small key fn" data-action="mplus">M+</button>
-              <button class="small key fn" data-action="mminus">M-</button>
-              <button class="small key" data-insert="(">(</button>
+              <button class="key fn small" data-action="mc">MC</button>
+              <button class="key fn small" data-action="mr">MR</button>
+              <button class="key fn small" data-action="mplus">M+</button>
+              <button class="key fn small" data-action="mminus">M-</button>
+              <!-- Put ( and ) side-by-side; ) is bigger for quick access -->
+              <button class="key small" data-insert="(">(</button>
+              <button class="key paren-large" data-insert=")">)</button>
 
               <!-- Row2 -->
               <button class="key" data-insert="7">7</button>
               <button class="key" data-insert="8">8</button>
               <button class="key" data-insert="9">9</button>
               <button class="key" data-insert="/" title="divide">÷</button>
-              <button class="key fn" data-insert="Math.sqrt(" title="square root">√</button>
+              <button class="key fn" data-insert="Math.sqrt(" title="sqrt">√</button>
 
               <!-- Row3 -->
               <button class="key" data-insert="4">4</button>
@@ -263,14 +111,14 @@
               <button class="key" data-insert="2">2</button>
               <button class="key" data-insert="3">3</button>
               <button class="key" data-insert="-" title="subtract">−</button>
-              <button class="key fn" data-insert="Math.pow(" title="xⁿ">xʸ</button>
+              <button class="key fn" data-insert="Math.pow(" title="xʸ">xʸ</button>
 
               <!-- Row5 -->
               <button class="key wide" data-insert="0">0</button>
               <button class="key" data-insert=".">.</button>
-              <button class="key" data-insert="+" title="add">+</button>
-              <button class="key fn" data-insert="Math.sin(" title="sine">sin</button>
-              <button class="key equal" id="equalBtn" title="equals">=</button>
+              <button class="key" data-insert="+">+</button>
+              <button class="key fn" data-insert="Math.sin(" title="sin">sin</button>
+              <button class="key equal" id="equalBtn">=</button>
 
               <!-- Row6 -->
               <button class="key fn" data-insert="Math.cos(">cos</button>
@@ -298,376 +146,277 @@
       </div>
     </div>
 
-    <!-- Right column: history + explanation -->
-    <div class="panel" id="panel">
-      <h3 id="hist-title">History</h3>
-      <div class="history" id="historyList" role="log" aria-live="polite"></div>
+    <!-- Right column -->
+    <div class="rightcol">
+      <div class="panel">
+        <h3 id="histTitle">History</h3>
+        <div class="history" id="historyList"></div>
 
-      <div class="explain" id="explainText">
-        <strong id="resLabel">Result:</strong>
-        <div id="resExplain" style="margin-top:6px; color:#cfeff0">No calculation yet.</div>
+        <div class="explainBox">
+          <strong id="resLabel">Result:</strong>
+          <div id="resExplain" style="margin-top:8px; color:#cfeff0">No calculation yet.</div>
+        </div>
+
+        <div class="meta" id="meta">Memory: 0 • Mode: Realistic • Language: English</div>
       </div>
 
-      <div class="meta" id="metaText">Memory: 0   •   Mode: Realistic   •   Language: English</div>
+      <div class="panel">
+        <h3 id="stepsTitle">Working Steps</h3>
+        <div class="steps" id="stepsBox">
+          <div class="step">No steps yet. Enter expression and press =</div>
+        </div>
+      </div>
     </div>
   </div>
 
 <script>
-/* ===========================
-   State & Translations
-   =========================== */
+/* TRANSLATIONS & STATE */
 const translations = {
-  en: {
-    mainTitle: "🧮 Super Explaining Calculator",
-    history: "History",
-    resultLabel: "Result:",
-    noCalc: "No calculation yet.",
-    memLabel: "Memory:",
-    modeReal: "Realistic",
-    modeDig: "Digital",
-    themeDark: "Dark",
-    themeLight: "Light",
-    langShort: "EN 🇬🇧",
-    langSpeakPrefix: "Result",
-    explainBtn: "Explain",
-    histBtn: "History",
-    ans: "ANS",
-  },
-  lg: {
-    mainTitle: "🧮 Kalikulata ey'Obukugu n'Okunnyonnyola",
-    history: "Ebyabaddibwa",
-    resultLabel: "Ekyavaamu:",
-    noCalc: "Tewali kunonyebwa.",
-    memLabel: "Obubonero:",
-    modeReal: "Realistic",
-    modeDig: "Digital",
-    themeDark: "Ddwaniro",
-    themeLight: "Enkazi",
-    langShort: "LG 🇺🇬",
-    langSpeakPrefix: "Obubonero",
-    explainBtn: "Tunnyonnyole",
-    histBtn: "Ebyabaddibwa",
-    ans: "ANS",
-  }
+  en:{ title:"🧮 Super Explaining Calculator — Steps", history:"History", stepsTitle:"Working Steps", resultLabel:"Result:", noCalc:"No calculation yet.", mem:"Memory", modeReal:"Realistic", modeDig:"Digital", themeDark:"Dark", themeLight:"Light", langShort:"EN 🇬🇧", compact:"Compact", verbose:"Verbose"},
+  lg:{ title:"🧮 Kalikulata — Enzira z'Okukola", history:"Ebyabaddibwa", stepsTitle:"Enzira z'Okukola", resultLabel:"Ekyavaamu:", noCalc:"Tewali kunonyebwa.", mem:"Obubonero", modeReal:"Realistic", modeDig:"Digital", themeDark:"Ddwaniro", themeLight:"Enkazi", langShort:"LG 🇺🇬", compact:"Mupiira", verbose:"Gulu"}
 };
 
-let lang = 'en';
-let design = 'realistic'; // realistic | digital
-let theme = 'dark'; // dark | light
+let lang='en', design='realistic', theme='dark';
+let expr='', lastAns=0, memory=0, history=[];
+let compactMode=true;
 
-let expr = '';           // expression string for evaluation
-let lastAns = 0;         // ANS value
-let memory = 0;          // stored memory
-let history = [];        // array of {expr, result, explanation}
-const displayExpr = document.getElementById('exprLine');
-const displayVal = document.getElementById('valueLine');
-const historyList = document.getElementById('historyList');
-const explainDiv = document.getElementById('resExplain');
-const resLabel = document.getElementById('resLabel');
-const metaText = document.getElementById('metaText');
-const mainTitle = document.getElementById('main-title');
+/* Element refs */
+const exprLine=document.getElementById('exprLine'), valueLine=document.getElementById('valueLine');
+const historyList=document.getElementById('historyList'), stepsBox=document.getElementById('stepsBox');
+const resExplain=document.getElementById('resExplain'), resLabel=document.getElementById('resLabel');
+const meta=document.getElementById('meta'), titleEl=document.getElementById('title');
+const histTitle=document.getElementById('histTitle'), stepsTitle=document.getElementById('stepsTitle');
+const compactBtn=document.getElementById('compactBtn');
+const exportBtn=document.getElementById('exportBtn');
 
-/* ===========================
-   Helpers
-   =========================== */
-function setLang(newLang){
-  lang = newLang;
-  document.getElementById('langBtn').innerText = translations[lang].langShort;
-  document.getElementById('hist-title').innerText = translations[lang].history;
-  resLabel.innerText = translations[lang].resultLabel;
-  explainDiv.innerText = translations[lang].noCalc;
-  mainTitle.innerText = translations[lang].mainTitle;
-  updateMeta();
+/* SAFE EVAL helpers */
+function replaceTokens(s){
+  let t=String(s);
+  t=t.replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-');
+  t=t.replace(/\bANS\b/gi, `(${lastAns})`);
+  t=t.replace(/\^/g,'**');
+  t=t.replace(/π/g,'Math.PI');
+  t=t.replace(/(^|[^A-Za-z0-9_])e([^A-Za-z0-9_]|$)/g, '$1Math.E$2');
+  return t;
 }
-
-function setDesign(newDesign){
-  design = newDesign;
-  const calc = document.getElementById('calc');
-  if(design === 'realistic'){
-    calc.classList.remove('digital');
-    calc.classList.add('realistic');
-    document.getElementById('designBtn').classList.add('active');
-    document.getElementById('designBtn').innerText = translations[lang].modeReal;
-  } else {
-    calc.classList.remove('realistic');
-    calc.classList.add('digital');
-    document.getElementById('designBtn').classList.remove('active');
-    document.getElementById('designBtn').innerText = translations[lang].modeDig;
-  }
-  updateMeta();
-}
-
-function setTheme(newTheme){
-  theme = newTheme;
-  if(theme === 'light'){
-    document.body.style.background = "linear-gradient(180deg,#f8fafc,#eef2ff)";
-    document.body.style.color = "#04203a";
-    document.getElementById('themeBtn').classList.add('active');
-    document.getElementById('themeBtn').innerText = translations[lang].themeLight;
-  } else {
-    document.body.style.background = "linear-gradient(180deg,#071126,#0b2540)";
-    document.body.style.color = "#e6eef7";
-    document.getElementById('themeBtn').classList.remove('active');
-    document.getElementById('themeBtn').innerText = translations[lang].themeDark;
-  }
-  updateMeta();
-}
-
-function updateMeta(){
-  metaText.innerText = `${translations[lang].memLabel} ${memory} • Mode: ${design === 'realistic' ? translations[lang].modeReal : translations[lang].modeDig} • Language: ${lang === 'en' ? 'English' : 'Luganda'}`;
-}
-
-/* ===========================
-   Input / Key handling
-   =========================== */
-function refreshDisplay(){
-  displayExpr.innerText = expr || '\u00A0';
-  displayVal.innerText = expr ? expr : '0';
-}
-
-function insertText(token){
-  // allowed insertion tokens include numbers, ., Math.* calls, operators, parentheses, ANS token replacement
-  expr += token;
-  refreshDisplay();
-}
-
-function setValueDirect(value){
-  expr = String(value);
-  refreshDisplay();
-}
-
-function clearAll(){
-  expr = '';
-  refreshDisplay();
-  explainDiv.innerText = translations[lang].noCalc;
-}
-
-function deleteChar(){
-  expr = expr.slice(0,-1);
-  refreshDisplay();
-}
-
-function negateValue(){
-  // try to wrap the last number into ( -number )
-  if(!expr) return;
-  // simple heuristic: if expr ends with digits, toggle sign
-  // For simplicity, append "*-1" if last token
-  expr = `(${expr})*-1`;
-  refreshDisplay();
-}
-
-/* ===========================
-   Memory operations
-   =========================== */
-function memoryClear(){ memory = 0; updateMeta(); speakShort(`${translations[lang].memLabel} ${memory}`); }
-function memoryRecall(){ setValueDirect(memory); speakShort(`${translations[lang].memLabel} ${memory}`); }
-function memoryPlus(){ 
-  try {
-    const val = evaluateExpression(expr);
-    memory += Number(val) || 0; updateMeta(); speakShort(`${translations[lang].memLabel} ${memory}`);
-  } catch(e){ speakShort(errorSpeak('calcError')); }
-}
-function memoryMinus(){ 
-  try {
-    const val = evaluateExpression(expr);
-    memory -= Number(val) || 0; updateMeta(); speakShort(`${translations[lang].memLabel} ${memory}`);
-  } catch(e){ speakShort(errorSpeak('calcError')); }
-}
-
-/* ===========================
-   Evaluation
-   =========================== */
-function safeExpressionForEval(input){
-  // Replace common tokens to Math.* equivalents and safe operators
-  // Allow ANS token to be replaced with lastAns
-  let s = String(input);
-  s = s.replace(/\^/g, '**');
-
-  // Replace unicode division/multiplication signs if present
-  s = s.replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g,'-');
-
-  // Replace 'ANS' with lastAns
-  s = s.replace(/\bANS\b/gi, `(${lastAns})`);
-
-  // Protect: Only allow characters and words we expect (digits, operators, Math., parentheses)
-  // We will still execute via Function but we control the replacements.
-  return s;
-}
-
-function evaluateExpression(input){
+function evaluateSafe(input){
   if(!input) return 0;
-  const safe = safeExpressionForEval(input);
-
-  // Limit potentially dangerous access: we create a Function with Math in scope only
-  // Build a function that returns the expression using Math and Number only
-  // We allow Math.* functions because we will use them via the transformed string
-  const fnBody = `"use strict"; return (${safe});`;
-  const fn = new Function('Math','Number', fnBody);
+  const safe = replaceTokens(input);
+  const fn = new Function('Math','Number', `"use strict"; return (${safe});`);
   const result = fn(Math,Number);
-  if(typeof result === 'number' && !isFinite(result)) throw new Error('Non-finite result');
+  if(typeof result === 'number' && !isFinite(result)) throw new Error('Non-finite');
   return result;
 }
 
-/* ===========================
-   Explanations & Speech
-   =========================== */
-function buildExplanation(exprText, res){
-  // produce a short explanation in the chosen language
-  if(!exprText) return translations[lang].noCalc;
-  if(lang === 'en'){
-    return `The expression ${exprText} equals ${res}.`;
-  } else {
-    return `Ensonda ${exprText} eweereza ku ${res}.`;
-  }
-}
-
-function speakShort(text){
-  if(!('speechSynthesis' in window)) return;
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = lang === 'en' ? 'en-GB' : 'en-UG';
-  u.rate = 1;
-  u.pitch = 1;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
-}
-
-/* ===========================
-   History management
-   =========================== */
-function pushHistory(exprText, result, explanation){
-  const entry = {expr: exprText, result, explanation, ts: Date.now()};
-  history.unshift(entry);
-  if(history.length>50) history.pop();
-  renderHistory();
-}
-
-function renderHistory(){
-  historyList.innerHTML = '';
-  if(history.length===0){
-    const empty = document.createElement('div'); empty.innerText = translations[lang].noCalc; empty.style.opacity = 0.7;
-    historyList.appendChild(empty); return;
-  }
-  history.forEach(h=>{
-    const el = document.createElement('div');
-    el.className = 'hist-item';
-    el.innerHTML = `<div style="flex:1;min-width:0"><div style="font-weight:700;color:#e6eef7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.expr}</div><div style="font-size:13px;color:var(--muted)">${h.explanation}</div></div><div style="margin-left:10px;color:#a7f0ea;font-weight:800">${h.result}</div>`;
-    el.onclick = ()=>{ setValueDirect(h.result); explainDiv.innerText = h.explanation; speakShort(`${translations[lang].resultLabel} ${h.result}. ${h.explanation}`); };
-    historyList.appendChild(el);
-  });
-}
-
-/* ===========================
-   High-level calculate function
-   =========================== */
-function calculateNow(){
-  try {
-    const exprToEval = expr || String(lastAns || 0);
-    const result = evaluateExpression(exprToEval);
-    lastAns = result;
-    const explanation = buildExplanation(exprToEval, result);
-    displayVal.innerText = result;
-    displayExpr.innerText = exprToEval;
-    explainDiv.innerText = explanation;
-    pushHistory(exprToEval, result, explanation);
-    speakShort(`${translations[lang].resultLabel} ${result}. ${explanation}`);
-    expr = String(result); // set result for next operations
-  } catch(err){
-    displayVal.innerText = 'Error';
-    explainDiv.innerText = lang === 'en' ? 'Invalid expression. Check input.' : 'Ensonda tewaliiyo. Laba byowandisizza.';
-    speakShort(lang === 'en' ? 'Error. Invalid expression.' : 'Ensobi. Ensonda tewaliiyo.');
-  }
-  updateMeta();
-}
-
-/* ===========================
-   Hook up UI events
-   =========================== */
-document.getElementById('langBtn').addEventListener('click', ()=>{
-  setLang(lang === 'en' ? 'lg' : 'en');
-});
-
-document.getElementById('designBtn').addEventListener('click', ()=>{
-  setDesign(design === 'realistic' ? 'digital' : 'realistic');
-});
-
-document.getElementById('themeBtn').addEventListener('click', ()=>{
-  setTheme(theme === 'dark' ? 'light' : 'dark');
-});
-
-document.getElementById('keys').addEventListener('click', (ev)=>{
-  const btn = ev.target.closest('button');
-  if(!btn) return;
-  const ins = btn.dataset.insert;
-  const action = btn.dataset.action;
-
-  if(ins !== undefined){
-    // Insert token (numbers, Math.*, etc)
-    insertText(ins);
-    return;
-  }
-
-  switch(action){
-    case 'clear': clearAll(); break;
-    case 'del': deleteChar(); break;
-    case 'mc': memoryClear(); break;
-    case 'mr': memoryRecall(); break;
-    case 'mplus': memoryPlus(); break;
-    case 'mminus': memoryMinus(); break;
-    case 'sq': insertText('**2'); break;
-    case 'cube': insertText('**3'); break;
-    case 'percent': insertText('/100'); break;
-    case 'ans': setValueDirect(lastAns); break;
-    case 'history': renderHistory(); break;
-    case 'explain': {
-      try {
-        const res = evaluateExpression(expr || String(lastAns));
-        const expl = buildExplanation(expr || String(lastAns), res);
-        explainDiv.innerText = expl;
-        speakShort(expl);
-      } catch(e){
-        explainDiv.innerText = lang === 'en' ? 'Cannot explain invalid expression.' : "Tosobola okunnyonnyola ensobi.";
-        speakShort(lang === 'en' ? 'Cannot explain invalid expression.' : "Tosobola okunnyonnyola ensobi.");
-      }
-    } break;
-    case 'neg': negateValue(); break;
-    default: break;
-  }
-});
-
-/* Equal button */
-document.getElementById('equalBtn').addEventListener('click', calculateNow);
-
-/* Keyboard support (basic) */
-window.addEventListener('keydown', (e)=>{
-  if(e.key >= '0' && e.key <= '9'){ insertText(e.key); return; }
-  if(e.key === '.') { insertText('.'); return; }
-  if(e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/' ) { insertText(e.key); return; }
-  if(e.key === 'Enter'){ e.preventDefault(); calculateNow(); return; }
-  if(e.key === 'Backspace'){ deleteChar(); return; }
-});
-
-/* ===========================
-   Initialization
-   =========================== */
-setLang('en');
-setDesign('realistic');
-setTheme('dark');
-refreshDisplay();
-renderHistory();
-updateMeta();
-
-/* ===========================
-   Utility: error speech message
-   =========================== */
-function errorSpeak(key){
-  if(key === 'calcError') return lang==='en' ? 'Calculation error' : 'Ensobi mu kubala';
+/* Balanced parentheses helper (auto-close) */
+function balanceParentheses(s){
+  const open = (s.match(/\(/g) || []).length;
+  const close = (s.match(/\)/g) || []).length;
+  if(open > close) return ')'.repeat(open - close);
   return '';
 }
 
-/* Accessibility: announce initial state
-   (small delay so screen readers pick it)
-*/
-setTimeout(()=>{ speakShort(translations[lang].mainTitle); }, 600);
+/* STEP GENERATION */
+function generateSteps(original){
+  const steps=[]; if(!original){ steps.push({text:translations[lang].noCalc}); return steps; }
+  steps.push({text: compactMode ? `1) ${original}` : `1) Original expression: ${original}`});
+
+  // Auto-close parentheses note (we insert step if we add ) )
+  const missing = balanceParentheses(original);
+  let usedOriginal = original;
+  if(missing){
+    usedOriginal = original + missing;
+    steps.push({text: compactMode ? `2) Auto-insert closing: ${missing}` : `2) Auto-inserted closing parenthesis ${missing} to balance`});
+  }
+
+  const replaced = replaceTokens(usedOriginal);
+  steps.push({text: compactMode ? `3) ${replaced}` : `3) Replace tokens (ANS, π, e, ^): ${replaced}`});
+
+  let working = replaced; let stepIndex = 4;
+  const evalSegment = (seg)=>{ try { return (new Function('Math','Number',`"use strict"; return (${seg});`))(Math,Number); } catch(e){ return null; } };
+
+  // Evaluate innermost parentheses iteratively
+  const maxLoops = 200; let loop = 0;
+  while(loop < maxLoops){
+    loop++;
+    const m = working.match(/\([^()]*\)/);
+    if(m){
+      const inner = m[0];
+      const content = inner.slice(1,-1);
+      const innerSteps = breakdownOperations(content);
+      innerSteps.forEach(it => { steps.push({text: `${stepIndex}) ${it}`}); stepIndex++; });
+      const val = evalSegment(content);
+      const valStr = (val === null) ? 'Error' : String(val);
+      steps.push({text: `${stepIndex}) Replace ${inner} → ${valStr}`}); stepIndex++;
+      working = working.replace(inner, valStr);
+      continue;
+    }
+    break;
+  }
+
+  // Breakdown remaining operations
+  const remaining = breakdownOperations(working);
+  remaining.forEach(s => { steps.push({text: `${stepIndex}) ${s}`}); stepIndex++; });
+
+  // Final evaluation
+  const finalVal = evalSegment(working);
+  steps.push({text: `${stepIndex}) ${compactMode ? `${working} = ${finalVal}` : `Final evaluate ${working} equals ${finalVal}`}`});
+  return steps;
+}
+
+/* Breakdown operations by precedence for str without parentheses */
+function breakdownOperations(exprStr){
+  if(!exprStr) return [(lang==='en') ? 'Empty expression' : 'Ensonda teryo'];
+  const stepsLocal = [];
+  let work = exprStr;
+
+  const applyOpRegex = (regex, descFormatter)=>{
+    let m;
+    while((m = work.match(regex))){
+      const matched = m[0];
+      let val;
+      try { val = evaluateSafe(matched); } catch(e){ val = null; }
+      const valStr = (val === null) ? 'Error' : String(val);
+      stepsLocal.push(compactMode ? `${matched} → ${valStr}` : descFormatter(matched, valStr));
+      work = work.replace(matched, valStr);
+    }
+  };
+
+  try {
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*\*\*\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate power ${m} = ${v}` : `Okwalaba obusobeko ${m} = ${v}`);
+
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*[*/]\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate multiply/divide ${m} = ${v}` : `Kukola okukozesa ${m} = ${v}`);
+
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*[+-]\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate add/subtract ${m} = ${v}` : `Kugatta oba okukyusa ${m} = ${v}`);
+  } catch(e){
+    stepsLocal.push((lang==='en') ? 'Cannot compute further breakdown.' : "Tosobola okukakasa enziza z'okukola.");
+  }
+
+  if(stepsLocal.length === 0){
+    try {
+      const final = evaluateSafe(work);
+      stepsLocal.push(compactMode ? `${work} → ${final}` : ((lang==='en') ? `Evaluate ${work} = ${final}` : `Kukola ${work} = ${final}`));
+    } catch(e){
+      stepsLocal.push((lang==='en') ? 'Cannot break down expression further.' : 'Tosobola kukola enkyusa.');
+    }
+  }
+  return stepsLocal;
+}
+
+/* UI helpers */
+function refreshDisplay(){ exprLine.innerText = expr || '\u00A0'; valueLine.innerText = expr || '0'; updateMeta(); }
+function clearAll(){ expr=''; refreshDisplay(); resExplain.innerText = translations[lang].noCalc; renderSteps([]); }
+function deleteChar(){ expr = expr.slice(0,-1); refreshDisplay(); }
+function insertToken(t){ expr += t; refreshDisplay(); }
+function setValue(v){ expr = String(v); refreshDisplay(); }
+function pushHistory(e,r,expl){ history.unshift({e,r,expl,ts:Date.now()}); if(history.length>160) history.pop(); renderHistory(); }
+function renderHistory(){ historyList.innerHTML=''; if(history.length===0){ const d=document.createElement('div'); d.className='hist-item'; d.innerText=translations[lang].noCalc; historyList.appendChild(d); return } history.forEach(h=>{ const el=document.createElement('div'); el.className='hist-item'; el.innerHTML=`<div style="flex:1;min-width:0"><div style="font-weight:700;color:#e6eef7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.e}</div><div style="font-size:13px;color:var(--muted)">${h.expl}</div></div><div style="margin-left:10px;color:#9ff3ea;font-weight:800">${h.r}</div>`; el.onclick=()=>{ setValue(h.r); resExplain.innerText=h.expl; speak(`${translations[lang].resultLabel} ${h.r}. ${h.expl}`)}; historyList.appendChild(el); }); }
+function renderSteps(steps){ stepsBox.innerHTML=''; if(!steps || steps.length===0){ const d=document.createElement('div'); d.className='step'; d.innerText = (lang==='en'?'No steps yet. Enter expression and press =':'Tewali entambula. Tandika ensonda obale ='); stepsBox.appendChild(d); return } steps.forEach((s,i)=>{ const d=document.createElement('div'); d.className='step'; d.dataset.index=i; d.innerText = s.text; stepsBox.appendChild(d); }); }
+
+/* highlight player */
+let highlightTimer=null;
+function playHighlights(speed=900){
+  if(highlightTimer) { clearInterval(highlightTimer); highlightTimer=null; }
+  const nodes = Array.from(stepsBox.querySelectorAll('.step'));
+  if(nodes.length===0) return;
+  let idx=0;
+  nodes.forEach(n=> n.classList.remove('highlight'));
+  highlightTimer = setInterval(()=>{
+    nodes.forEach(n=> n.classList.remove('highlight'));
+    if(idx >= nodes.length){ clearInterval(highlightTimer); highlightTimer=null; return; }
+    nodes[idx].classList.add('highlight');
+    nodes[idx].scrollIntoView({behavior:'smooth', block:'center'});
+    idx++;
+  }, speed);
+}
+
+/* speech */
+function speak(txt){ if(!('speechSynthesis' in window)) return; const u=new SpeechSynthesisUtterance(txt); u.lang = (lang==='en') ? 'en-GB' : 'en-UG'; u.rate=1; u.pitch=1; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
+
+/* calculate (auto-close parentheses before eval) */
+function calculateNow(){
+  try {
+    // auto close parentheses if needed (and display step)
+    const missing = balanceParentheses(expr);
+    let exprForEval = expr;
+    if(missing){
+      exprForEval = expr + missing;
+      // show a step about auto-closure inside steps panel after generation
+    }
+
+    const result = evaluateSafe(exprForEval);
+    lastAns = result;
+    const explanation = (lang==='en') ? `The expression ${exprForEval} equals ${result}.` : `Ensonda ${exprForEval} eweereza ku ${result}.`;
+    resExplain.innerText = explanation;
+    valueLine.innerText = String(result);
+    pushHistory(exprForEval, result, explanation);
+    // generate steps (generateSteps will include the auto-insert note)
+    const steps = generateSteps(exprForEval);
+    renderSteps(steps);
+    playHighlights(850);
+    speak(`${translations[lang].resultLabel} ${result}. ${explanation}`);
+    expr = String(result);
+    refreshDisplay();
+  } catch(e){
+    valueLine.innerText = 'Error';
+    resExplain.innerText = (lang==='en') ? 'Invalid expression. Check input.' : 'Ensonda tewaliiyo. Laba byowandisizza.';
+    renderSteps([{text: (lang==='en' ? 'Cannot evaluate expression: check syntax.' : 'Tosobola okunonyonnyola ensonda: leka obukugu.')}]);
+    speak((lang==='en') ? 'Error. Invalid expression.' : 'Ensobi. Ensonda tewaliiyo.');
+  }
+}
+
+/* memory */
+function memClear(){ memory=0; updateMeta(); speak(`${translations[lang].mem} ${memory}`) }
+function memRecall(){ setValue(memory); speak(`${translations[lang].mem} ${memory}`) }
+function memPlus(){ try{ const v=evaluateSafe(expr||String(lastAns)); memory += Number(v)||0; updateMeta(); speak(`${translations[lang].mem} ${memory}`);}catch(e){speak('Error')} }
+function memMinus(){ try{ const v=evaluateSafe(expr||String(lastAns)); memory -= Number(v)||0; updateMeta(); speak(`${translations[lang].mem} ${memory}`);}catch(e){speak('Error')} }
+
+/* Export history CSV */
+function exportHistoryCSV(){
+  if(!history || history.length===0) { alert(lang==='en' ? 'No history to export.' : 'Tewali ebyabaddibwa'); return; }
+  const rows = [['timestamp','expression','result','explanation']];
+  history.slice().reverse().forEach(h => {
+    const ts = new Date(h.ts).toISOString();
+    // escape quotes
+    const esc = v => `"${String(v).replace(/"/g,'""')}"`;
+    rows.push([esc(ts), esc(h.e), esc(h.r), esc(h.expl)]);
+  });
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `calculator_history_${new Date().toISOString().slice(0,10)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* Wiring events */
+document.getElementById('keys').addEventListener('click',(ev)=>{ const btn = ev.target.closest('button'); if(!btn) return; const ins = btn.dataset.insert; const action = btn.dataset.action; if(ins !== undefined){ insertToken(ins); return; } switch(action){ case 'clear': clearAll(); break; case 'del': deleteChar(); break; case 'mc': memClear(); break; case 'mr': memRecall(); break; case 'mplus': memPlus(); break; case 'mminus': memMinus(); break; case 'sq': insertToken('**2'); break; case 'cube': insertToken('**3'); break; case 'percent': insertToken('/100'); break; case 'ans': setValue(lastAns); break; case 'history': renderHistory(); break; case 'explain': { try{ const v=evaluateSafe(expr||String(lastAns)); const expl = (lang==='en') ? `The expression ${expr||lastAns} equals ${v}.` : `Ensonda ${expr||lastAns} eweereza ku ${v}.`; resExplain.innerText=expl; speak(expl); const steps = generateSteps(expr||String(lastAns)); renderSteps(steps); playHighlights(900);}catch(e){ resExplain.innerText=(lang==='en'?'Cannot explain invalid expression.':'Tosobola okunnyonnyola.'); speak('Cannot explain'); } } break; case 'neg': insertToken('*-1'); break; default: break; } });
+
+document.getElementById('equalBtn').addEventListener('click', calculateNow);
+
+window.addEventListener('keydown',(e)=>{ if(e.key >= '0' && e.key <= '9'){ insertToken(e.key); return; } if(e.key === '.') { insertToken('.'); return; } if(['+','-','*','/','(',')'].includes(e.key)){ insertToken(e.key); return; } if(e.key === 'Enter'){ e.preventDefault(); calculateNow(); return; } if(e.key === 'Backspace'){ deleteChar(); return; } });
+
+/* switches */
+document.getElementById('langBtn').addEventListener('click', ()=>{ lang = (lang==='en') ? 'lg' : 'en'; document.getElementById('langBtn').innerText = translations[lang].langShort; titleEl.innerText = translations[lang].title; histTitle.innerText = translations[lang].history; stepsTitle.innerText = translations[lang].stepsTitle; resLabel.innerText = translations[lang].resultLabel; resExplain.innerText = translations[lang].noCalc; renderSteps([]); renderHistory(); updateMeta(); });
+
+document.getElementById('designBtn').addEventListener('click', ()=>{ design = (design==='realistic') ? 'digital' : 'realistic'; const calc=document.getElementById('calc'); if(design==='realistic'){ calc.classList.remove('digital'); calc.classList.add('realistic'); document.getElementById('designBtn').classList.add('active'); document.getElementById('designBtn').innerText = translations[lang].modeReal; } else { calc.classList.remove('realistic'); calc.classList.add('digital'); document.getElementById('designBtn').classList.remove('active'); document.getElementById('designBtn').innerText = translations[lang].modeDig; } updateMeta(); });
+
+document.getElementById('themeBtn').addEventListener('click', ()=>{ theme = (theme==='dark') ? 'light' : 'dark'; if(theme==='light'){ document.body.style.background = 'linear-gradient(180deg,#f8fafc,#eef2ff)'; document.body.style.color = '#071022'; document.getElementById('themeBtn').classList.add('active'); document.getElementById('themeBtn').innerText = translations[lang].themeLight; } else { document.body.style.background = 'linear-gradient(180deg,var(--bg1),var(--bg2))'; document.body.style.color = '#e6eef7'; document.getElementById('themeBtn').classList.remove('active'); document.getElementById('themeBtn').innerText = translations[lang].themeDark; } updateMeta(); });
+
+compactBtn.addEventListener('click', ()=>{ compactMode = !compactMode; compactBtn.innerText = compactMode ? translations[lang].compact : translations[lang].verbose; compactBtn.classList.toggle('active'); renderSteps([]); });
+
+exportBtn.addEventListener('click', exportHistoryCSV);
+
+/* meta helper + init */
+function updateMeta(){ meta.innerText = `${translations[lang].mem} ${memory} • Mode: ${design==='realistic'?translations[lang].modeReal:translations[lang].modeDig} • Language: ${lang==='en'?'English':'Luganda'}`; }
+updateMeta(); refreshDisplay(); renderHistory(); renderSteps([]);
+setTimeout(()=>{ speak(translations[lang].title); },600);
+
+/* utility to expose for console */
+window._calc = { evaluateSafe, generateSteps };
 
 </script>
 </body>
