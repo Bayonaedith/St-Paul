@@ -3,64 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Super Explaining Calculator — Steps</title>
+  <title>Super Explaining Calculator — Nicholas</title>
   <style>
     :root{
-      --accent: #06b6d4;
-      --muted: #94a3b8;
-      --bg-dark-start:#071126;
-      --bg-dark-end:#0b2540;
-      --panel-dark:#0f1724;
-      --glass: rgba(255,255,255,0.03);
+      --accent:#06b6d4; --muted:#94a3b8; --bg1:#071126; --bg2:#0b2540;
+      --panel:#0f1724; --glass: rgba(255,255,255,0.03);
       font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-      color-scheme: dark;
     }
     *{box-sizing:border-box}
-    body{margin:0; min-height:100vh; background:linear-gradient(180deg,var(--bg-dark-start),var(--bg-dark-end)); color:#e6eef7; padding:24px; -webkit-font-smoothing:antialiased}
-    .app{max-width:1100px; margin:0 auto; display:grid; grid-template-columns:420px 1fr; gap:18px; align-items:start}
-    .controls{background:var(--panel-dark); padding:14px; border-radius:14px; box-shadow:0 10px 30px rgba(2,6,23,0.5)}
-    .controls h1{margin:6px 0 12px; font-size:18px}
-    .row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px}
-    .switch-btn{padding:8px 12px; border-radius:10px; background:transparent;border:1px solid rgba(255,255,255,0.06); color:var(--muted); cursor:pointer; font-weight:700}
-    .switch-btn.active{background:linear-gradient(90deg,var(--accent),#0ea5a4); color:#001522; border:none; box-shadow:0 8px 25px rgba(14,165,164,0.12)}
-    .calc-wrap{display:flex; gap:12px}
-    .calculator{width:420px; border-radius:14px; padding:12px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); box-shadow:0 12px 30px rgba(2,6,23,0.45)}
-    .calculator.realistic{background:linear-gradient(180deg,#e6eef7,#cfe8ff); color:#071022}
-    .calculator.realistic .display{background:#051426; color:#dbeafe}
-    .calculator.digital .display{background:linear-gradient(180deg,#001018,#001826); color:#00ffb3}
-    .display{border-radius:10px; padding:10px; min-height:70px; display:flex; flex-direction:column; justify-content:center; text-align:right; gap:6px; overflow:hidden}
-    .expr{font-size:13px; color:var(--muted); opacity:0.95; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-    .val{font-size:22px; font-weight:800}
-    .keys{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:12px}
-    button.key{background:#0f1724; color:#e6eef7; padding:12px; border-radius:10px; border:none; font-weight:700; cursor:pointer}
-    .calculator.realistic button.key{background:#e6eef7; color:#071022; box-shadow:inset 0 -4px 0 rgba(0,0,0,0.06)}
+    body{margin:0; min-height:100vh; background:linear-gradient(180deg,var(--bg1),var(--bg2)); color:#e6eef7; padding:20px}
+    .app{max-width:1150px;margin:0 auto;display:grid;grid-template-columns:440px 1fr;gap:18px;align-items:start}
+    .controls{background:var(--panel);padding:14px;border-radius:12px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+    .row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    .switch-btn{padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);cursor:pointer;font-weight:700}
+    .switch-btn.active{background:linear-gradient(90deg,var(--accent),#0ea5a4);color:#001522;border:none;box-shadow:0 8px 25px rgba(14,165,164,0.12)}
+    .calc-wrap{display:flex;gap:12px}
+    .calculator{width:420px;border-radius:12px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+    .calculator.realistic{background:linear-gradient(180deg,#e6eef7,#cfe8ff);color:#071022}
+    .display{border-radius:10px;padding:10px;min-height:74px;display:flex;flex-direction:column;justify-content:center;text-align:right;gap:6px;overflow:hidden}
+    .expr{font-size:13px;color:var(--muted);opacity:0.95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .val{font-size:22px;font-weight:800}
+    .keys{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+    button.key{background:#0f1724;color:#e6eef7;padding:12px;border-radius:10px;border:none;font-weight:700;cursor:pointer}
+    .calculator.realistic button.key{background:#e6eef7;color:#071022;box-shadow:inset 0 -4px 0 rgba(0,0,0,0.06)}
     button.fn{background:#334155}
-    .calculator.realistic button.fn{background:#fbbf24; color:#071022}
-    button.equal{background:linear-gradient(90deg,#06b6d4,#0ea5a4); color:#001522; grid-row:span 2; display:flex; align-items:center; justify-content:center}
+    .calculator.realistic button.fn{background:#fbbf24;color:#071022}
+    button.equal{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#001522;grid-row:span 2;display:flex;align-items:center;justify-content:center}
     .wide{grid-column: span 2}
-    .small{padding:8px; font-size:13px}
-    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:12px; border-radius:12px; box-shadow:0 10px 30px rgba(2,6,23,0.35)}
+    .small{padding:8px;font-size:13px}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,0.45)}
     .panel h3{margin:6px 0 10px}
-    .history{max-height:200px; overflow:auto; padding:8px; border-radius:8px; background:rgba(255,255,255,0.01)}
-    .hist-item{padding:8px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; gap:8px; color:var(--muted)}
-    .explainBox{margin-top:12px; color:#cfeff0; font-size:15px}
-    .steps{margin-top:12px; background:rgba(0,0,0,0.18); padding:10px; border-radius:10px; max-height:calc(100vh - 320px); overflow:auto}
-    .step{padding:8px; border-radius:8px; margin-bottom:8px; background:rgba(255,255,255,0.02); color:var(--muted)}
-    .meta{margin-top:12px; color:var(--muted); font-size:13px}
-    /* Layout for right column */
-    .rightcol{display:flex; flex-direction:column; gap:12px}
-    .controlsSmall{display:flex; gap:6px; justify-content:space-between; align-items:center}
-    /* Responsive */
-    @media (max-width:980px){
-      .app{grid-template-columns:1fr; padding:12px}
-      .calculator{width:100%}
-    }
+    .history{max-height:160px;overflow:auto;padding:8px;border-radius:8px;background:rgba(255,255,255,0.01)}
+    .hist-item{padding:8px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;color:var(--muted);cursor:pointer}
+    .explainBox{margin-top:12px;color:#cfeff0;font-size:15px}
+    .steps{margin-top:12px;background:rgba(0,0,0,0.18);padding:10px;border-radius:10px;max-height:calc(100vh - 340px);overflow:auto}
+    .step{padding:8px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02);color:var(--muted);transition:background .25s, transform .12s}
+    .step.highlight{background:linear-gradient(90deg,#06b6d4,#0ea5a4);color:#001522;transform:scale(1.02)}
+    .meta{margin-top:12px;color:var(--muted);font-size:13px}
+    .controlsSmall{display:flex;gap:6px;justify-content:space-between;align-items:center}
+    .compactToggle{margin-left:auto;padding:8px 10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer;color:var(--muted)}
+    @media (max-width:980px){.app{grid-template-columns:1fr;padding:12px}.calculator{width:100%}}
   </style>
 </head>
 <body>
-
   <div class="app">
-    <!-- left: controls + calculator -->
     <div>
       <div class="controls">
         <h1 id="title">🧮 Super Explaining Calculator — Steps</h1>
@@ -68,6 +54,7 @@
           <button id="langBtn" class="switch-btn">EN 🇬🇧</button>
           <button id="designBtn" class="switch-btn active">Realistic</button>
           <button id="themeBtn" class="switch-btn">Dark</button>
+          <button id="compactBtn" class="compactToggle">Compact</button>
         </div>
 
         <div class="calc-wrap">
@@ -133,13 +120,15 @@
               <button class="key" data-action="history">HIST</button>
               <button class="key" data-action="explain">Explain</button>
               <button class="key" data-action="neg">+/-</button>
+
+              <!-- Added explicit closing parenthesis button for clarity -->
+              <button class="key small" data-insert=")">)</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- right: history, steps, explanation -->
     <div class="rightcol">
       <div class="panel">
         <h3 id="histTitle">History</h3>
@@ -163,221 +152,157 @@
   </div>
 
 <script>
-/* -------------------------
-   Translations & State
-   ------------------------- */
+/* TRANSLATIONS & STATE */
 const translations = {
-  en: {
-    title: "🧮 Super Explaining Calculator — Steps",
-    history: "History",
-    stepsTitle: "Working Steps",
-    resultLabel: "Result:",
-    noCalc: "No calculation yet.",
-    mem: "Memory",
-    modeReal: "Realistic",
-    modeDig: "Digital",
-    themeDark: "Dark",
-    themeLight: "Light",
-    langShort: "EN 🇬🇧",
-    speakPrefix: "Result"
-  },
-  lg: {
-    title: "🧮 Kalikulata ey'obukugu — Obukulembeze bw'Engeri",
-    history: "Ebyabaddibwa",
-    stepsTitle: "Enzira y'Okukola",
-    resultLabel: "Ekyavaamu:",
-    noCalc: "Tewali kunonyebwa.",
-    mem: "Obubonero",
-    modeReal: "Realistic",
-    modeDig: "Digital",
-    themeDark: "Ddwaniro",
-    themeLight: "Enkazi",
-    langShort: "LG 🇺🇬",
-    speakPrefix: "Obubonero"
-  }
+  en:{ title:"🧮 Super Explaining Calculator — Steps", history:"History", stepsTitle:"Working Steps", resultLabel:"Result:", noCalc:"No calculation yet.", mem:"Memory", modeReal:"Realistic", modeDig:"Digital", themeDark:"Dark", themeLight:"Light", langShort:"EN 🇬🇧", compact:"Compact", verbose:"Verbose"},
+  lg:{ title:"🧮 Kalikulata — Enzira z'Okukola", history:"Ebyabaddibwa", stepsTitle:"Enzira z'Okukola", resultLabel:"Ekyavaamu:", noCalc:"Tewali kunonyebwa.", mem:"Obubonero", modeReal:"Realistic", modeDig:"Digital", themeDark:"Ddwaniro", themeLight:"Enkazi", langShort:"LG 🇺🇬", compact:"Mupiira", verbose:"Gulu"}
 };
 
-let lang = 'en';
-let design = 'realistic';
-let theme = 'dark';
-let expr = '';
-let lastAns = 0;
-let memory = 0;
-let history = [];
+let lang='en', design='realistic', theme='dark';
+let expr='', lastAns=0, memory=0, history=[];
+let compactMode=true;
 
-const exprLine = document.getElementById('exprLine');
-const valueLine = document.getElementById('valueLine');
-const historyList = document.getElementById('historyList');
-const stepsBox = document.getElementById('stepsBox');
-const resExplain = document.getElementById('resExplain');
-const resLabel = document.getElementById('resLabel');
-const meta = document.getElementById('meta');
-const titleEl = document.getElementById('title');
-const histTitle = document.getElementById('histTitle');
-const stepsTitle = document.getElementById('stepsTitle');
+/* Element refs */
+const exprLine=document.getElementById('exprLine'), valueLine=document.getElementById('valueLine');
+const historyList=document.getElementById('historyList'), stepsBox=document.getElementById('stepsBox');
+const resExplain=document.getElementById('resExplain'), resLabel=document.getElementById('resLabel');
+const meta=document.getElementById('meta'), titleEl=document.getElementById('title');
+const histTitle=document.getElementById('histTitle'), stepsTitle=document.getElementById('stepsTitle');
+const compactBtn=document.getElementById('compactBtn');
 
-/* -------------------------
-   Utility: sanitize & eval
-   ------------------------- */
+/* SAFE EVAL helpers */
 function replaceTokens(s){
-  // replace readable signs and ANS token with numeric values
-  let t = String(s);
-  t = t.replace(/÷/g, '/').replace(/×/g, '*').replace(/−/g,'-');
-  t = t.replace(/\bANS\b/gi, `(${lastAns})`);
-  t = t.replace(/\^/g, '**');
-  // Replace π and e with Math constants if user used symbol directly
-  t = t.replace(/π/g, 'Math.PI').replace(/\be\b/g, 'Math.E');
+  let t=String(s);
+  t=t.replace(/÷/g,'/').replace(/×/g,'*').replace(/−/g,'-');
+  t=t.replace(/\bANS\b/gi, `(${lastAns})`);
+  t=t.replace(/\^/g,'**');
+  t=t.replace(/π/g,'Math.PI');
+  t=t.replace(/(^|[^A-Za-z0-9_])e([^A-Za-z0-9_]|$)/g, '$1Math.E$2');
   return t;
 }
-
 function evaluateSafe(input){
   if(!input) return 0;
   const safe = replaceTokens(input);
-  const body = `"use strict"; return (${safe});`;
-  const fn = new Function('Math','Number', body);
+  const fn = new Function('Math','Number', `"use strict"; return (${safe});`);
   const result = fn(Math,Number);
   if(typeof result === 'number' && !isFinite(result)) throw new Error('Non-finite');
   return result;
 }
 
-/* -------------------------
-   Steps generator
-   ------------------------- */
+/* STEP GENERATION (with precedence & parentheses) */
 function generateSteps(original){
-  const steps = [];
-  if(!original) {
-    steps.push({text: translations[lang].noCalc});
-    return steps;
-  }
-
-  // Step 0: show original expression
-  steps.push({text: `1) ${original}`});
-
-  // Step 1: replacements (ANS, symbols)
+  const steps=[]; if(!original){ steps.push({text:translations[lang].noCalc}); return steps; }
+  steps.push({text: compactMode ? `1) ${original}` : `1) Original expression: ${original}`});
   const replaced = replaceTokens(original);
-  steps.push({text: `2) Replace tokens → ${replaced}`});
+  steps.push({text: compactMode ? `2) ${replaced}` : `2) Replace tokens (ANS, π, e, ^): ${replaced}`});
 
-  // We'll now iteratively evaluate innermost parentheses
-  // Strategy: repeatedly find /\([^()]*\)/ and evaluate their content
-  let working = replaced;
-  let stepIndex = 3;
-  const maxLoops = 100;
-  let loop = 0;
+  let working = replaced; let stepIndex = 3;
+  const evalSegment = (seg)=>{ try { return (new Function('Math','Number',`"use strict"; return (${seg});`))(Math,Number); } catch(e){ return null; } };
 
-  function evalSegment(segment){
-    try {
-      // avoid side-effects by evaluating only the segment
-      const val = (new Function('Math','Number', `"use strict"; return (${segment});`))(Math,Number);
-      return val;
-    } catch(e){
-      return null;
-    }
-  }
-
-  // Evaluate inner parentheses until none left or too many loops
+  // Evaluate innermost parentheses iteratively
+  const maxLoops = 200; let loop = 0;
   while(loop < maxLoops){
     loop++;
-    // find innermost parentheses
     const m = working.match(/\([^()]*\)/);
     if(m){
       const inner = m[0];
       const content = inner.slice(1,-1);
+      // break down inner content by precedence
+      const innerSteps = breakdownOperations(content);
+      innerSteps.forEach(it => { steps.push({text: `${stepIndex}) ${it}`}); stepIndex++; });
       const val = evalSegment(content);
-      const displayVal = (val === null) ? 'Error' : String(val);
-      working = working.replace(inner, displayVal);
-      steps.push({text: `${stepIndex}) Evaluate ${inner} → ${displayVal}`});
-      stepIndex++;
+      const valStr = (val === null) ? 'Error' : String(val);
+      steps.push({text: `${stepIndex}) Replace ${inner} → ${valStr}`}); stepIndex++;
+      working = working.replace(inner, valStr);
       continue;
-    } else {
-      // no parentheses left — try to evaluate whole expression
-      const finalVal = evalSegment(working);
-      if(finalVal === null){
-        steps.push({text: `${stepIndex}) Cannot evaluate expression directly.`});
-      } else {
-        steps.push({text: `${stepIndex}) Evaluate ${working} → ${finalVal}`});
-      }
-      break;
     }
+    break;
   }
 
+  // Breakdown remaining operations
+  const remaining = breakdownOperations(working);
+  remaining.forEach(s => { steps.push({text: `${stepIndex}) ${s}`}); stepIndex++; });
+
+  // Final evaluation
+  const finalVal = evalSegment(working);
+  steps.push({text: `${stepIndex}) ${compactMode ? `${working} = ${finalVal}` : `Final evaluate ${working} equals ${finalVal}`}`});
   return steps;
 }
 
-/* -------------------------
-   UI Helpers
-   ------------------------- */
-function refreshDisplay(){
-  exprLine.innerText = expr || '\u00A0';
-  valueLine.innerText = expr || '0';
-  updateMeta();
-}
+/* Break down operations by precedence for string without parentheses */
+function breakdownOperations(exprStr){
+  if(!exprStr) return [(lang==='en') ? 'Empty expression' : 'Ensonda teryo'];
+  const stepsLocal = [];
+  let work = exprStr;
 
-function clearAll(){
-  expr = '';
-  refreshDisplay();
-  resExplain.innerText = translations[lang].noCalc;
-  renderSteps([]);
-}
+  const applyOpRegex = (regex, descFormatter)=>{
+    let m;
+    while((m = work.match(regex))){
+      const matched = m[0];
+      let val;
+      try { val = evaluateSafe(matched); } catch(e){ val = null; }
+      const valStr = (val === null) ? 'Error' : String(val);
+      stepsLocal.push(compactMode ? `${matched} → ${valStr}` : descFormatter(matched, valStr));
+      work = work.replace(matched, valStr);
+    }
+  };
 
-function deleteChar(){
-  expr = expr.slice(0,-1);
-  refreshDisplay();
-}
+  try {
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*\*\*\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate power ${m} = ${v}` : `Okwalaba obusobeko ${m} = ${v}`);
 
-function insertToken(t){
-  expr += t;
-  refreshDisplay();
-}
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*[*/]\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate multiply/divide ${m} = ${v}` : `Kukola okukozesa ${m} = ${v}`);
 
-function setValue(v){
-  expr = String(v);
-  refreshDisplay();
-}
-
-function pushHistoryItem(e, r, expl){
-  history.unshift({e, r, expl, ts:Date.now()});
-  if(history.length>80) history.pop();
-  renderHistory();
-}
-
-function renderHistory(){
-  historyList.innerHTML = '';
-  if(history.length===0){
-    const d = document.createElement('div'); d.className='hist-item'; d.innerText = translations[lang].noCalc;
-    historyList.appendChild(d); return;
+    applyOpRegex(/(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))\s*[+-]\s*(?:Math\.[A-Za-z0-9_]+\([^\)]*\)|[0-9.]+|\([^\)]*\))/g,
+      (m,v)=> (lang==='en') ? `Evaluate add/subtract ${m} = ${v}` : `Kugatta oba okukyusa ${m} = ${v}`);
+  } catch(e){
+    stepsLocal.push((lang==='en') ? 'Cannot compute further breakdown.' : "Tosobola okukakasa enziza z'okukola.");
   }
-  history.forEach(h=>{
-    const el = document.createElement('div'); el.className='hist-item';
-    el.innerHTML = `<div style="flex:1;min-width:0"><div style="font-weight:700; color:#e6eef7; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">${h.e}</div><div style="font-size:13px; color:var(--muted)">${h.expl}</div></div><div style="margin-left:10px; font-weight:800; color:#9ff3ea">${h.r}</div>`;
-    el.onclick = ()=>{ setValue(h.r); resExplain.innerText = h.expl; speakText(`${translations[lang].resultLabel} ${h.r}. ${h.expl}`) };
-    historyList.appendChild(el);
-  });
-}
 
-function renderSteps(steps){
-  stepsBox.innerHTML = '';
-  if(!steps || steps.length===0){
-    const d = document.createElement('div'); d.className='step'; d.innerText = (lang==='en' ? 'No steps yet. Enter expression and press =' : 'Tewali entambula. Tandika ensonda obale =');
-    stepsBox.appendChild(d); return;
+  if(stepsLocal.length === 0){
+    try {
+      const final = evaluateSafe(work);
+      stepsLocal.push(compactMode ? `${work} → ${final}` : ((lang==='en') ? `Evaluate ${work} = ${final}` : `Kukola ${work} = ${final}`));
+    } catch(e){
+      stepsLocal.push((lang==='en') ? 'Cannot break down expression further.' : 'Tosobola kukola enkyusa.');
+    }
   }
-  steps.forEach(s=>{
-    const d = document.createElement('div'); d.className='step'; d.innerText = s.text;
-    stepsBox.appendChild(d);
-  });
+
+  return stepsLocal;
 }
 
-function speakText(txt){
-  if(!('speechSynthesis' in window)) return;
-  const u = new SpeechSynthesisUtterance(txt);
-  u.lang = (lang==='en') ? 'en-GB' : 'en-UG';
-  u.rate = 1; u.pitch = 1;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+/* UI helpers & actions */
+function refreshDisplay(){ exprLine.innerText = expr || '\u00A0'; valueLine.innerText = expr || '0'; updateMeta(); }
+function clearAll(){ expr=''; refreshDisplay(); resExplain.innerText = translations[lang].noCalc; renderSteps([]); }
+function deleteChar(){ expr = expr.slice(0,-1); refreshDisplay(); }
+function insertToken(t){ expr += t; refreshDisplay(); }
+function setValue(v){ expr = String(v); refreshDisplay(); }
+function pushHistory(e,r,expl){ history.unshift({e,r,expl,ts:Date.now()}); if(history.length>80) history.pop(); renderHistory(); }
+function renderHistory(){ historyList.innerHTML=''; if(history.length===0){ const d=document.createElement('div'); d.className='hist-item'; d.innerText=translations[lang].noCalc; historyList.appendChild(d); return } history.forEach(h=>{ const el=document.createElement('div'); el.className='hist-item'; el.innerHTML=`<div style="flex:1;min-width:0"><div style="font-weight:700;color:#e6eef7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.e}</div><div style="font-size:13px;color:var(--muted)">${h.expl}</div></div><div style="margin-left:10px;color:#9ff3ea;font-weight:800">${h.r}</div>`; el.onclick=()=>{ setValue(h.r); resExplain.innerText=h.expl; speak(`${translations[lang].resultLabel} ${h.r}. ${h.expl}`)}; historyList.appendChild(el); }); }
+function renderSteps(steps){ stepsBox.innerHTML=''; if(!steps || steps.length===0){ const d=document.createElement('div'); d.className='step'; d.innerText = (lang==='en'?'No steps yet. Enter expression and press =':'Tewali entambula. Tandika ensonda obale ='); stepsBox.appendChild(d); return } steps.forEach((s,i)=>{ const d=document.createElement('div'); d.className='step'; d.dataset.index=i; d.innerText = s.text; stepsBox.appendChild(d); }); }
+
+/* highlight player */
+let highlightTimer=null;
+function playHighlights(speed=900){
+  if(highlightTimer) { clearInterval(highlightTimer); highlightTimer=null; }
+  const nodes = Array.from(stepsBox.querySelectorAll('.step'));
+  if(nodes.length===0) return;
+  let idx=0;
+  nodes.forEach(n=> n.classList.remove('highlight'));
+  highlightTimer = setInterval(()=>{
+    nodes.forEach(n=> n.classList.remove('highlight'));
+    if(idx >= nodes.length){ clearInterval(highlightTimer); highlightTimer=null; return; }
+    nodes[idx].classList.add('highlight');
+    nodes[idx].scrollIntoView({behavior:'smooth', block:'center'});
+    idx++;
+  }, speed);
 }
 
-/* -------------------------
-   Calculation
-   ------------------------- */
+/* speech */
+function speak(txt){ if(!('speechSynthesis' in window)) return; const u=new SpeechSynthesisUtterance(txt); u.lang = (lang==='en') ? 'en-GB' : 'en-UG'; u.rate=1; u.pitch=1; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u); }
+
+/* calculate */
 function calculateNow(){
   try {
     const toEval = expr || String(lastAns || 0);
@@ -386,138 +311,47 @@ function calculateNow(){
     const explanation = (lang==='en') ? `The expression ${toEval} equals ${result}.` : `Ensonda ${toEval} eweereza ku ${result}.`;
     resExplain.innerText = explanation;
     valueLine.innerText = String(result);
-    pushHistoryItem(toEval, result, explanation);
+    pushHistory(toEval, result, explanation);
     const steps = generateSteps(toEval);
     renderSteps(steps);
-    speakText(`${translations[lang].resultLabel} ${result}. ${explanation}`);
+    playHighlights(850);
+    speak(`${translations[lang].resultLabel} ${result}. ${explanation}`);
     expr = String(result);
     refreshDisplay();
   } catch(e){
     valueLine.innerText = 'Error';
     resExplain.innerText = (lang==='en') ? 'Invalid expression. Check input.' : 'Ensonda tewaliiyo. Laba byowandisizza.';
-    renderSteps([{text: (lang==='en' ? 'Cannot evaluate expression: check syntax.' : "Tosobola okunonyonnyola ensonda: leka obukugu." )}]);
-    speakText((lang==='en') ? 'Error. Invalid expression.' : 'Ensobi. Ensonda tewaliiyo.');
+    renderSteps([{text: (lang==='en' ? 'Cannot evaluate expression: check syntax.' : 'Tosobola okunonyonnyola ensonda: leka obukugu.')}]);
+    speak((lang==='en') ? 'Error. Invalid expression.' : 'Ensobi. Ensonda tewaliiyo.');
   }
 }
 
-/* -------------------------
-   Memory functions
-   ------------------------- */
-function memClear(){ memory = 0; updateMeta(); speakText(`${translations[lang].mem} ${memory}`) }
-function memRecall(){ setValue(memory); speakText(`${translations[lang].mem} ${memory}`) }
-function memPlus(){ try{ const val = evaluateSafe(expr||String(lastAns)); memory += Number(val)||0; updateMeta(); speakText(`${translations[lang].mem} ${memory}`) }catch(e){ speakText('Error') } }
-function memMinus(){ try{ const val = evaluateSafe(expr||String(lastAns)); memory -= Number(val)||0; updateMeta(); speakText(`${translations[lang].mem} ${memory}`) }catch(e){ speakText('Error') } }
+/* memory */
+function memClear(){ memory=0; updateMeta(); speak(`${translations[lang].mem} ${memory}`) }
+function memRecall(){ setValue(memory); speak(`${translations[lang].mem} ${memory}`) }
+function memPlus(){ try{ const v=evaluateSafe(expr||String(lastAns)); memory += Number(v)||0; updateMeta(); speak(`${translations[lang].mem} ${memory}`);}catch(e){speak('Error')} }
+function memMinus(){ try{ const v=evaluateSafe(expr||String(lastAns)); memory -= Number(v)||0; updateMeta(); speak(`${translations[lang].mem} ${memory}`);}catch(e){speak('Error')} }
 
-/* -------------------------
-   Event wiring
-   ------------------------- */
-document.getElementById('keys').addEventListener('click', (ev)=>{
-  const btn = ev.target.closest('button');
-  if(!btn) return;
-  const ins = btn.dataset.insert;
-  const action = btn.dataset.action;
-  if(ins !== undefined){
-    insertToken(ins);
-    return;
-  }
-  switch(action){
-    case 'clear': clearAll(); break;
-    case 'del': deleteChar(); break;
-    case 'mc': memClear(); break;
-    case 'mr': memRecall(); break;
-    case 'mplus': memPlus(); break;
-    case 'mminus': memMinus(); break;
-    case 'sq': insertToken('**2'); break;
-    case 'cube': insertToken('**3'); break;
-    case 'percent': insertToken('/100'); break;
-    case 'ans': setValue(lastAns); break;
-    case 'history': renderHistory(); break;
-    case 'explain': {
-      try{
-        const val = evaluateSafe(expr||String(lastAns));
-        const expl = (lang==='en') ? `The expression ${expr||lastAns} equals ${val}.` : `Ensonda ${expr||lastAns} eweereza ku ${val}.`;
-        resExplain.innerText = expl;
-        speakText(expl);
-        const steps = generateSteps(expr||String(lastAns));
-        renderSteps(steps);
-      }catch(e){ resExplain.innerText = (lang==='en' ? 'Cannot explain invalid expression.' : 'Tosobola okunnyonnyola.'); speakText('Cannot explain'); }
-    } break;
-    case 'neg': insertToken('*-1'); break;
-    default: break;
-  }
-});
+/* wiring */
+document.getElementById('keys').addEventListener('click',(ev)=>{ const btn = ev.target.closest('button'); if(!btn) return; const ins = btn.dataset.insert; const action = btn.dataset.action; if(ins !== undefined){ insertToken(ins); return; } switch(action){ case 'clear': clearAll(); break; case 'del': deleteChar(); break; case 'mc': memClear(); break; case 'mr': memRecall(); break; case 'mplus': memPlus(); break; case 'mminus': memMinus(); break; case 'sq': insertToken('**2'); break; case 'cube': insertToken('**3'); break; case 'percent': insertToken('/100'); break; case 'ans': setValue(lastAns); break; case 'history': renderHistory(); break; case 'explain': { try{ const v=evaluateSafe(expr||String(lastAns)); const expl = (lang==='en') ? `The expression ${expr||lastAns} equals ${v}.` : `Ensonda ${expr||lastAns} eweereza ku ${v}.`; resExplain.innerText=expl; speak(expl); const steps = generateSteps(expr||String(lastAns)); renderSteps(steps); playHighlights(900);}catch(e){ resExplain.innerText=(lang==='en'?'Cannot explain invalid expression.':'Tosobola okunnyonnyola.'); speak('Cannot explain'); } } break; case 'neg': insertToken('*-1'); break; default: break; } });
 
-/* Equal button */
 document.getElementById('equalBtn').addEventListener('click', calculateNow);
 
-/* Keyboard support */
-window.addEventListener('keydown',(e)=>{
-  if(e.key >= '0' && e.key <= '9'){ insertToken(e.key); return; }
-  if(e.key === '.') { insertToken('.'); return; }
-  if(['+','-','*','/','(',')'].includes(e.key)){ insertToken(e.key); return; }
-  if(e.key === 'Enter'){ e.preventDefault(); calculateNow(); return; }
-  if(e.key === 'Backspace'){ deleteChar(); return; }
-});
+window.addEventListener('keydown',(e)=>{ if(e.key >= '0' && e.key <= '9'){ insertToken(e.key); return; } if(e.key === '.') { insertToken('.'); return; } if(['+','-','*','/','(',')'].includes(e.key)){ insertToken(e.key); return; } if(e.key === 'Enter'){ e.preventDefault(); calculateNow(); return; } if(e.key === 'Backspace'){ deleteChar(); return; } });
 
-/* Switch buttons */
-document.getElementById('langBtn').addEventListener('click', ()=>{
-  lang = (lang === 'en') ? 'lg' : 'en';
-  document.getElementById('langBtn').innerText = translations[lang].langShort;
-  titleEl.innerText = translations[lang].title;
-  histTitle.innerText = translations[lang].history;
-  stepsTitle.innerText = translations[lang].stepsTitle;
-  resLabel.innerText = translations[lang].resultLabel;
-  resExplain.innerText = translations[lang].noCalc;
-  renderSteps([]);
-  renderHistory();
-  updateMeta();
-});
+/* switches */
+document.getElementById('langBtn').addEventListener('click', ()=>{ lang = (lang==='en') ? 'lg' : 'en'; document.getElementById('langBtn').innerText = translations[lang].langShort; titleEl.innerText = translations[lang].title; histTitle.innerText = translations[lang].history; stepsTitle.innerText = translations[lang].stepsTitle; resLabel.innerText = translations[lang].resultLabel; resExplain.innerText = translations[lang].noCalc; renderSteps([]); renderHistory(); updateMeta(); });
 
-document.getElementById('designBtn').addEventListener('click', ()=>{
-  design = (design === 'realistic') ? 'digital' : 'realistic';
-  const calc = document.getElementById('calc');
-  if(design === 'realistic'){
-    calc.classList.remove('digital'); calc.classList.add('realistic');
-    document.getElementById('designBtn').classList.add('active');
-    document.getElementById('designBtn').innerText = translations[lang].modeReal;
-  } else {
-    calc.classList.remove('realistic'); calc.classList.add('digital');
-    document.getElementById('designBtn').classList.remove('active');
-    document.getElementById('designBtn').innerText = translations[lang].modeDig;
-  }
-  updateMeta();
-});
+document.getElementById('designBtn').addEventListener('click', ()=>{ design = (design==='realistic') ? 'digital' : 'realistic'; const calc=document.getElementById('calc'); if(design==='realistic'){ calc.classList.remove('digital'); calc.classList.add('realistic'); document.getElementById('designBtn').classList.add('active'); document.getElementById('designBtn').innerText = translations[lang].modeReal; } else { calc.classList.remove('realistic'); calc.classList.add('digital'); document.getElementById('designBtn').classList.remove('active'); document.getElementById('designBtn').innerText = translations[lang].modeDig; } updateMeta(); });
 
-document.getElementById('themeBtn').addEventListener('click', ()=>{
-  theme = (theme === 'dark') ? 'light' : 'dark';
-  if(theme === 'light'){
-    document.body.style.background = 'linear-gradient(180deg,#f8fafc,#eef2ff)';
-    document.body.style.color = '#071022';
-    document.getElementById('themeBtn').classList.add('active');
-    document.getElementById('themeBtn').innerText = translations[lang].themeLight;
-  } else {
-    document.body.style.background = 'linear-gradient(180deg,var(--bg-dark-start),var(--bg-dark-end))';
-    document.body.style.color = '#e6eef7';
-    document.getElementById('themeBtn').classList.remove('active');
-    document.getElementById('themeBtn').innerText = translations[lang].themeDark;
-  }
-  updateMeta();
-});
+document.getElementById('themeBtn').addEventListener('click', ()=>{ theme = (theme==='dark') ? 'light' : 'dark'; if(theme==='light'){ document.body.style.background = 'linear-gradient(180deg,#f8fafc,#eef2ff)'; document.body.style.color = '#071022'; document.getElementById('themeBtn').classList.add('active'); document.getElementById('themeBtn').innerText = translations[lang].themeLight; } else { document.body.style.background = 'linear-gradient(180deg,var(--bg1),var(--bg2))'; document.body.style.color = '#e6eef7'; document.getElementById('themeBtn').classList.remove('active'); document.getElementById('themeBtn').innerText = translations[lang].themeDark; } updateMeta(); });
 
-/* -------------------------
-   Meta + init
-   ------------------------- */
-function updateMeta(){
-  meta.innerText = `${translations[lang].mem} ${memory} • Mode: ${design === 'realistic' ? translations[lang].modeReal : translations[lang].modeDig} • Language: ${lang === 'en' ? 'English' : 'Luganda'}`;
-}
-updateMeta();
-refreshDisplay();
-renderHistory();
-renderSteps([]);
+compactBtn.addEventListener('click', ()=>{ compactMode = !compactMode; compactBtn.innerText = compactMode ? translations[lang].compact : translations[lang].verbose; compactBtn.classList.toggle('active'); renderSteps([]); });
 
-/* announce ready */
-setTimeout(()=>{ speakText(translations[lang].title); }, 700);
-
+/* meta */
+function updateMeta(){ meta.innerText = `${translations[lang].mem} ${memory} • Mode: ${design==='realistic'?translations[lang].modeReal:translations[lang].modeDig} • Language: ${lang==='en'?'English':'Luganda'}`; }
+updateMeta(); refreshDisplay(); renderHistory(); renderSteps([]);
+setTimeout(()=>{ speak(translations[lang].title); },600);
 </script>
 </body>
 </html>
