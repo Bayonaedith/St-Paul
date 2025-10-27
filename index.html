@@ -6,7 +6,26 @@
 <title>St Paul Learning Centre</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // No user is signed in — redirect to auth.html
+      window.location.href = "auth.html";
+    }
+  });
+</script>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
