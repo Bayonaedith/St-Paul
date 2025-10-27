@@ -6,9 +6,11 @@
 <title>St Paul Learning Centre</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<!-- ✅ Firebase Login Check -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
@@ -19,25 +21,12 @@
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
 
+  // ✅ Redirect to auth.html if not logged in
   onAuthStateChanged(auth, (user) => {
     if (!user) {
-      // No user is signed in — redirect to auth.html
       window.location.href = "auth.html";
     }
   });
-</script>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-    projectId: "my-school-st-paul-1455a",
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
 </script>
 
 <style>
@@ -55,10 +44,10 @@ body {
   animation: gradientBG 20s ease infinite;
 }
 
-/* Fix: The body class applied by JS will push content */
+/* Fix for sidebar push */
 .menu-open #main-content-wrapper,
 .menu-open .navbar {
-  transform: translateX(260px); /* Pushes content right by sidebar width */
+  transform: translateX(260px);
 }
 
 /* Gradient Background Animation */
@@ -82,7 +71,7 @@ button {
 button:hover {
   background: #0056b3;
 }
-  .navbar {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,7 +81,7 @@ button:hover {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-  transition: transform 0.4s ease; /* Added for smooth push effect */
+  transition: transform 0.4s ease;
 }
 
 .navbar-center {
@@ -104,7 +93,7 @@ button:hover {
   transform: translateX(-50%);
 }
 
-/* -------------------- Menu Toggle Button (Hamburger / X) -------------------- */
+/* -------------------- Hamburger Menu -------------------- */
 #menu-toggle {
   background: none;
   border: none;
@@ -127,18 +116,11 @@ button:hover {
   box-shadow: 0 0 5px #60a5fa;
 }
 
-/* TRANSFORMS HAMBURGER INTO 'X' */
-.change .bar1 {
-  transform: translateY(7px) rotate(-45deg);
-}
-.change .bar2 {
-  opacity: 0; /* Makes the middle bar disappear */
-}
-.change .bar3 {
-  transform: translateY(-7px) rotate(45deg);
-}
-/* ----------------------------------------------------------- */
+.change .bar1 { transform: translateY(7px) rotate(-45deg); }
+.change .bar2 { opacity: 0; }
+.change .bar3 { transform: translateY(-7px) rotate(45deg); }
 
+/* -------------------- Logo -------------------- */
 .logo-link {
   display: flex;
   flex-direction: column;
@@ -155,9 +137,7 @@ button:hover {
   border: 2px solid white;
   transition: transform 0.5s;
 }
-.school-logo:hover {
-  transform: rotate(10deg) scale(1.1);
-}
+.school-logo:hover { transform: rotate(10deg) scale(1.1); }
 
 .logo-text {
   font-size: 1.2rem;
@@ -197,12 +177,11 @@ button:hover {
   text-shadow: 0 0 15px #93c5fd;
 }
 
-/* -------------------- Main Content Wrapper -------------------- */
+/* -------------------- Main Content -------------------- */
 #main-content-wrapper {
-  transition: transform 0.4s ease; /* Added for smooth push effect */
+  transition: transform 0.4s ease;
 }
 
-/* -------------------- Header and Sections -------------------- */
 header {
   text-align: center;
   padding: 30px 20px;
@@ -257,7 +236,7 @@ section h2 {
   box-shadow: 0 0 20px #2563eb, 0 0 30px #60a5fa;
 }
 
-/* -------------------- Quick Access Buttons -------------------- */
+/* -------------------- Quick Access -------------------- */
 .feature-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -276,30 +255,13 @@ section h2 {
   border-radius: 8px;
   text-align: center;
   position: relative;
-  opacity: 1;
-  transform: translateY(0);
   animation: pulseGlow 2.5s ease-in-out infinite;
 }
 
-.neon-btn::before {
-  content: '';
-  position: absolute;
-  top: -5px; left: -5px; right: -5px; bottom: -5px;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #60a5fa, #2563eb, #93c5fd);
-  opacity: 0;
-  transition: 0.3s;
-  z-index: -1;
-  filter: blur(8px);
-}
-
 .neon-btn:hover {
-  color: #ffffff;
+  color: #fff;
   background: #2563eb;
   box-shadow: 0 0 15px #60a5fa, 0 0 25px #3b82f6, 0 0 35px #93c5fd;
-}
-.neon-btn:hover::before {
-  opacity: 1;
 }
 
 /* -------------------- Footer -------------------- */
@@ -317,7 +279,6 @@ footer {
   from { text-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6; }
   to { text-shadow: 0 0 20px #93c5fd, 0 0 30px #2563eb; }
 }
-
 @keyframes pulseGlow {
   0% { box-shadow: 0 0 10px #60a5fa, 0 0 20px #3b82f6; }
   50% { box-shadow: 0 0 20px #60a5fa, 0 0 35px #3b82f6, 0 0 40px #93c5fd; }
@@ -332,15 +293,15 @@ footer {
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="navbar">
   <button id="menu-toggle" onclick="toggleMenu()">
     <div class="hamburger-icon bar1"></div>
     <div class="hamburger-icon bar2"></div>
     <div class="hamburger-icon bar3"></div>
   </button>
-  
+
   <div class="navbar-center">
     <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
       <img src="https://i.postimg.cc/t4yDG3Fq/Mon-21-07-2025-16-26-06.png" 
@@ -352,30 +313,21 @@ footer {
   
 <nav id="sideMenu" class="side-menu">
   <li><a href="index.html">📰 News & Announcements</a></li>
-    <li><a href="student-portal.html">🎓 Student Portal</a></li>
-    <li><a href="admissions.html">📋 Admissions</a></li>
-    <li><a href="resources.html">📘 Resources</a></li>
-    <li><a href="showcase.html">🌟 Showcase</a></li>
-    <li><a href="contact.html">📞 Contact</a></li>
-    <li><a href="class.html">🗓️ Timetable</a></li>
-    <li><a href="resources.html">👩‍🏫 Teacher Resources</a></li>
-    <li><a href="parent-portal.html">👨‍👩‍👧 Parent Portal</a></li>
-    <li><a href="calculator.html">🧮 calculator</a></li>
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.7.html'">
-  Google 🌍
-   </button>
-
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.4.html'">
-  Assistant 🤖
-   </button>
-
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.2.html'">
-  Notebook 📓 
-    </button>
+  <li><a href="student-portal.html">🎓 Student Portal</a></li>
+  <li><a href="admissions.html">📋 Admissions</a></li>
+  <li><a href="resources.html">📘 Resources</a></li>
+  <li><a href="showcase.html">🌟 Showcase</a></li>
+  <li><a href="contact.html">📞 Contact</a></li>
+  <li><a href="class.html">🗓️ Timetable</a></li>
+  <li><a href="resources.html">👩‍🏫 Teacher Resources</a></li>
+  <li><a href="parent-portal.html">👨‍👩‍👧 Parent Portal</a></li>
+  <li><a href="calculator.html">🧮 Calculator</a></li>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.7.html'">Google 🌍</button>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.4.html'">Assistant 🤖</button>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.2.html'">Notebook 📓</button>
 </nav>
 
 <div id="main-content-wrapper"> 
-
   <header>
     <h1>St Paul Learning Centre</h1>
     <div class="motto">Strive For Success, Shine With Excellence</div>
@@ -408,31 +360,25 @@ footer {
   <footer>
     &copy; 2025 St Paul Learning Centre. All rights reserved.
   </footer>
+</div>
 
-</div> <script>
-/**
- * Toggles the side menu open or closed.
- * It also handles the hamburger/X icon transition and pushes the main content.
- */
+<script>
 function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
   const menuToggle = document.getElementById("menu-toggle");
   const body = document.body;
 
   if (sideMenu.style.width === "260px") {
-    // Menu is open, so close it
     sideMenu.style.width = "0";
-    menuToggle.classList.remove("change"); // Hamburger icon appears
-    body.classList.remove("menu-open"); // Content slides back
+    menuToggle.classList.remove("change");
+    body.classList.remove("menu-open");
   } else {
-    // Menu is closed, so open it
     sideMenu.style.width = "260px";
-    menuToggle.classList.add("change"); // 'X' icon appears
-    body.classList.add("menu-open"); // Content slides right
+    menuToggle.classList.add("change");
+    body.classList.add("menu-open");
   }
 }
 
-// Close sidebar on Escape key
 document.addEventListener('keydown', function(event) {
   if(event.key === "Escape") {
     document.getElementById("sideMenu").style.width = "0";
