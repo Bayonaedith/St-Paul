@@ -1,34 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>St Paul Learning Centre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>St Paul Learning Centre</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png">
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<meta property="og:title" content="St Paul Learning Centre - Strive For Success, Shine With Excellence">
+<meta property="og:description" content="Empowering bright minds. Access student and parent portals, resources, and latest news. Strive For Success, Shine With Excellence.">
+<meta property="og:image" content="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png">
+<meta property="og:url" content="https://st-paul-learning-centre.vercel.app/"> 
+<meta property="og:type" content="website">
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
-      authDomain: "my-school-st-paul-1455a.firebaseapp.com",
-      projectId: "my-school-st-paul-1455a",
-    };
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    // ✅ Redirect to auth.html if not logged in
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "auth.html";
-      }
-    });
-  </script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBvLXOx9N88hBBLMHVCcEM3zBK-AYfQI_o",
+    authDomain: "my-school-st-paul-1455a.firebaseapp.com",
+    projectId: "my-school-st-paul-1455a",
+  };
 
-  <style>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // ✅ Redirect to auth.html if not logged in
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "auth.html";
+    }
+  });
+</script>
+
+<style>
 /* -------------------- Global -------------------- */
 body {
   margin: 0;
@@ -160,10 +168,11 @@ button:hover {
   z-index: 2000;
 }
 
+/* Added list styling cleanup */
 .side-menu ul {
-  list-style: none; /* Remove bullet points */
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .side-menu a {
@@ -296,111 +305,111 @@ footer {
   .gallery { flex-direction: column; align-items: center; }
   .feature-buttons { flex-direction: column; align-items: center; }
 }
-  </style>
+</style>
 </head>
 
 <body>
-  <div class="navbar">
-    <button id="menu-toggle" onclick="toggleMenu()">
-      <div class="hamburger-icon bar1"></div>
-      <div class="hamburger-icon bar2"></div>
-      <div class="hamburger-icon bar3"></div>
-    </button>
+<div class="navbar">
+  <button id="menu-toggle" onclick="toggleMenu()">
+    <div class="hamburger-icon bar1"></div>
+    <div class="hamburger-icon bar2"></div>
+    <div class="hamburger-icon bar3"></div>
+  </button>
 
-    <div class="navbar-center">
-      <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
-        <img src="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png" 
-             alt="School Logo" class="school-logo">
-        <span class="logo-text">St Paul Learning Centre</span>
-      </a>
+  <div class="navbar-center">
+    <a href="https://nicholasbagenda.netlify.app" target="_blank" class="logo-link">
+      <img src="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png" 
+           alt="School Logo" class="school-logo">
+      <span class="logo-text">St Paul Learning Centre</span>
+    </a>
+  </div>
+</div>
+  
+<nav id="sideMenu" class="side-menu">
+  <ul>
+    <li><a href="index.html">📰 News & Announcements</a></li>
+    <li><a href="student-portal.html">🎓 Student Portal</a></li>
+    <li><a href="admissions.html">📋 Admissions</a></li>
+    <li><a href="resources.html">📘 Resources</a></li>
+    <li><a href="showcase.html">🌟 Showcase</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+    <li><a href="class.html">🗓️ Timetable</a></li>
+    <li><a href="resources.html">👩‍🏫 Teacher Resources</a></li>
+    <li><a href="parent-portal.html">👨‍👩‍👧 Parent Portal</a></li>
+    <li><a href="calculator.html">🧮 Calculator</a></li>
+  </ul>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.7.html'">Google 🌍</button>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.4.html'">Assistant 🤖</button>
+  <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.2.html'">Notebook 📓</button>
+</nav>
+
+<div id="main-content-wrapper"> 
+  <header>
+    <h1>St Paul Learning Centre</h1>
+    <div class="motto">Strive For Success, Shine With Excellence</div>
+    <p>Empowering bright minds, connecting passionate families, and inspiring dedicated teachers for a brighter future.</p>
+  </header>
+
+  <section>
+    <h2>Welcome to St Paul Learning Centre</h2>
+    <p>
+      At <strong>St Paul Learning Centre</strong>, we are committed to unlocking every student’s potential and cultivating a dynamic, inclusive community. Explore our intuitive student and parent portals, access rich learning resources, witness our school’s inspiring showcase, and stay informed with the latest news and exciting announcements.
+    </p>
+
+    <div class="gallery">
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <img src="https://i.postimg.cc/ncMtCh8Z/IMG-20251028-WA0021.jpg" alt="Blessing Day 1" width="300">
+        <img src="https://i.postimg.cc/zX31VGmN/IMG-20251028-WA0020.jpg" alt="Blessing Day 2" width="300">
+        <img src="https://i.postimg.cc/283fVSpf/IMG-20251028-WA0019.jpg" alt="Blessing Day 3" width="300">
+        <img src="https://i.postimg.cc/GpFWZBD7/file-00000000c018622f8ec6f55828286f85.png" alt="Graphic 1" width="300">
+        <img src="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png" alt="Graphic 2" width="300">
+      </div>
+      <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
+      <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
+      <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
     </div>
-  </div>
-    
-  <nav id="sideMenu" class="side-menu">
-    <ul>
-      <li><a href="index.html">📰 News & Announcements</a></li>
-      <li><a href="student-portal.html">🎓 Student Portal</a></li>
-      <li><a href="admissions.html">📋 Admissions</a></li>
-      <li><a href="resources.html">📘 Resources</a></li>
-      <li><a href="showcase.html">🌟 Showcase</a></li>
-      <li><a href="contact.html">📞 Contact</a></li>
-      <li><a href="class.html">🗓️ Timetable</a></li>
-      <li><a href="resources.html">👩‍🏫 Teacher Resources</a></li>
-      <li><a href="parent-portal.html">👨‍👩‍👧 Parent Portal</a></li>
-      <li><a href="calculator.html">🧮 Calculator</a></li>
-    </ul>
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.7.html'">Google 🌍</button>
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.4.html'">Assistant 🤖</button>
-    <button onclick="window.location.href='https://bagendanicholas.github.io/My-website-/index2.2.html'">Notebook 📓</button>
-  </nav>
 
-  <div id="main-content-wrapper"> 
-    <header>
-      <h1>St Paul Learning Centre</h1>
-      <div class="motto">Strive For Success, Shine With Excellence</div>
-      <p>Empowering bright minds, connecting passionate families, and inspiring dedicated teachers for a brighter future.</p>
-    </header>
+    <h3>Quick Access 😎</h3>
+    <div class="feature-buttons">
+      <a href="student-portal.html" class="neon-btn">Student Portal</a>
+      <a href="parent-portal.html" class="neon-btn">Parent Portal</a>
+      <a href="admissions.html" class="neon-btn">Admissions</a>
+      <a href="resources.html" class="neon-btn">Resources</a>
+      <a href="showcase.html" class="neon-btn">Showcase</a>
+      <a href="contact.html" class="neon-btn">Contact</a>
+    </div>
+  </section>
 
-    <section>
-      <h2>Welcome to St Paul Learning Centre</h2>
-      <p>
-        At <strong>St Paul Learning Centre</strong>, we are committed to unlocking every student’s potential and cultivating a dynamic, inclusive community. Explore our intuitive student and parent portals, access rich learning resources, witness our school’s inspiring showcase, and stay informed with the latest news and exciting announcements.
-      </p>
+  <footer>
+    &copy; 2025 St Paul Learning Centre. All rights reserved.
+  </footer>
+</div>
 
-      <div class="gallery">
-        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-          <img src="https://i.postimg.cc/ncMtCh8Z/IMG-20251028-WA0021.jpg" alt="Blessing Day 1" width="300">
-          <img src="https://i.postimg.cc/zX31VGmN/IMG-20251028-WA0020.jpg" alt="Blessing Day 2" width="300">
-          <img src="https://i.postimg.cc/283fVSpf/IMG-20251028-WA0019.jpg" alt="Blessing Day 3" width="300">
-          <img src="https://i.postimg.cc/GpFWZBD7/file-00000000c018622f8ec6f55828286f85.png" alt="Graphic 1" width="300">
-          <img src="https://i.postimg.cc/FKXtWbY7/file-000000006dd862309587c04f14dd0a1e.png" alt="Graphic 2" width="300">
-        </div>
-        <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="School Hall">
-        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Classroom">
-        <img src="https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=400&q=80" alt="Library">
-      </div>
+<script>
+function toggleMenu() {
+  const sideMenu = document.getElementById("sideMenu");
+  const menuToggle = document.getElementById("menu-toggle");
+  const body = document.body;
 
-      <h3>Quick Access 😎</h3>
-      <div class="feature-buttons">
-        <a href="student-portal.html" class="neon-btn">Student Portal</a>
-        <a href="parent-portal.html" class="neon-btn">Parent Portal</a>
-        <a href="admissions.html" class="neon-btn">Admissions</a>
-        <a href="resources.html" class="neon-btn">Resources</a>
-        <a href="showcase.html" class="neon-btn">Showcase</a>
-        <a href="contact.html" class="neon-btn">Contact</a>
-      </div>
-    </section>
+  if (sideMenu.style.width === "260px") {
+    sideMenu.style.width = "0";
+    menuToggle.classList.remove("change");
+    body.classList.remove("menu-open");
+  } else {
+    sideMenu.style.width = "260px";
+    menuToggle.classList.add("change");
+    body.classList.add("menu-open");
+  }
+}
 
-    <footer>
-      &copy; 2025 St Paul Learning Centre. All rights reserved.
-    </footer>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      const sideMenu = document.getElementById("sideMenu");
-      const menuToggle = document.getElementById("menu-toggle");
-      const body = document.body;
-
-      if (sideMenu.style.width === "260px") {
-        sideMenu.style.width = "0";
-        menuToggle.classList.remove("change");
-        body.classList.remove("menu-open");
-      } else {
-        sideMenu.style.width = "260px";
-        menuToggle.classList.add("change");
-        body.classList.add("menu-open");
-      }
-    }
-
-    document.addEventListener('keydown', function(event) {
-      if(event.key === "Escape") {
-        document.getElementById("sideMenu").style.width = "0";
-        document.getElementById("menu-toggle").classList.remove("change");
-        document.body.classList.remove("menu-open");
-      }
-    });
-  </script>
+document.addEventListener('keydown', function(event) {
+  if(event.key === "Escape") {
+    document.getElementById("sideMenu").style.width = "0";
+    document.getElementById("menu-toggle").classList.remove("change");
+    document.body.classList.remove("menu-open");
+  }
+});
+</script>
 
 </body>
 </html>
